@@ -6,6 +6,11 @@ const routes: Routes = [
     path: '',
     loadChildren: () =>
       import('../Feature/Pages/Welcome/welcome.module').then((m) => m.WelcomeModule)
+  },
+  {
+    path: '**',
+    redirectTo: 'welcome',
+    pathMatch: 'full'
   }
 ];
 

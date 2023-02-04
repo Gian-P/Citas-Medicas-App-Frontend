@@ -8,9 +8,9 @@ const routes: Routes = [
       import('../Feature/Pages/Welcome/welcome.module').then((m) => m.WelcomeModule)
   },
   {
-    path: '**',
-    redirectTo: 'welcome',
-    pathMatch: 'full'
+    path: '',
+    loadChildren: () =>
+      import('../Feature/Auth/auth.module').then(m => m.AuthModule)
   }
 ];
 

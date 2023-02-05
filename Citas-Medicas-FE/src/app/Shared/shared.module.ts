@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { ToastrModule } from 'ngx-toastr';
 
 const MODULES : any = [
   CommonModule,
   MatDialogModule,
-  MatIconModule
+  MatIconModule,
+  ToastrModule
 ]; // AQUI SE DEBEN AGREGAR LOS MODULOS COMPARTIDOS
 
 @NgModule({

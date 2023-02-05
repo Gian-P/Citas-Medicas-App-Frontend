@@ -5,11 +5,7 @@ import { NotAuthorizedComponent } from './not-authorized.component';
 const routes: Routes = [
   {
     path: 'not-authorized',
-    component: NotAuthorizedComponent,
-  },
-  {
-    path: '**',
-    redirectTo: 'not-authorized',
+    component: NotAuthorizedComponent
   }
 ];
 

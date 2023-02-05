@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { NotAuthorizedRoutingModule } from './not-authorized-routing.module';
 import { NotAuthorizedComponent } from './not-authorized.component';
-import { SharedModule } from 'src/app/Shared/shared.module';
+
 
 @NgModule({
   declarations: [
@@ -9,7 +11,7 @@ import { SharedModule } from 'src/app/Shared/shared.module';
   ],
   imports: [
     CommonModule,
-    SharedModule
+    NotAuthorizedRoutingModule
   ]
 })
 export class NotAuthorizedModule { }

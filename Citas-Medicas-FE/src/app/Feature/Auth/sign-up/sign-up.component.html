@@ -1,1 +1,26 @@
-<h4>Aqui va la pagina de register</h4>
+<form>
+  <div class="d-flex justify-content-end">
+    <button (click)="closeDialog()" type="button" class="btn-close" aria-label="Close"></button>
+  </div>
+  <h3 class="login-heading mb-4">Registrate!</h3>
+
+  <div class="form-floating mb-3">
+    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+    <label for="floatingInput">Ingresa tu correo electronico</label>
+  </div>
+
+  <div class="form-floating mb-3">
+    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+    <label for="floatingPassword">Ingresa tu contraseña</label>
+  </div>
+
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control" placeholder="Telefono">
+    <label for="floatingPassword">Ingresa tu número de telefono</label>
+  </div>
+
+  <div class="d-grid">
+    <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit">Registrate</button>
+  </div>
+
+</form>

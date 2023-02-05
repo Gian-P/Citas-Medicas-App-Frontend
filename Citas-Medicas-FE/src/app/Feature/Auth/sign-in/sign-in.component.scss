@@ -1,0 +1,36 @@
+.login {
+  min-height: 100vh;
+}
+
+.bg-image {
+  background-image: url('../../../../assets/img/login-image.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.login-heading {
+  font-weight: 300;
+  font-size: 30px;
+}
+
+.btn-login {
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
+  padding: 0.75rem 1rem;
+}
+
+.register-link {
+  color: #007bff;
+  text-decoration: none;
+  background-color: transparent;
+  -webkit-text-decoration-skip: objects;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+
+  margin-left:-6px ;
+}

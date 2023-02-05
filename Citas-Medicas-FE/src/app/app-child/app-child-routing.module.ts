@@ -11,6 +11,20 @@ const routes: Routes = [
     path: '',
     loadChildren: () =>
       import('../Feature/Auth/auth.module').then(m => m.AuthModule)
+  },
+  {
+    path: '',
+    loadChildren: () =>
+      import('../Feature/Pages/NotAuthorized/not-authorized.module').then((m) => m.NotAuthorizedModule)
+  },
+  {
+    path: '',
+    loadChildren: () =>
+      import('../Feature/Pages/NotFound/not-found.module').then((m) => m.NotFoundModule)
+  },
+  {
+    path: '**',
+    redirectTo: 'not-found',
   }
 ];
 

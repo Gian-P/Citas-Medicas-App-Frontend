@@ -1,0 +1,33 @@
+<mat-nav-list>
+  <div class="logo py-4">
+    <a href="dashboard">
+      <img src="../../../../assets/img/logo2.png" alt="logo" />
+    </a>
+  </div>
+  <mat-divider></mat-divider>
+
+  <mat-divider></mat-divider>
+  <h2 matSubheader class="mt-2">GENERALES</h2>
+
+  <div *ngFor="let module of generales">
+    <button
+      mat-list-item
+      routerLinkActive="list-item-active"
+      (click)="goto(module.route)"
+    >
+      <mat-icon>{{ module.icon }}</mat-icon> {{ module.name }}
+    </button>
+  </div>
+
+  <mat-divider></mat-divider>
+  <h2 mat-subheader class="mt-2">PREFERENCIAS</h2>
+  <div *ngFor="let module of preferencias">
+    <button
+      mat-list-item
+      routerLinkActive="list-item-active"
+      (click)="goto(module.route)"
+    >
+      <mat-icon>{{ module.icon }}</mat-icon> {{ module.name }}
+    </button>
+  </div>
+</mat-nav-list>

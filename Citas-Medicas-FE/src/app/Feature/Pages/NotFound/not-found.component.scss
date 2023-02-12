@@ -1,0 +1,59 @@
+.background-notFound{
+  background: linear-gradient(#95a3b8 -500%, white 99%);
+  position:absolute;
+  width:100%;
+  height:100vh;
+  top:0;
+  left:0;
+  right:0;
+}
+
+.bush{
+  position:absolute;
+  right:70%;
+  top:3%;
+}
+
+.person{
+  position:absolute;
+  left:65%;
+  top:28%;
+}
+
+.box-notFound{
+  position:absolute;
+  top:160px;
+  left:440px;
+  text-align:center;
+}
+
+.head-notFound{
+  color:#95a3b8;
+  font-size:35px;
+}
+
+.body-notFound{
+  color:#FF7A00;
+  font-size:70px;
+}
+
+.btn{
+  // eliminar estilos border al hacer click
+  &:focus{
+    outline: none;
+    box-shadow: none;
+    border: none;
+  }
+}
+
+.btn-volverInicio{
+  width: 230px;
+  height: 20px;
+  border-radius: 12px;
+  background: #5a7aab;
+  Color: #fff;
+  outline: none;
+  box-shadow: none;
+  border:none;
+  text-decoration: none;
+}

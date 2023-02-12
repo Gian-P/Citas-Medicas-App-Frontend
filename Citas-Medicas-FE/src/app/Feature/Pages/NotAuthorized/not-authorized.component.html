@@ -1,1 +1,28 @@
-<p>not-authorized works!</p>
+<table class="table">
+  <thead>
+    <tr>
+      <th>
+        <button mat-button (click)="previousMonth()">Anterior</button>
+      </th>
+      <th colspan="5">{{ month }} {{ year }}</th>
+      <th>
+        <button mat-button (click)="nextMonth()">Siguiente</button>
+      </th>
+    </tr>
+    <tr>
+      <th>Lunes</th>
+      <th>Martes</th>
+      <th>Miércoles</th>
+      <th>Jueves</th>
+      <th>Viernes</th>
+      <th>Sábado</th>
+      <th>Domingo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let week of weeks">
+      <td *ngFor="let day of week">{{ day }}</td>
+    </tr>
+  </tbody>
+</table>
+

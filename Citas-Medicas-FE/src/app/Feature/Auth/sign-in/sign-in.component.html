@@ -11,21 +11,44 @@
               <!-- Sign In Form -->
               <form [formGroup]="form" (ngSubmit)="submit()">
                 <div class="form-floating mb-3">
-                  <input formControlName="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                  <input
+                    formControlName="email"
+                    type="email"
+                    class="form-control"
+                    id="floatingInput"
+                    placeholder="name@example.com"
+                  />
                   <label for="floatingInput">Correo electronico</label>
                 </div>
                 <div class="form-floating mb-3">
-                  <input type="password" formControlName="password" class="form-control" id="floatingPassword" placeholder="Password">
+                  <input
+                    type="password"
+                    formControlName="password"
+                    class="form-control"
+                    id="floatingPassword"
+                    placeholder="Password"
+                  />
                   <label for="floatingPassword">Contraseña</label>
                 </div>
-                <div class="d-grid">
-                  <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit">Inicia sesión</button>
-                  <div class="text-center">
-                    ¿Eres nuevo?
-                    <button class="register-link" (click)="onRegister()">Registrate aquí</button>
+                <div *ngIf="IsLoading" class="text-center mb-4">
+                  <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
                   </div>
                 </div>
-
+                <div class="d-grid">
+                  <button
+                    class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2"
+                    type="submit"
+                  >
+                    Inicia sesión
+                  </button>
+                  <div class="text-center">
+                    ¿Eres nuevo?
+                    <button class="register-link" (click)="onRegister()">
+                      Registrate aquí
+                    </button>
+                  </div>
+                </div>
               </form>
             </div>
           </div>

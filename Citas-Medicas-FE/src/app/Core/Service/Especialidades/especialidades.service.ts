@@ -27,6 +27,11 @@ export class EspecialidadService
     return this.http.get(this.myAppUrl + "lista-especialidades");
   }
 
+  public getEspecialidadesPaged(pageNo: number, pageSize: number) : Observable<any>
+  {
+    return this.http.get(this.myAppUrl + "especialidades-paginadas?page=" + pageNo + "&rows=" + pageSize);
+  }
+
   public deleteEspecialidad(id: number) :  Observable<any>
   {
     return this.http.delete(this.myAppUrl + "eliminar-especialidad" + id)

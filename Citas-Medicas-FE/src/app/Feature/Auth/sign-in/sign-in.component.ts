@@ -19,11 +19,9 @@ export class SignInComponent implements OnInit {
   public form : FormGroup = new FormGroup([]);
   public user !: login;
   public IsLoading : boolean = false;
-  public especialidad !: especialidad;
 
   constructor(
     private _authService: LoginService,
-    private _especialidadService: EspecialidadService,
     private router: Router,
     private sweetalertService: SweetAlertService,
     private authService: AuthService,
@@ -32,7 +30,6 @@ export class SignInComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
-    this.getEspecialidadesList();
   }
 
   public submit(): void {
@@ -66,13 +63,5 @@ export class SignInComponent implements OnInit {
     dialogConfig.height = '88%';
     dialogConfig.minWidth = '410px';
     this.dialog.open(SignUpComponent, dialogConfig);
-  }
-
-  public getEspecialidadesList(): any {
-    this._especialidadService.getListEspecialidades().subscribe((res: any) => {
-      console.log(res);
-    }, error => {
-      console.log(error);
-    })
   }
 }

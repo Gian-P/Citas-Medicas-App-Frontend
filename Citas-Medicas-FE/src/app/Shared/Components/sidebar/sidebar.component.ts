@@ -11,7 +11,7 @@ export class SidebarComponent implements OnInit {
   generales: modules[] = [
     { name: 'Dashboard', route: '#', icon: 'dashboard' },
     { name: 'Calendario', route: '#', icon: 'calendar_today' },
-    { name: 'Reportes Medicos', route: '#', icon: 'list_alt' },
+    { name: 'Especialidades', route: '#', icon: 'list_alt' },
     {
       name: 'Pacientes',
       route: '#',

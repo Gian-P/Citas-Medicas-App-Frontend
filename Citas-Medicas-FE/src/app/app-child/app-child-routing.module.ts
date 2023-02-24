@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { EspecialidadesComponent } from '../Feature/Dashboard/Components/Admin/Especialidades/especialidades.component';
 import { DashboardComponent } from '../Feature/Dashboard/dashboard.component';
 
 const routes: Routes = [
@@ -17,6 +18,10 @@ const routes: Routes = [
     path: '',
     loadChildren: () =>
       import('../Feature/Pages/NotAuthorized/not-authorized.module').then((m) => m.NotAuthorizedModule)
+  },
+  {
+    path: 'especialides',
+    component: EspecialidadesComponent,
   },
   {
     path: '',

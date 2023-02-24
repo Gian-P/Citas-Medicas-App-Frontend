@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Register } from 'src/app/Core/Models/auth-paciente/register.models';
-import { RegisterService } from 'src/app/Core/Service/Auth/Paciente/register.service';
+import { RegisterService } from 'src/app/Core/Service/Auth/register.service';
 import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.service';
 
 @Component({

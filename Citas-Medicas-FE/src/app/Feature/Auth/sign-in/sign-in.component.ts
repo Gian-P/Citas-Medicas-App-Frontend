@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { login } from 'src/app/Core/Models/auth-paciente/login.models';
 import { especialidad } from 'src/app/Core/Models/especialidades/especialidades.models';
 import { AuthService } from 'src/app/Core/Service/Auth/Common/auth.service';
-import { LoginService } from 'src/app/Core/Service/Auth/Paciente/login.service';
+import { LoginService } from 'src/app/Core/Service/Auth/login.service';
 import { EspecialidadService } from 'src/app/Core/Service/Especialidades/especialidades.service';
 import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.service';
 import { SignUpComponent } from '../sign-up/sign-up.component';
@@ -42,6 +42,9 @@ export class SignInComponent implements OnInit {
       this.IsLoading = false;
       this.router.navigate(['dashboard']);
       this.authService.setToken(res.tokenJwt);
+    }, (err) => {
+      this.IsLoading = false;
+      this.sweetalertService.opensweetalerterror(err.error ? err.error : 'Error al iniciar sesión');
     });
   }
 

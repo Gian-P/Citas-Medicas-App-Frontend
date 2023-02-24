@@ -3,8 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { login } from 'src/app/Core/Models/auth-paciente/login.models';
+import { especialidad } from 'src/app/Core/Models/especialidades/especialidades.models';
 import { AuthService } from 'src/app/Core/Service/Auth/Common/auth.service';
 import { LoginService } from 'src/app/Core/Service/Auth/Paciente/login.service';
+import { EspecialidadService } from 'src/app/Core/Service/Especialidades/especialidades.service';
 import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.service';
 import { SignUpComponent } from '../sign-up/sign-up.component';
 
@@ -14,12 +16,14 @@ import { SignUpComponent } from '../sign-up/sign-up.component';
   styleUrls: ['./sign-in.component.scss']
 })
 export class SignInComponent implements OnInit {
-  public form: FormGroup = new FormGroup([]);
-  public user!: login;
-  public IsLoading: boolean = false;
+  public form : FormGroup = new FormGroup([]);
+  public user !: login;
+  public IsLoading : boolean = false;
+  public especialidad !: especialidad;
 
   constructor(
     private _authService: LoginService,
+    private _especialidadService: EspecialidadService,
     private router: Router,
     private sweetalertService: SweetAlertService,
     private authService: AuthService,
@@ -28,6 +32,7 @@ export class SignInComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
+    this.getEspecialidadesList();
   }
 
   public submit(): void {
@@ -62,6 +67,12 @@ export class SignInComponent implements OnInit {
     dialogConfig.minWidth = '410px';
     this.dialog.open(SignUpComponent, dialogConfig);
   }
+
+  public getEspecialidadesList(): any {
+    this._especialidadService.getListEspecialidades().subscribe((res: any) => {
+      console.log(res);
+    }, error => {
+      console.log(error);
+    })
+  }
 }
-
-

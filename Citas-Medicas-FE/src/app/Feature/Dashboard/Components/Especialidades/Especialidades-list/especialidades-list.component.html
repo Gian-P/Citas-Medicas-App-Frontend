@@ -1,0 +1,17 @@
+<app-page title="Especialidades">
+  <button class="btn">Agregar</button>
+  <table class="table table-striped">
+    <thead style="background-color: #13B0F0; color: #fff;">
+      <tr>
+        <th scope="col">Identificador</th>
+        <th scope="col">Tipo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let especialidad of especialidades">
+        <td>{{especialidad.idEspecialidad}}</td>
+        <td>{{especialidad.tipo}}</td>
+      </tr>
+    </tbody>
+  </table>
+</app-page>

@@ -39,7 +39,7 @@ export class EspecialidadService {
     return this.http.put(
       this.myAppUrl +
         'actualizar-especialidad/' +
-        especialidad.idEspecialidades,
+        especialidad.idEspecialidad,
       especialidad
     );
   }

@@ -6,13 +6,11 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { SharedModule } from 'src/app/Shared/shared.module';
 import { DashboardComponent } from './dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
-import { EspecialidadesComponent } from './Components/Admin/Especialidades/especialidades.component';
 
 
 @NgModule({
   declarations: [
-    DashboardComponent,
-    EspecialidadesComponent
+    DashboardComponent
   ],
   imports: [
     CommonModule,

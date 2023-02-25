@@ -1,0 +1,31 @@
+<app-page title="Pacientes">
+  <table class="table table-striped">
+    <thead style="background-color: #13b0f0; color: #fff">
+      <tr>
+        <th scope="col">Cedula</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Correo Electronico</th>
+        <th scope="col">Numero Telefonico</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let paciente of pacientes">
+        <td>{{ paciente.cedula }}</td>
+        <td>{{ paciente.nombre }}</td>
+        <td>{{ paciente.apellido }}</td>
+        <td>{{ paciente.email }}</td>
+        <td>{{ paciente.numero }}</td>
+        <td>
+          <i (click)="deletePaciente(paciente.idPaciente)">
+            <mat-icon style="color: red">delete</mat-icon>
+          </i>
+          <i (click)="openDialogUpdate(paciente)">
+            <mat-icon style="color: green">edit</mat-icon>
+          </i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</app-page>

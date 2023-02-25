@@ -39,7 +39,7 @@ export class EspecialidadService {
     especialidad: especialidad,
     id: number
   ): Observable<any> {
-    return this.http.put(
+    return this.http.post(
       this.myAppUrl + 'actualizar-especialidad/' + id,
       especialidad
     );

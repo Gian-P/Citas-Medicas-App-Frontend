@@ -9,6 +9,13 @@ const routes: Routes = [
         (m) => m.EspecialidadesModule
       ),
   },
+  {
+    path: '',
+    loadChildren: () =>
+    import('./Components/Pacientes/pacientes.module').then(
+      (m) => m.PacientesModule
+    )
+  }
 ];
 
 @NgModule({

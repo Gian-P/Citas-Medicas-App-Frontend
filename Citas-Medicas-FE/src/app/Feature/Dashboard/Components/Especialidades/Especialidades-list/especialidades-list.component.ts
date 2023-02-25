@@ -24,7 +24,6 @@ export class EspecialidadesListComponent implements OnInit {
   public getEspecialidades() {
     this.especialidadService.getEspecialidadesPaged(0, 10).subscribe(especialidades => {
       this.especialidades = especialidades;
-      console.log(especialidades);
     });
   }
 

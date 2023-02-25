@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { especialidad } from '../../Models/especialidades/especialidades.models';
+import { Pacientes } from '../../Models/pacientes/pacientes.models';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ export class PacienteService {
   }
 
   public deletePaciente(id: number): Observable<any> {
-    return this.http.delete(this.myAppUrl + 'eliminar-paciente/' + id);
+    return this.http.put(this.myAppUrl + 'eliminar-paciente/' + id, null);
   }
 
   public getPacienteById(id: number): Observable<any> {
@@ -28,7 +29,7 @@ export class PacienteService {
     );
   }
 
-  public updatePaciente(id: number, paciente: any): Observable<any> {
+  public updatePaciente(id: number, paciente: Pacientes): Observable<any> {
     return this.http.put(
       this.myAppUrl + 'modificar-datos-paciente/' + id,
       paciente

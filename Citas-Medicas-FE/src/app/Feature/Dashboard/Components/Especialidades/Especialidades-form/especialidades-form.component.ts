@@ -47,8 +47,7 @@ export class EspecialidadesFormComponent implements OnInit {
     this.especialidadService
       .createEspecialidad(especialidad)
       .subscribe((res) => {
-        this.dialogRef.close();
-        this.sweetAlertService.opensweetalertsuccess(res);
+        this.sweetAlertService.opensweetalertsuccess('Especialidad creada con éxito');
       });
   }
 
@@ -56,8 +55,7 @@ export class EspecialidadesFormComponent implements OnInit {
     this.especialidadService
       .updateEspecialidad(especialidad, this.data.idEspecialidad)
       .subscribe((res) => {
-        this.dialogRef.close();
-        this.sweetAlertService.opensweetalertsuccess(res);
+        this.sweetAlertService.opensweetalertsuccess('Especialidad actualizada con éxito');
       });
   }
 

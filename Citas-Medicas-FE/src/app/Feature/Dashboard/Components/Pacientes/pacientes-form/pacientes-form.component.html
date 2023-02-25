@@ -1,0 +1,14 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <label>Nombre</label>
+  <input type="text" formControlName="nombre" class="form-control" placeholder="Ingrese el nuevo nombre">
+  <label>Apellido</label>
+  <input type="text" formControlName="apellido" class="form-control" placeholder="Ingrese el nuevo apellido">
+  <label>Correo Electronico</label>
+  <input type="text" formControlName="direccion" class="form-control" placeholder="Ingrese la nueva direccion">
+  <label>Numero de telefono</label>
+  <input type="text" formControlName="numeroTelefono" class="form-control" placeholder="Ingrese el nuevo telefono cedular">
+  <label>Cedula</label>
+  <input type="text" formControlName="cedula" class="form-control" placeholder="Ingrese la nueva cedula">
+
+  <button type="submit" class="btn btn-primary">Guardar</button>
+</form>

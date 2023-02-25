@@ -32,14 +32,15 @@ export class EspecialidadService {
   }
 
   public deleteEspecialidad(id: number): Observable<any> {
-    return this.http.delete(this.myAppUrl + 'eliminar-especialidad' + id);
+    return this.http.delete(this.myAppUrl + 'eliminar-especialidad/' + id);
   }
 
-  public updateEspecialidad(especialidad: especialidad): Observable<any> {
+  public updateEspecialidad(
+    especialidad: especialidad,
+    id: number
+  ): Observable<any> {
     return this.http.put(
-      this.myAppUrl +
-        'actualizar-especialidad/' +
-        especialidad.idEspecialidad,
+      this.myAppUrl + 'actualizar-especialidad/' + id,
       especialidad
     );
   }

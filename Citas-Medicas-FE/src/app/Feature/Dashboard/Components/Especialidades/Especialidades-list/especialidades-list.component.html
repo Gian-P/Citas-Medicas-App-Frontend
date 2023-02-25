@@ -1,16 +1,25 @@
 <app-page title="Especialidades">
-  <button class="btn">Agregar</button>
+  <button class="btn" (click)="openDialogCreate()">Agregar</button>
   <table class="table table-striped">
-    <thead style="background-color: #13B0F0; color: #fff;">
+    <thead style="background-color: #13b0f0; color: #fff">
       <tr>
         <th scope="col">Identificador</th>
         <th scope="col">Tipo</th>
+        <th scope="col">Acciones</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let especialidad of especialidades">
-        <td>{{especialidad.idEspecialidad}}</td>
-        <td>{{especialidad.tipo}}</td>
+        <td>{{ especialidad.idEspecialidad }}</td>
+        <td>{{ especialidad.tipo }}</td>
+        <td>
+          <i (click)="deleteEspecialidad(especialidad.idEspecialidad)">
+            <mat-icon style="color: red">delete</mat-icon>
+          </i>
+          <i (click)="openDialogUpdate(especialidad)">
+            <mat-icon style="color: green">edit</mat-icon>
+          </i>
+        </td>
       </tr>
     </tbody>
   </table>

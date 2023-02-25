@@ -9,13 +9,10 @@ import { modules } from 'src/app/Core/Models/modules.models';
 })
 export class SidebarComponent implements OnInit {
   generales: modules[] = [
-    { name: 'Dashboard', route: '#', icon: 'dashboard' },
-    { name: 'Calendario', route: '#', icon: 'calendar_today' },
-    { name: 'Especialidades', route: 'dashboard/especialidades/list', icon: 'list_alt' },
     {
-      name: 'Pacientes',
-      route: '#',
-      icon: 'person_add',
+      name: 'Especialidades',
+      route: 'dashboard/especialidades/list',
+      icon: 'people',
     },
   ];
 

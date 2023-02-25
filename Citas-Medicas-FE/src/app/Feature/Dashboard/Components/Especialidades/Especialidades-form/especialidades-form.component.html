@@ -1,1 +1,13 @@
-<p>especialidades-form works!</p>
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <label>Nombre especialidad</label>
+  <input
+    formControlName="tipo"
+    class="form-control"
+    type="text"
+    placeholder="Ingrese tipo de especialidad"
+  />
+  <br />
+  <br />
+
+  <button [disabled]="form.invalid" class="btn" type="submit">aceptar</button>
+</form>

@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Register } from 'src/app/Core/Models/auth-paciente/register.models';
+import { Register } from 'src/app/Core/Models/auth/register.models';
 import { BaseService } from '../base.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RegisterService extends BaseService<Register> {
+export class MedicoRegisterService extends BaseService<Register> {
 
   constructor(http: HttpClient) {
-    super(http, 'registrar-paciente');
+    super(http, 'registrar-medico');
   }
 }

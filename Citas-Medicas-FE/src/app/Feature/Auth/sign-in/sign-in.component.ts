@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { login } from 'src/app/Core/Models/auth-paciente/login.models';
-import { especialidad } from 'src/app/Core/Models/especialidades/especialidades.models';
-import { AuthService } from 'src/app/Core/Service/Auth/Common/auth.service';
+import { login } from 'src/app/Core/Models/auth/login.models';
+import { TokenService } from 'src/app/Core/Service/Auth/Common/token.service';
 import { LoginService } from 'src/app/Core/Service/Auth/login.service';
-import { EspecialidadService } from 'src/app/Core/Service/Especialidades/especialidades.service';
 import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.service';
 import { SignUpComponent } from '../sign-up/sign-up.component';
 
@@ -24,7 +22,7 @@ export class SignInComponent implements OnInit {
     private _authService: LoginService,
     private router: Router,
     private sweetalertService: SweetAlertService,
-    private authService: AuthService,
+    private authService: TokenService,
     private dialog: MatDialog
   ) { }
 

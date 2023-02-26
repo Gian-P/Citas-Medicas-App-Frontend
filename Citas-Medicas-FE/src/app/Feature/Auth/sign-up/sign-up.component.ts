@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Register } from 'src/app/Core/Models/auth-paciente/register.models';
-import { RegisterService } from 'src/app/Core/Service/Auth/register.service';
+import { Register } from 'src/app/Core/Models/auth/register.models';
+import { PacienteRegisterService } from 'src/app/Core/Service/Auth/paciente-register.service';
 import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class SignUpComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<SignUpComponent>,
-    private registerService: RegisterService,
+    private registerService: PacienteRegisterService,
     private sweetAlertService: SweetAlertService,
     private router: Router
   ) {}
@@ -45,7 +45,7 @@ export class SignUpComponent implements OnInit {
         this.closeDialog();
         this.router.navigate(['/auth/sign-in']);
       },
-      (err) => {
+      (err: any) => {
         this.IsLoading = false;
         this.sweetAlertService.opensweetalerterror(
           err.error ? err.error : 'Error al registrar',

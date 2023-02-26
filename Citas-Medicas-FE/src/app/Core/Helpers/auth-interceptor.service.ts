@@ -17,7 +17,7 @@ import { Observable, throwError } from 'rxjs';
 export class AuthInterceptorService implements HttpInterceptor {
 
   constructor(private router: Router) {}
-
+  
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler

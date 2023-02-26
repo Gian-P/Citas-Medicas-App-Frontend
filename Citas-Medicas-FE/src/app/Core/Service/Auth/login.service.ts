@@ -9,5 +9,6 @@ export class LoginService extends BaseService<login> {
 
   constructor(http: HttpClient) {
     super(http, 'login');
-  }
+  } 
+  
 }

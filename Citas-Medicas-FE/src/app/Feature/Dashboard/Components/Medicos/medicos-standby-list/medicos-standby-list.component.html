@@ -1,0 +1,29 @@
+<table class="table table-striped" *ngIf="medicos.length != 0">
+  <thead style="background-color: #13b0f0; color: #fff">
+    <tr>
+      <th scope="col">Cedula</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Apellido</th>
+      <th scope="col">Correo Electronico</th>
+      <th scope="col">Numero Telefonico</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let medico of medicos">
+      <td>{{ medico.cedula }}</td>
+      <td>{{ medico.nombre }}</td>
+      <td>{{ medico.apellido }}</td>
+      <td>{{ medico.email }}</td>
+      <td>{{ medico.numero }}</td>
+      <td>
+        <button class="btn btn-aceptar" (click)="updateStatus(medico.email, 'aceptado')">Activar</button>
+        <button class="btn btn-rechazar" (click)="updateStatus(medico.email, 'rechazado')">Rechazar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="medicos.length == 0">
+  <h3>No hay medicos en espera</h3>
+</div>

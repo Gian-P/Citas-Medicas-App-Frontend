@@ -1,0 +1,38 @@
+<app-page title="Medicos">
+  <button class="btn" (click)="openAddMedicoDialog()">Agregar medico</button>
+  <button class="btn" (click)="openStanbyMedicoDialog()">
+    Medicos en espera
+  </button>
+
+  <table class="table table-striped">
+    <thead style="background-color: #13b0f0; color: #fff">
+      <tr>
+        <th scope="col">Cedula</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Correo Electronico</th>
+        <th scope="col">Numero Telefonico</th>
+        <th scope="col">Especialidad</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let medico of medicos">
+        <td>{{ medico.cedula }}</td>
+        <td>{{ medico.nombre }}</td>
+        <td>{{ medico.apellido }}</td>
+        <td>{{ medico.email }}</td>
+        <td>{{ medico.numero }}</td>
+        <td>{{ medico.nombreEspecialidad }}</td>
+        <td>
+          <i (click)="deleteMedico(medico.idPaciente)">
+            <mat-icon style="color: red">delete</mat-icon>
+          </i>
+          <i (click)="openEditMedicoDialog(medico)">
+            <mat-icon style="color: green">edit</mat-icon>
+          </i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</app-page>

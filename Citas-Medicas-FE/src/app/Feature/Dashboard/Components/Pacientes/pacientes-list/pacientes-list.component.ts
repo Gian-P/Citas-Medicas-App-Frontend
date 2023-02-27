@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Pacientes } from 'src/app/Core/Models/pacientes/pacientes.models';
+import { User } from 'src/app/Core/Models/users/users.models';
 import { PacienteService } from 'src/app/Core/Service/Pacientes/pacientes.service';
 import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.service';
 import { PacientesFormComponent } from '../pacientes-form/pacientes-form.component';
@@ -11,7 +11,7 @@ import { PacientesFormComponent } from '../pacientes-form/pacientes-form.compone
   styleUrls: ['./pacientes-list.component.scss'],
 })
 export class PacientesListComponent implements OnInit {
-  public pacientes: Pacientes[] = [];
+  public pacientes: User[] = [];
 
   constructor(
     private pacienteService: PacienteService,
@@ -42,7 +42,7 @@ export class PacientesListComponent implements OnInit {
       });
   }
 
-  openDialogUpdate(paciente: Pacientes) {
+  openDialogUpdate(paciente: User) {
     this.dialog.open(PacientesFormComponent, { data: paciente });
 
     this.dialog.afterAllClosed.subscribe(() => {

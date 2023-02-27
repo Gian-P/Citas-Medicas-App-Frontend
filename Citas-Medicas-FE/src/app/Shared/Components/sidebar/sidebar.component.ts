@@ -15,18 +15,13 @@ export class SidebarComponent implements OnInit {
       icon: 'calendar_today',
     },
     {
-      name: 'Doctors',
-      route: '#',
+      name: 'Medicos',
+      route: 'dashboard/medicos/list',
       icon: 'people',
     },
     {
       name: 'Pacientes',
       route: 'dashboard/pacientes/list',
-      icon: 'people',
-    },
-    {
-      name: 'Roles',
-      route: '#',
       icon: 'people',
     },
     {

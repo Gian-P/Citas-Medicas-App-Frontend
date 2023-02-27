@@ -10,7 +10,7 @@
     </div>
     <div class="row align-items-center">
       <div class="col">
-        <h1 class="text-center">Registrate</h1>
+        <h1 class="text-center">Formulario</h1>
       </div>
     </div>
     <div class="row">
@@ -120,6 +120,22 @@
         </div>
       </div>
       <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+        <label for="exampleInputEmail1" class="form-label">Especialidad</label>
+        <div class="form-floating mb-3">
+          <select class="form-control" formControlName="idEspecialidad">
+            <option [disabled]="true" value="">Selecciona especialidad</option>
+            <option
+              *ngFor="let especialidad of especialidades"
+              id="floatingInput"
+              [ngValue]="especialidad.idEspecialidad"
+            >
+              {{ especialidad.tipo }}
+            </option>
+          </select>
+          <label for="floatingInput">Ingresa tu dirección</label>
+        </div>
+      </div>
+      <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
         <label for="exampleInputEmail1" class="form-label"
           >Numero de identidad</label
         >
@@ -144,9 +160,8 @@
       <button
         class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2"
         type="submit"
-        [disabled]="form.invalid"
       >
-        Registrate
+        Guardar
       </button>
     </div>
   </form>

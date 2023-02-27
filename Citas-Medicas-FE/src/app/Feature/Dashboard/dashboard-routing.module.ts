@@ -12,10 +12,17 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-    import('./Components/Pacientes/pacientes.module').then(
-      (m) => m.PacientesModule
-    )
-  }
+      import('./Components/Pacientes/pacientes.module').then(
+        (m) => m.PacientesModule
+      ),
+  },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./Components/Medicos/medicos.module').then(
+        (m) => m.MedicosModule
+      ),
+  },
 ];
 
 @NgModule({

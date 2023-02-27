@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Pacientes } from 'src/app/Core/Models/pacientes/pacientes.models';
+import { User } from 'src/app/Core/Models/users/users.models';
 import { PacienteService } from 'src/app/Core/Service/Pacientes/pacientes.service';
 import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.service';
 
@@ -16,7 +16,7 @@ export class PacientesFormComponent implements OnInit {
   constructor(
     private pacienteService: PacienteService,
     private sweetAlertService: SweetAlertService,
-    @Inject(MAT_DIALOG_DATA) public data: Pacientes
+    @Inject(MAT_DIALOG_DATA) public data: User
   ) {}
 
   private intializeForm() {
@@ -36,9 +36,9 @@ export class PacientesFormComponent implements OnInit {
   }
 
   public update() {
-    const paciente: Pacientes = {
+    const paciente: User = {
       ...this.form.value,
-    } as Pacientes;
+    } as User;
 
     paciente.tipoTelefono = 'Celular';
 

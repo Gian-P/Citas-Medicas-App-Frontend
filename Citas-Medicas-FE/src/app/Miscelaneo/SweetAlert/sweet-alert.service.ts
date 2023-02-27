@@ -31,6 +31,28 @@ export class SweetAlertService {
     });
   }
 
+  public opensweetalertwarning(value: string){
+    return new Observable((observer) => {
+      swal.fire({
+        title: '¿Está seguro?',
+        text: `${value}`,
+        titleText: '¡Estás apunto de realizar una acción importante!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, continuar!',
+        cancelButtonText: 'Cancelar'
+      }).then((result : any) => {
+        if (result.isConfirmed) {
+          observer.next(true);
+        }else{
+          observer.next(false);
+        }
+      });
+    });
+  }
+
   opensweetalertsuccess(value: string): void{
     swal.fire(
       '¡Éxito!',

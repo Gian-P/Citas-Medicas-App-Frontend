@@ -60,8 +60,8 @@ export class SignInComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '50%';
-    dialogConfig.height = '88%';
+    dialogConfig.width = 'auto';
+    dialogConfig.height = 'auto';
     dialogConfig.minWidth = '410px';
     this.dialog.open(SignUpComponent, dialogConfig);
   }

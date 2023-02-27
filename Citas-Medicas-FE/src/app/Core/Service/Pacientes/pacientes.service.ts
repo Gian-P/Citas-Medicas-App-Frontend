@@ -2,8 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { especialidad } from '../../Models/especialidades/especialidades.models';
-import { Pacientes } from '../../Models/pacientes/pacientes.models';
+import { User } from '../../Models/users/users.models';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +28,7 @@ export class PacienteService {
     );
   }
 
-  public updatePaciente(id: number, paciente: Pacientes): Observable<any> {
+  public updatePaciente(id: number, paciente: User): Observable<any> {
     return this.http.put(
       this.myAppUrl + 'modificar-datos-paciente/' + id,
       paciente

@@ -22,13 +22,17 @@
                 </div>
                 <div class="form-floating mb-3">
                   <input
-                    type="password"
+                    [type]="show ? 'text' : 'password'"
                     formControlName="password"
                     class="form-control"
                     id="floatingPassword"
                     placeholder="Password"
                   />
-                  <label for="floatingPassword">Contraseña</label>
+                  <label for="floatingPassword" class="floatingPassword">Contraseña
+                    <i (click)="password()" class="fa fa-eye eye" aria-hidden="false"></i>
+                  </label>
+                  
+
                 </div>
                 <div *ngIf="IsLoading" class="text-center mb-4">
                   <div class="spinner-border" role="status">

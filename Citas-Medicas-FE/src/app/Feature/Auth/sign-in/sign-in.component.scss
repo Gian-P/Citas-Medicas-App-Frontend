@@ -34,3 +34,13 @@
 
   margin-left:-6px ;
 }
+
+.floatingPassword{
+  display: flex;
+  justify-content: space-between;
+  pointer-events: all;
+
+  .eye{
+    line-height: 1.5;
+  }
+}

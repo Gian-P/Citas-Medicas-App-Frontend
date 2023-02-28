@@ -17,6 +17,7 @@ export class SignInComponent implements OnInit {
   public form : FormGroup = new FormGroup([]);
   public user !: login;
   public IsLoading : boolean = false;
+  public show: boolean = false;
 
   constructor(
     private _authService: LoginService,
@@ -28,6 +29,10 @@ export class SignInComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
+  }
+
+  public password(): void {
+    this.show = !this.show;
   }
 
   public submit(): void {

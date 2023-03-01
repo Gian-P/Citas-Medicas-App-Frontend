@@ -25,7 +25,7 @@
         <td>{{ medico.numero }}</td>
         <td>{{ medico.nombreEspecialidad }}</td>
         <td>
-          <i (click)="deleteMedico(medico.idPaciente)">
+          <i (click)="deleteMedico(medico.idMedico)">
             <mat-icon style="color: red">delete</mat-icon>
           </i>
           <i (click)="openEditMedicoDialog(medico)">

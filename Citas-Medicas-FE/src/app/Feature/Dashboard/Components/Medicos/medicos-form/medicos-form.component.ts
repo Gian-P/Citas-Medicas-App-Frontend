@@ -31,6 +31,7 @@ export class MedicosFormComponent implements OnInit {
     this.getEspecialidades();
     this.initializeForm();
     this.setData();
+    console.log(this.data);
   }
 
   public onSubmit() {
@@ -87,6 +88,8 @@ export class MedicosFormComponent implements OnInit {
         ...this.data,
       });
     }
+
+    console.log(this.data);
   }
 
   private initializeForm() {

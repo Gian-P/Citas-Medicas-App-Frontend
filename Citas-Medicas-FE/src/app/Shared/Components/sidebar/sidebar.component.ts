@@ -20,6 +20,11 @@ export class SidebarComponent implements OnInit {
       icon: 'people',
     },
     {
+      name: 'Administradores',
+      route: 'dashboard/administradores/list',
+      icon: 'lock',
+    },
+    {
       name: 'Pacientes',
       route: 'dashboard/pacientes/list',
       icon: 'people',

@@ -27,6 +27,7 @@ export class MedicosListComponent implements OnInit {
   public getMedicos() {
     this.medicoService.getDoctorsPaged(0, 10).subscribe((data) => {
       this.medicos = data;
+      console.log(data);
     });
   }
 
@@ -43,7 +44,7 @@ export class MedicosListComponent implements OnInit {
   }
 
   public openEditMedicoDialog(medico: User) {
-    const dialogRef = this.dialog.open(MedicosListComponent, {
+    const dialogRef = this.dialog.open(MedicosFormComponent, {
       width: '600px',
       data: { medico },
     });

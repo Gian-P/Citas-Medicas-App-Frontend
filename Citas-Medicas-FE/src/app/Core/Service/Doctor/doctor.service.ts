@@ -14,7 +14,7 @@ export class DoctorService {
   }
 
   public deleteDoctor(id: number): Observable<any> {
-    return this.http.delete(this.myAppUrl + 'eliminar-medico/' + id);
+    return this.http.put(this.myAppUrl + 'eliminar-medico/' + id, null);
   }
 
   public getDoctorById(id: number): Observable<any> {

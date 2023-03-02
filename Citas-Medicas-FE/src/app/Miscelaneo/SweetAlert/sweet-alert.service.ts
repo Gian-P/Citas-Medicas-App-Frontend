@@ -68,4 +68,12 @@ export class SweetAlertService {
       text: value
     })
   }
+
+  opensweetalertinfo(value: string): void{
+    swal.fire({
+      icon: 'info',
+      title: 'Oops...',
+      text: value
+    })
+  }
 }

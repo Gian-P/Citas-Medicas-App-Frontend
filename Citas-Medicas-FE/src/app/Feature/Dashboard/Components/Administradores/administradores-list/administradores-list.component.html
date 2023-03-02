@@ -1,1 +1,36 @@
-<p>administradores-list works!</p>
+<app-page title="Administradores">
+  <button class="btn" (click)="openDialogCreate()">Agregar administrador</button>
+  <button class="btn" (click)="openDialogStandbyList()">
+    Administradores en espera
+  </button>
+  <button class="btn" (click)="openDialogRolCreate()">Agregar nuevo rol</button>
+  <table class="table table-striped">
+    <thead style="background-color: #13b0f0; color: #fff">
+      <tr>
+        <th scope="col">Cedula</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Correo Electronico</th>
+        <th scope="col">Numero Telefonico</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let administrador of administradores">
+        <td>{{ administrador.cedula }}</td>
+        <td>{{ administrador.nombre }}</td>
+        <td>{{ administrador.apellido }}</td>
+        <td>{{ administrador.email }}</td>
+        <td>{{ administrador.numero || "No asignado" }}</td>
+        <td>
+          <i (click)="deleteAdmin(administrador.idAdministrador)">
+            <mat-icon style="color: red">delete</mat-icon>
+          </i>
+          <i (click)="openDialogUpdate(administrador)">
+            <mat-icon style="color: green">edit</mat-icon>
+          </i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</app-page>

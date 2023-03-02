@@ -22,7 +22,7 @@
         <td>{{ medico.nombre }}</td>
         <td>{{ medico.apellido }}</td>
         <td>{{ medico.email }}</td>
-        <td>{{ medico.numero }}</td>
+        <td>{{ medico.numero || "No asignado"}}</td>
         <td>{{ medico.nombreEspecialidad }}</td>
         <td>
           <i (click)="deleteMedico(medico.idMedico)">

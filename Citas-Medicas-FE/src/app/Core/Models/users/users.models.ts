@@ -5,6 +5,7 @@ export interface User {
   direccion: string;
   idPaciente: number;
   idMedico: number;
+  idAdministrador: number;
   numero: string;
   nombreEspecialidad: string;
   estatus: string;

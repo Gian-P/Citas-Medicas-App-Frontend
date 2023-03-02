@@ -23,6 +23,13 @@ const routes: Routes = [
         (m) => m.MedicosModule
       ),
   },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./Components/Administradores/administradores.module').then(
+        (m) => m.AdministradoresModule
+      )
+  }
 ];
 
 @NgModule({

@@ -13,7 +13,7 @@ export class AdminService {
     this.myAppUrl = environment.baseUrl;
   }
 
-  public standbyAdminPaged(pagesNo: number, pageSize: number): Observable<any> {
+  public getStandbyAdminPaged(pagesNo: number, pageSize: number): Observable<any> {
     return this.http.get(
       this.myAppUrl +
         'administradores-en-espera-pageados/' +
@@ -23,14 +23,14 @@ export class AdminService {
     );
   }
 
-  public standbyAdminsPaged(pageNo: number, pageSize: number): Observable<any> {
+  public getAdminsPaged(pageNo: number, pageSize: number): Observable<any> {
     return this.http.get(
       this.myAppUrl + 'administradores-pageados/' + pageNo + '/' + pageSize
     );
   }
 
   public deleteAdmin(id: number): Observable<any> {
-    return this.http.delete(this.myAppUrl + 'eliminar-administrador/' + id);
+    return this.http.put(this.myAppUrl + 'eliminar-administrador/' + id, null);
   }
 
   public getAdminById(id: number): Observable<any> {

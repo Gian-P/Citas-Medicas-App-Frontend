@@ -1,1 +1,49 @@
-<p>administradores-form works!</p>
+<div class="container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()"> <!--aqui-->
+    <div class="d-flex justify-content-end">
+      <button
+        (click)="closeDialog()"
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="row align-items-center">
+      <div class="col">
+        <h1 class="text-center">Formulario</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col offset-md-0">
+        <label for="exampleInputRol" class="form-label d-flex justify-content-center"
+          >Ingrese nuevo rol a crear</label
+        >
+        <div class="form-floating mb-3">
+          <input
+            formControlName="nombreRol"
+            type="text"
+            class="form-control"
+            id="floatingRolInput"
+            placeholder="rol"
+          />
+          <label for="floatingRolInput">Rol</label>
+        </div>
+      </div>
+    </div>
+    <!-- aqui -->
+    <div *ngIf="IsLoading" class="text-center mb-4">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div class="d-grid">
+      <button
+        class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2"
+        type="submit"
+      >
+        Guardar
+      </button>
+    </div>
+  </form>
+</div>

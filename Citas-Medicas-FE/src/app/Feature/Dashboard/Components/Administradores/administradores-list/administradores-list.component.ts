@@ -99,6 +99,14 @@ export class AdministradoresListComponent implements OnInit {
   openDialogRolCreate(): void {
     // aqui va la funcionalidad para crear un rol. guiate por el metodo openDialogCreate()
 
-    this.sweetAlert.opensweetalertinfo('Funcionalidad en desarrollo');
+    const dialogRef = this.dialog.open(AdministradoresFormComponent, {
+      width: '40%',
+      height: '30%',
+    });
+    
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('done')
+    });
+
   }
 }

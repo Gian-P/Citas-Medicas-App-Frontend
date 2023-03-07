@@ -1,1 +1,29 @@
-<p>administradores-standby-list works!</p>
+<table class="table table-striped" *ngIf="administradores.length != 0">
+  <thead style="background-color: #13b0f0; color: #fff">
+    <tr>
+      <th scope="col">Cedula</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Apellido</th>
+      <th scope="col">Correo Electronico</th>
+      <th scope="col">Numero Telefonico</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let administrador of administradores">
+      <td>{{ administrador.cedula }}</td>
+      <td>{{ administrador.nombre }}</td>
+      <td>{{ administrador.apellido }}</td>
+      <td>{{ administrador.email }}</td>
+      <td>{{ administrador.numero }}</td>
+      <td>
+        <button class="btn btn-aceptar" (click)="updateStatus(administrador.email, 'aceptado')">Activar</button>
+        <button class="btn btn-rechazar" (click)="updateStatus(administrador.email, 'rechazado')">Rechazar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="administradores.length == 0">
+  <h3>No hay administradores en espera</h3>
+</div>

@@ -39,11 +39,11 @@ export class AdministradoresFormComponent implements OnInit {
   private CreateRol(rol: rol) {
     this.IsLoading = true;
     this.rolService.post(rol).subscribe({
-      next:(position) => {
+      next:(position : any) => {
         this.SweetAlertService.opensweetalertsuccess('El rol ha sido creado');
       },
 
-      error:(msg) => {
+      error:(msg : any) => {
          this.SweetAlertService.opensweetalerterror('El rol no se pudo crear');
       },
 

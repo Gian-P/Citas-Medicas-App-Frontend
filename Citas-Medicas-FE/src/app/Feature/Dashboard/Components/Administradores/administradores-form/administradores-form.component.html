@@ -1,5 +1,5 @@
 <div class="container">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()"> <!--aqui-->
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="d-flex justify-content-end">
       <button
         (click)="closeDialog()"
@@ -13,25 +13,120 @@
         <h1 class="text-center">Formulario</h1>
       </div>
     </div>
-
     <div class="row">
-      <div class="col offset-md-0">
-        <label for="exampleInputRol" class="form-label d-flex justify-content-center"
-          >Ingrese nuevo rol a crear</label
+      <div class="col-sm-5 col-md-6">
+        <label for="exampleInputEmail1" class="form-label"
+          >Correo electronico</label
         >
         <div class="form-floating mb-3">
           <input
-            formControlName="nombreRol"
-            type="text"
+            formControlName="email"
+            type="email"
             class="form-control"
-            id="floatingRolInput"
-            placeholder="rol"
+            placeholder="name@example.com"
           />
-          <label for="floatingRolInput">Rol</label>
+          <label>Ingresa tu correo electronico</label>
+        </div>
+      </div>
+      <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+        <label for="exampleInputEmail1" class="form-label">Contraseña</label>
+        <div class="form-floating mb-3">
+          <input
+            formControlName="password"
+            type="password"
+            class="form-control"
+            placeholder="name@example.com"
+          />
+          <label>Ingresa tu contraseña</label>
         </div>
       </div>
     </div>
-    <!-- aqui -->
+    <div class="row">
+      <div class="col-sm-5 col-md-6">
+        <label for="exampleInputEmail1" class="form-label">Nombre</label>
+        <div class="form-floating mb-3">
+          <input
+            formControlName="nombre"
+            type="text"
+            class="form-control"
+            placeholder="name@example.com"
+          />
+          <label>Ingresa tu nombre</label>
+        </div>
+      </div>
+      <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+        <label for="exampleInputEmail1" class="form-label">Apellidos</label>
+        <div class="form-floating mb-3">
+          <input
+            formControlName="apellido"
+            type="text"
+            class="form-control"
+            placeholder="name@example.com"
+          />
+          <label>Ingresa tu apellido</label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-5 col-md-6">
+        <label for="exampleInputEmail1" class="form-label"
+          >Numero celular</label
+        >
+        <div class="form-floating mb-3">
+          <input
+            formControlName="numeroTelefonoCelular"
+            type="text"
+            class="form-control"
+            required
+            placeholder="name@example.com"
+          />
+          <label>Ingresa tu número telefonico</label>
+        </div>
+      </div>
+      <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+        <label for="exampleInputEmail1" class="form-label">Número casa</label>
+        <div class="form-floating mb-3">
+          <input
+            formControlName="numeroTelefonoCasa"
+            type="text"
+            class="form-control"
+            required
+            placeholder="name@example.com"
+          />
+          <label>Ingresa tu número de la casa</label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-5 col-md-6">
+        <label for="exampleInputEmail1" class="form-label"
+          >Dirección de residencia</label
+        >
+        <div class="form-floating mb-3">
+          <input
+            formControlName="direccion"
+            type="text"
+            class="form-control"
+            placeholder="name@example.com"
+          />
+          <label>Ingresa tu dirección</label>
+        </div>
+      </div>
+      <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+        <label for="exampleInputEmail1" class="form-label"
+          >Numero de identidad</label
+        >
+        <div class="form-floating mb-3">
+          <input
+            formControlName="cedula"
+            type="text"
+            class="form-control"
+            placeholder="name@example.com"
+          />
+          <label>Ingresa tu cédula</label>
+        </div>
+      </div>
+    </div>
     <div *ngIf="IsLoading" class="text-center mb-4">
       <div class="spinner-border" role="status">
         <span class="visually-hidden">Loading...</span>

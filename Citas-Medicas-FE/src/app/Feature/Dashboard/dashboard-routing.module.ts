@@ -29,6 +29,13 @@ const routes: Routes = [
       import('./Components/Administradores/administradores.module').then(
         (m) => m.AdministradoresModule
       )
+  },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./Components/Citas/citas.module').then(
+        (m) => m.CitasModule
+      )
   }
 ];
 

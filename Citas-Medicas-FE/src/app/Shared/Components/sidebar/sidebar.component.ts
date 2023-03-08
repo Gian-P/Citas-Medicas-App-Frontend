@@ -11,8 +11,8 @@ export class SidebarComponent implements OnInit {
   generales: modules[] = [
     {
       name: 'Citas',
-      route: '#',
-      icon: 'calendar_today',
+      route: 'dashboard/citas/list',
+      icon: 'date_range',
     },
     {
       name: 'Medicos',
@@ -32,14 +32,13 @@ export class SidebarComponent implements OnInit {
     {
       name: 'Especialidades',
       route: 'dashboard/especialidades/list',
-      icon: 'category',
+      icon: 'bubble_chart',
     }
   ];
 
   preferencias: modules[] = [
     { name: 'Account', route: '#', icon: 'person' },
-    { name: 'Settings', route: '#', icon: 'settings' },
-    { name: 'Dark Mode', route: '#', icon: 'toll' },
+    { name: 'Dark Mode', route: '#', icon: 'toll' }
   ];
 
   constructor(private router: Router) {}

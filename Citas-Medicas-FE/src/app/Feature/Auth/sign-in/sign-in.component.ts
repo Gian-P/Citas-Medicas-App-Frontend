@@ -45,6 +45,7 @@ export class SignInComponent implements OnInit {
       this.IsLoading = false;
       this.router.navigate(['dashboard']);
       this.authService.setToken(res.tokenJwt);
+      localStorage.setItem('rol', res.usuarioDTO.rolSet[0].nombreRol);
     }, (err) => {
       this.IsLoading = false;
       this.sweetalertService.opensweetalerterror(err.error ? err.error : 'Error al iniciar sesión');

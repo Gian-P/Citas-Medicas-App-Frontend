@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { User } from 'src/app/Core/Models/users/users.models';
 import { DoctorService } from 'src/app/Core/Service/Doctor/doctor.service';
 import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.service';
@@ -13,21 +15,33 @@ import { MedicosStandbyListComponent } from '../medicos-standby-list/medicos-sta
 })
 export class MedicosListComponent implements OnInit {
   public medicos: User[] = [];
+  public dataSource: any;
+
+  displayedColumns: string[] = ['cedula', 'nombre', 'apellido', 'email', 'numero', 'nombreEspecialidad', 'actions'];
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private medicoService: DoctorService,
     private dialog: MatDialog,
     private sweetAlertService: SweetAlertService
-  ) {}
-
-  ngOnInit(): void {
+  ) {
     this.getMedicos();
   }
 
+  ngOnInit(): void {
+    this.getMedicos();
+
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
   public getMedicos() {
-    this.medicoService.getDoctorsPaged(0, 10).subscribe((data) => {
+    this.medicoService.getDoctorsPaged(0, 6).subscribe((data) => {
       this.medicos = data;
-      console.log(data);
+      this.dataSource = new MatTableDataSource<User>(this.medicos);
     });
   }
 

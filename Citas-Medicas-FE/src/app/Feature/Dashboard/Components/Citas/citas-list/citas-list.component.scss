@@ -1,0 +1,39 @@
+table {
+  width: 100%;
+}
+
+.mat-table{
+  background: none;
+  border: none;
+
+}
+
+
+table{
+  th{
+    background-color: #13B0F0;
+    color: white;
+    font-size: 14px;
+
+    &:first-child{
+      border-top-left-radius: 10px;
+    }
+    &:last-child{
+      border-top-right-radius: 10px;
+    }
+
+  }
+}
+
+.button-container{
+  padding-bottom: 16px;
+}
+
+.button{
+  background-color: #13B0F0;
+  color: #fff;
+}
+
+.button + .button {
+  margin-left: 8px;
+}

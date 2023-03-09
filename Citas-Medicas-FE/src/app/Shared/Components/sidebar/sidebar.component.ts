@@ -38,7 +38,6 @@ export class SidebarComponent implements OnInit {
 
   preferencias: modules[] = [
     { name: 'Account', route: '#', icon: 'person' },
-    { name: 'Dark Mode', route: '#', icon: 'toll' }
   ];
 
   constructor(private router: Router) {}

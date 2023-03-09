@@ -45,6 +45,7 @@ export class SignInComponent implements OnInit {
       this.IsLoading = false;
       this.router.navigate(['dashboard']);
       this.authService.setToken(res.tokenJwt);
+      localStorage.setItem('id', res.idUsuario.idAdministrador || res.idUsuario.idMedico || res.idUsuario.idPaciente);
       localStorage.setItem('rol', res.usuarioDTO.rolSet[0].nombreRol);
     }, (err) => {
       this.IsLoading = false;

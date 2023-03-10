@@ -13,13 +13,17 @@ table{
     background-color: #13B0F0;
     color: white;
     font-size: 14px;
-
+    text-align: center;
     &:first-child{
       border-top-left-radius: 10px;
     }
     &:last-child{
       border-top-right-radius: 10px;
     }
+  }
+
+  td{
+    text-align: center;
   }
 }
 

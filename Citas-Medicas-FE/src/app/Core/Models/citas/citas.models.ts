@@ -9,6 +9,9 @@ export interface Citas extends Base {
   fechaDesde: Date;
   fechaHasta: Date;
   fechaPeticion: Date;
+  idMedico: number;
+  idPaciente: number;
+  tipoCita: string;
   idCita: number;
   nombre: string;
 }

@@ -7,9 +7,7 @@ import { BaseService } from '../base.service';
   providedIn: 'root'
 })
 export class PacienteRegisterService extends BaseService<Register> {
-
   constructor(http: HttpClient) {
     super(http, 'registrar-paciente');
   }
-  
 }

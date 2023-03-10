@@ -10,31 +10,35 @@ import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthInterceptorService implements HttpInterceptor {
-
   constructor(private router: Router) {}
-  
+
   intercept(
-    request: HttpRequest<unknown>,
+    req: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    const token = localStorage.getItem('token');
+    const token: string = localStorage.getItem('token') as string;
+
+    let request = req;
 
     if (token) {
-      request = request.clone({
-        setHeaders: { Authorization: `Bearer ${token}` },
+      request = req.clone({
+        setHeaders: {
+          authorization: `Bearer ${token}`,
+        },
       });
     }
+
     return next.handle(request).pipe(
-      catchError((error: HttpErrorResponse) => {
-        if (error.status === 401) {
-          this.router.navigate(['/auth/login']);
+      catchError((err: HttpErrorResponse) => {
+        if (err.status === 401) {
+          this.router.navigateByUrl('/login');
         }
-        return throwError(error);
+
+        return throwError(err);
       })
     );
   }

@@ -1,1 +1,47 @@
-<p>citas-form works!</p>
+<div class="container">
+  <div class="row align-items-center">
+    <div class="col">
+      <h1 class="text-center">Crear cita</h1>
+    </div>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row mb-2">
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Seleccione doctor</mat-label>
+          <mat-select formControlName="idMedico">
+            <mat-option
+              *ngFor="let doctor of doctors"
+              value="{{ doctor.idMedico }}"
+              >{{ doctor.nombre }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field appearance="fill">
+          <mat-label>Seleccione modalidad</mat-label>
+          <mat-select formControlName="tipoCita">
+            <mat-option value="Presencial">Presencial</mat-option>
+            <mat-option value="Virtual">Virtual</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row mb-1">
+      <mat-form-field appearance="fill">
+        <mat-label> Fecha de la cita </mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input formControlName="fechaDesde" matStartDate  placeholder="Fecha inicio" />
+          <input formControlName="fechaHasta" matEndDate placeholder="Fecha fin" />
+          <label>hola</label>
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+    </div>
+    <div class="d-grid">
+      <button class="button" mat-raised-button>Guardar</button>
+    </div>
+  </form>
+</div>

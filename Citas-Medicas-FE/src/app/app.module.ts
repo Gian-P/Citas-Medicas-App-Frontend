@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MatNativeDateModule } from '@angular/material/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,7 +12,8 @@ const MODULES : any = [
   BrowserModule,
   AppRoutingModule,
   BrowserAnimationsModule,
-  HttpClientModule
+  HttpClientModule,
+  MatNativeDateModule
 ]
 
 @NgModule({

@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Citas } from 'src/app/Core/Models/citas/citas.models';
 import { CitaService } from 'src/app/Core/Service/Citas/citas.service';
 import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.service';
+import { CitasFormComponent } from '../citas-form/citas-form.component';
+import { CitasStandbyListComponent } from '../citas-standby-list/citas-standby-list.component';
 
 @Component({
   selector: 'app-citas-list',
@@ -16,7 +18,7 @@ import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.ser
 export class CitasListComponent implements OnInit {
   public citas: Citas[] = []
 
-  displayedColumns: string[] = ['nombre', 'apellido', 'email', 'fechaDesde', 'fechaHasta'];
+  displayedColumns: string[] = ['nombre', 'apellido', 'email', 'fechaDesde', 'fechaHasta', 'estado'];
   dataSource = new MatTableDataSource<Citas>(this.citas);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -29,6 +31,7 @@ export class CitasListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCitas();
+    console.log(this.citas);
   }
 
   ngAfterViewInit() {
@@ -38,7 +41,7 @@ export class CitasListComponent implements OnInit {
   public getCitas() {
     let rol = localStorage.getItem('rol');
 
-    if (rol === 'Paciente') {
+    if (rol === 'Cliente') {
       let id = parseInt(localStorage.getItem('id') || '0');
       this.getCitasByPacienteId(id);
     }
@@ -50,20 +53,22 @@ export class CitasListComponent implements OnInit {
   }
 
   public getCitasByPacienteId(id: number) {
-    this.citasService.getCitasByPaciente(id, 0, 10).subscribe((res: any) => {
-      this.citas = res;
+    this.citasService.getCitasByPaciente(id, 0, 10).subscribe((data) => {
+      this.citas = data;
+      this.dataSource = new MatTableDataSource<Citas>(this.citas);
     });
   }
 
   public getCitasByMedicoId(id: number) {
-    this.citasService.getStandByCitasDoctor(id, 0, 10).subscribe((res: any) => {
-      this.citas = res;
+    this.citasService.getStandByCitasDoctor(id, 0, 10).subscribe((data) => {
+      this.citas = data;
+      this.dataSource = new MatTableDataSource<Citas>(this.citas);
     });
   }
 
   public getStandByMedicosCitas(id: number){
-    this.citasService.getStandByCitasDoctor(id, 0, 10).subscribe((res: any) => {
-      this.citas = res;
+    this.citasService.getStandByCitasDoctor(id, 0, 10).subscribe((data) => {
+      this.citas = data;
     }, (err) => {
       this.sweetAlertService.opensweetalerterror(err.error ? err.error : 'Error al obtener las citas');
     });
@@ -74,6 +79,20 @@ export class CitasListComponent implements OnInit {
       this.citas = res;
     }, (err) => {
       this.sweetAlertService.opensweetalerterror(err.error ? err.error : 'Error al obtener las citas');
+    });
+  }
+
+  public addCreateDialog() {
+    this.dialog.open(CitasFormComponent);
+  }
+
+  public openStandbyDialog(){
+    const dialogRef = this.dialog.open(CitasStandbyListComponent, {
+      width: 'auto',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.getCitas();
     });
   }
 }

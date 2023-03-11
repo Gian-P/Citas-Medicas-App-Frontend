@@ -60,4 +60,8 @@ export class CitasFormComponent implements OnInit {
       }
     );
   }
+
+  public close() {
+    this.dialogRef.close();
+  }
 }

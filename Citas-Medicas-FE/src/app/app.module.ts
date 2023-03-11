@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './Core/Helpers/auth-interceptor.service'
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 const MODULES : any = [
   BrowserModule,
   AppRoutingModule,
   BrowserAnimationsModule,
   HttpClientModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatFormFieldModule
 ]
 
 @NgModule({

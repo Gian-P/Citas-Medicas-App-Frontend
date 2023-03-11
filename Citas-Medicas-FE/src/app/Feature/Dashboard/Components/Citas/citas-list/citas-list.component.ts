@@ -11,14 +11,19 @@ import { CitasStandbyListComponent } from '../citas-standby-list/citas-standby-l
 @Component({
   selector: 'app-citas-list',
   templateUrl: './citas-list.component.html',
-  styleUrls: ['./citas-list.component.scss']
+  styleUrls: ['./citas-list.component.scss'],
 })
-
-
 export class CitasListComponent implements OnInit {
-  public citas: Citas[] = []
+  public citas: Citas[] = [];
 
-  displayedColumns: string[] = ['nombre', 'apellido', 'email', 'fechaDesde', 'fechaHasta', 'estado'];
+  displayedColumns: string[] = [
+    'nombre',
+    'apellido',
+    'email',
+    'fechaDesde',
+    'fechaHasta',
+    'estado',
+  ];
   dataSource = new MatTableDataSource<Citas>(this.citas);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -27,11 +32,10 @@ export class CitasListComponent implements OnInit {
     private dialog: MatDialog,
     private citasService: CitaService,
     private sweetAlertService: SweetAlertService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getCitas();
-    console.log(this.citas);
   }
 
   ngAfterViewInit() {
@@ -46,7 +50,7 @@ export class CitasListComponent implements OnInit {
       this.getCitasByPacienteId(id);
     }
 
-    if(rol === 'Medico'){
+    if (rol === 'Medico') {
       let id = parseInt(localStorage.getItem('id') || '0');
       this.getCitasByMedicoId(id);
     }
@@ -66,29 +70,13 @@ export class CitasListComponent implements OnInit {
     });
   }
 
-  public getStandByMedicosCitas(id: number){
-    this.citasService.getStandByCitasDoctor(id, 0, 10).subscribe((data) => {
-      this.citas = data;
-    }, (err) => {
-      this.sweetAlertService.opensweetalerterror(err.error ? err.error : 'Error al obtener las citas');
-    });
-  }
-
-  public getStandByPacientesCitas(id: number){
-    this.citasService.getStandByCitasPaciente(id, 0, 10).subscribe((res: any) => {
-      this.citas = res;
-    }, (err) => {
-      this.sweetAlertService.opensweetalerterror(err.error ? err.error : 'Error al obtener las citas');
-    });
-  }
-
   public addCreateDialog() {
     this.dialog.open(CitasFormComponent);
   }
 
-  public openStandbyDialog(){
+  public openStandbyDialog() {
     const dialogRef = this.dialog.open(CitasStandbyListComponent, {
-      width: 'auto',
+      width: '100%'
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -96,5 +84,3 @@ export class CitasListComponent implements OnInit {
     });
   }
 }
-
-

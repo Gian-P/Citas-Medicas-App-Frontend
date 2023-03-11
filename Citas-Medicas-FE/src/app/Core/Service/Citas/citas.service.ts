@@ -13,7 +13,7 @@ export class CitaService {
     return this.http.post(environment.baseUrl + 'crear-cita', cita);
   }
 
-  public cambiarEstatusCita(id: number, estatus: string): Observable<any> {
+  public cambiarEstatusCita(id: number, estatus: any): Observable<any> {
     return this.http.put(environment.baseUrl + 'cambiar-estatus/' + id, estatus);
   }
 
@@ -39,5 +39,9 @@ export class CitaService {
 
   public updateCita(cita: any): Observable<any> {
     return this.http.put(environment.baseUrl + 'actualizar-cita/' + cita.id , cita);
+  }
+
+  public addGoogleMeetLink(idCita: number, meet: any): Observable<any> {
+    return this.http.put(environment.baseUrl + 'agregar-google-meet/' + idCita, meet);
   }
 }

@@ -1,14 +1,18 @@
 <app-page title="Citas">
   <div class="button-container">
-    <button mat-raised-button class="button" (click)="addCreateDialog()">CREAR NUEVA CITA</button>
-    <button mat-raised-button class="button">CITAS EN ESPERA</button>
+    <button mat-raised-button class="button" (click)="addCreateDialog()">
+      CREAR NUEVA CITA
+    </button>
+    <button mat-raised-button class="button" (click)="openStandbyDialog()">
+      CITAS EN ESPERA
+    </button>
   </div>
 
   <table mat-table [dataSource]="dataSource">
     <!-- name Column -->
     <ng-container matColumnDef="nombre">
       <th mat-header-cell *matHeaderCellDef>Nombre médico</th>
-      <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+      <td class="tdnombre" mat-cell *matCellDef="let element">{{ element.nombre }}</td>
     </ng-container>
 
     <!-- apellido Column -->
@@ -38,7 +42,17 @@
     <!-- estatus Column -->
     <ng-container matColumnDef="estado">
       <th mat-header-cell *matHeaderCellDef>Estatus</th>
-      <td mat-cell *matCellDef="let element">{{ element.estatus }}</td>
+      <td
+        class="tdestatus"
+        [ngClass]="{
+          'text-success': element.estatus === 'ACEPTADA',
+          'text-danger': element.estatus === 'ESPERA' || element.estatus === 'RECHAZADA' || element.estatus === 'CANCELADA' || element.estatus === 'Cancelada'
+        }"
+        mat-cell
+        *matCellDef="let element"
+      >
+        {{ element.estatus }}
+      </td>
     </ng-container>
 
     <!-- no hay contenido en la tablar -->

@@ -8,13 +8,23 @@ import { SharedModule } from 'src/app/Shared/shared.module';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CitasStandbyListComponent } from './citas-standby-list/citas-standby-list.component';
+import { MatCardModule } from '@angular/material/card';
+import { CitasFormMeetComponent } from './citas-form-meet/citas-form-meet.component';
+import { TutorialCreateMeetComponent } from './tutorial-create-meet/tutorial-create-meet.component';
 
 @NgModule({
-  declarations: [CitasListComponent, CitasFormComponent, CitasStandbyListComponent],
+  declarations: [
+    CitasListComponent,
+    CitasFormComponent,
+    CitasStandbyListComponent,
+    CitasFormMeetComponent,
+    TutorialCreateMeetComponent,
+  ],
   imports: [
     CommonModule,
     CitasRoutingModule,
@@ -23,8 +33,10 @@ import { CitasStandbyListComponent } from './citas-standby-list/citas-standby-li
     MatButtonModule,
     MatFormFieldModule,
     MatDatepickerModule,
+    MatInputModule,
     MatSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatCardModule,
   ],
 })
 export class CitasModule {}

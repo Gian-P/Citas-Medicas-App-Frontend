@@ -15,138 +15,146 @@
     </div>
     <div class="row">
       <div class="col-sm-5 col-md-6">
-        <label for="exampleInputEmail1" class="form-label"
-          >Correo electronico</label
-        >
-        <div class="form-floating mb-3">
-          <input
-            formControlName="email"
-            type="email"
-            class="form-control"
-            id="floatingInput"
-            placeholder="name@example.com"
-          />
-          <label for="floatingInput">Ingresa tu correo electronico</label>
-        </div>
+        <mat-form-field class="mat-form" appearance="outline">
+          <mat-label>Correo electronico</mat-label>
+          <input formControlName="email" matInput type="email" />
+          <mat-error *ngIf="form.get('email')?.hasError('required')">
+            El correo es requerido
+          </mat-error>
+          <mat-error *ngIf="form.get('email')?.hasError('email')">
+            El correo no es valido
+          </mat-error>
+        </mat-form-field>
       </div>
       <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
-        <label for="exampleInputEmail1" class="form-label">Contraseña</label>
-        <div class="form-floating mb-3">
+        <mat-form-field class="mat-form" appearance="outline">
+          <mat-label>Contraseña</mat-label>
           <input
             formControlName="password"
-            type="password"
-            class="form-control"
-            id="floatingInput"
-            placeholder="name@example.com"
+            matInput
+            [type]="hide ? 'password' : 'text'"
           />
-          <label for="floatingInput">Ingresa tu contraseña</label>
-        </div>
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+          <mat-error *ngIf="form.get('password')?.hasError('required')">
+            La contraseña es requerida
+          </mat-error>
+        </mat-form-field>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-5 col-md-6">
-        <label for="exampleInputEmail1" class="form-label">Nombre</label>
-        <div class="form-floating mb-3">
-          <input
-            formControlName="nombre"
-            type="text"
-            class="form-control"
-            id="floatingInput"
-            placeholder="name@example.com"
-          />
-          <label for="floatingInput">Ingresa tu nombre</label>
-        </div>
+        <mat-form-field class="mat-form" appearance="outline">
+          <mat-label>Nombre completo</mat-label>
+          <input formControlName="nombre" matInput type="text" />
+          <mat-error *ngIf="form.get('nombre')?.hasError('required')">
+            El nombre es requerido
+          </mat-error>
+          <mat-error *ngIf="form.get('nombre')?.hasError('nombre')">
+            El nombre no es valido
+          </mat-error>
+        </mat-form-field>
       </div>
       <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
-        <label for="exampleInputEmail1" class="form-label">Apellidos</label>
-        <div class="form-floating mb-3">
-          <input
-            formControlName="apellido"
-            type="text"
-            class="form-control"
-            id="floatingInput"
-            placeholder="name@example.com"
-          />
-          <label for="floatingInput">Ingresa tu apellido</label>
-        </div>
+        <mat-form-field class="mat-form" appearance="outline">
+          <mat-label>Apellido completo</mat-label>
+          <input formControlName="apellido" matInput type="text" />
+          <mat-error *ngIf="form.get('apellido')?.hasError('required')">
+            El apellido es requerido
+          </mat-error>
+          <mat-error *ngIf="form.get('apellid')?.hasError('apellido')">
+            El apellido no es valido
+          </mat-error>
+        </mat-form-field>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-5 col-md-6">
-        <label for="exampleInputEmail1" class="form-label"
-          >Numero celular</label
-        >
-        <div class="form-floating mb-3">
-          <input
-            formControlName="numeroTelefonoCelular"
-            type="text"
-            class="form-control"
-            id="floatingInput"
-            required
-            placeholder="name@example.com"
-          />
-          <label for="floatingInput">Ingresa tu número telefonico</label>
-        </div>
+        <mat-form-field class="mat-form" appearance="outline">
+          <mat-label>Número tel. celular</mat-label>
+          <input formControlName="numeroTelefonoCelular" matInput type="text" />
+          <mat-error
+            *ngIf="form.get('numeroTelefonoCelular')?.hasError('required')"
+          >
+            El número es requerido
+          </mat-error>
+          <mat-error
+            *ngIf="
+              form
+                .get('numeroTelefonoCelular')
+                ?.hasError('numeroTelefonoCelular')
+            "
+          >
+            El número no es valido
+          </mat-error>
+        </mat-form-field>
       </div>
       <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
-        <label for="exampleInputEmail1" class="form-label">Número casa</label>
-        <div class="form-floating mb-3">
-          <input
-            formControlName="numeroTelefonoCasa"
-            type="text"
-            class="form-control"
-            id="floatingInput"
-            required
-            placeholder="name@example.com"
-          />
-          <label for="floatingInput">Ingresa tu número de la casa</label>
-        </div>
+        <mat-form-field class="mat-form" appearance="outline">
+          <mat-label>Número tel. casa</mat-label>
+          <input formControlName="numeroTelefonoCasa" matInput type="text" />
+          <mat-error
+            *ngIf="form.get('numeroTelefonoCasa')?.hasError('required')"
+          >
+            El número es requerido
+          </mat-error>
+          <mat-error
+            *ngIf="
+              form.get('numeroTelefonoCasa')?.hasError('numeroTelefonoCasa')
+            "
+          >
+            El número no es valido
+          </mat-error>
+        </mat-form-field>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-5 col-md-6">
-        <label for="exampleInputEmail1" class="form-label"
-          >Dirección de residencia</label
-        >
-        <div class="form-floating mb-3">
-          <input
-            formControlName="direccion"
-            type="text"
-            class="form-control"
-            id="floatingInput"
-            placeholder="name@example.com"
-          />
-          <label for="floatingInput">Ingresa tu dirección</label>
-        </div>
+        <mat-form-field class="mat-form" appearance="outline">
+          <mat-label>Dirección de residencia</mat-label>
+          <input formControlName="direccion" matInput type="text" />
+          <mat-error *ngIf="form.get('direccion')?.hasError('required')">
+            la direccion es requerida
+          </mat-error>
+          <mat-error *ngIf="form.get('direccion')?.hasError('direccion')">
+            la direccion no es valida
+          </mat-error>
+        </mat-form-field>
       </div>
       <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
-        <label for="exampleInputEmail1" class="form-label"
-          >Numero de identidad</label
-        >
-        <div class="form-floating mb-3">
-          <input
-            formControlName="cedula"
-            type="text"
-            class="form-control"
-            id="floatingInput"
-            placeholder="name@example.com"
-          />
-          <label for="floatingInput">Ingresa tu cédula</label>
-        </div>
+        <mat-form-field class="mat-form" appearance="outline">
+          <mat-label>Número de identidad</mat-label>
+          <input formControlName="cedula" matInput type="text" />
+          <mat-error *ngIf="form.get('cedula')?.hasError('required')">
+            la cedula es requerida
+          </mat-error>
+          <mat-error *ngIf="form.get('cedula')?.hasError('cedula')">
+            la cedula no es valida
+          </mat-error>
+        </mat-form-field>
       </div>
     </div>
     <div *ngIf="IsLoading" class="text-center mb-4">
-      <div class="spinner-border" role="status">
+      <div class="spinner-border text-primary" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>
     </div>
     <div class="d-grid">
       <button
-        class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2"
+        *ngIf="!IsLoading"
+        mat-raised-button
+        class="button"
         type="submit"
-        [disabled]="form.invalid"
+        (click)="onSubmit()"
       >
-        Registrate
+        Registrarse
       </button>
     </div>
   </form>

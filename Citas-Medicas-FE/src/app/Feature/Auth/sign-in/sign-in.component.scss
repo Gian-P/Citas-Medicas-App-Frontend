@@ -23,7 +23,6 @@
   color: #007bff;
   text-decoration: none;
   background-color: transparent;
-  -webkit-text-decoration-skip: objects;
   border: none;
   cursor: pointer;
 
@@ -35,12 +34,8 @@
   margin-left:-6px ;
 }
 
-.floatingPassword{
-  display: flex;
-  justify-content: space-between;
-  pointer-events: all;
-
-  .eye{
-    line-height: 1.5;
-  }
+.button{
+  background-color: #13B0F0;
+  margin-bottom: 14px;
+  color: #fff;
 }

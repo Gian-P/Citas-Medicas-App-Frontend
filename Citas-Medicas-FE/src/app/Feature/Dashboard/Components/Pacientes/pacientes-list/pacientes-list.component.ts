@@ -44,7 +44,7 @@ export class PacientesListComponent implements OnInit {
   }
 
   public getPacientes() {
-    this.pacienteService.getPacientesPaged(0, 10).subscribe((res) => {
+    this.pacienteService.getPacientesPaged(0, 8).subscribe((res) => {
       this.pacientes = res;
       this.dataSource = new MatTableDataSource<User>(this.pacientes);
     });

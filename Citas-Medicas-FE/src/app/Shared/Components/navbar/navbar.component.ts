@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { TokenService } from 'src/app/Core/Service/Auth/Common/token.service';
 import { LoginService } from 'src/app/Core/Service/Auth/login.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class NavbarComponent implements OnInit {
   public userName !: string;
 
   constructor(
-    private _loginService: LoginService,
+    private tokenService: TokenService,
     private router: Router
   ) {}
 
@@ -25,8 +26,11 @@ export class NavbarComponent implements OnInit {
   }
 
   logOut() {
+    this.tokenService.deleteToken();
+    this.router.navigate(['auth/login']);
   }
 
   getUserName(): any{
+    this.userName = localStorage.getItem('email') || '';
   }
 }

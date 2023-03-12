@@ -4,14 +4,13 @@ import { DashboardComponent } from '../Feature/Dashboard/dashboard.component';
 
 const routes: Routes = [
   {
-    path: 'dashboard', 
+    path: 'dashboard',
     component: DashboardComponent,
     loadChildren: () =>
       import('../Feature/Dashboard/dashboard.module').then(
         (m) => m.DashboardModule
       ),
   },
-
   {
     path: '',
     loadChildren: () =>
@@ -19,7 +18,6 @@ const routes: Routes = [
         (m) => m.WelcomeModule
       ),
   },
-
   {
     path: '',
     loadChildren: () =>
@@ -33,7 +31,6 @@ const routes: Routes = [
         (m) => m.NotAuthorizedModule
       ),
   },
-
   {
     path: '',
     loadChildren: () =>
@@ -45,6 +42,11 @@ const routes: Routes = [
     path: '**',
     redirectTo: 'not-found',
   },
+  {
+    path: '',
+    redirectTo: 'welcome',
+    pathMatch: 'full'
+  }
 ];
 
 @NgModule({

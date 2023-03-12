@@ -11,13 +11,14 @@ import { SignUpComponent } from '../sign-up/sign-up.component';
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.scss']
+  styleUrls: ['./sign-in.component.scss'],
 })
 export class SignInComponent implements OnInit {
-  public form : FormGroup = new FormGroup([]);
-  public user !: login;
-  public IsLoading : boolean = false;
+  public form: FormGroup = new FormGroup([]);
+  public user!: login;
+  public IsLoading: boolean = false;
   public show: boolean = false;
+  public hide = true;
 
   constructor(
     private _authService: LoginService,
@@ -25,7 +26,11 @@ export class SignInComponent implements OnInit {
     private sweetalertService: SweetAlertService,
     private authService: TokenService,
     private dialog: MatDialog
-  ) { }
+  ) {
+    if (this.authService.getToken()) {
+      this.router.navigate(['dashboard']);
+    }
+  }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -41,16 +46,27 @@ export class SignInComponent implements OnInit {
       ...this.form.value,
     } as login;
 
-    this._authService.post(user).subscribe((res : any) => {
-      this.IsLoading = false;
-      this.router.navigate(['dashboard']);
-      this.authService.setToken(res.tokenJwt);
-      localStorage.setItem('id', res.idUsuario.idAdministrador || res.idUsuario.idMedico || res.idUsuario.idPaciente);
-      localStorage.setItem('rol', res.usuarioDTO.rolSet[0].nombreRol);
-    }, (err) => {
-      this.IsLoading = false;
-      this.sweetalertService.opensweetalerterror(err.error ? err.error : 'Error al iniciar sesión');
-    });
+    this._authService.post(user).subscribe(
+      (res: any) => {
+        this.IsLoading = false;
+        this.router.navigate(['dashboard']);
+        this.authService.setToken(res.tokenJwt);
+        localStorage.setItem(
+          'id',
+          res.idUsuario.idAdministrador ||
+            res.idUsuario.idMedico ||
+            res.idUsuario.idPaciente
+        );
+        localStorage.setItem('email', res.usuarioDTO.email);
+        localStorage.setItem('rol', res.usuarioDTO.rolSet[0].nombreRol);
+      },
+      (err) => {
+        this.IsLoading = false;
+        this.sweetalertService.opensweetalerterror(
+          err.error ? err.error : 'Error al iniciar sesión'
+        );
+      }
+    );
   }
 
   private initializeForm(): void {
@@ -63,7 +79,7 @@ export class SignInComponent implements OnInit {
     });
   }
 
-  onRegister() : void {
+  onRegister(): void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;

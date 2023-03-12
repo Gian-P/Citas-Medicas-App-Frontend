@@ -15,12 +15,11 @@ export class SignUpComponent implements OnInit {
   public form: FormGroup = new FormGroup([]);
   public user!: Register;
   public IsLoading: boolean = false;
-
+  public hide: boolean = true;
   constructor(
     private dialogRef: MatDialogRef<SignUpComponent>,
     private registerService: PacienteRegisterService,
     private sweetAlertService: SweetAlertService,
-    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -43,7 +42,6 @@ export class SignUpComponent implements OnInit {
           'Registro exitoso',
         );
         this.closeDialog();
-        this.router.navigate(['/auth/sign-in']);
       },
       (err: any) => {
         this.IsLoading = false;

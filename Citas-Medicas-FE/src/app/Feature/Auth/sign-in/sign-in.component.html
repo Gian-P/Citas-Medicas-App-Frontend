@@ -10,46 +10,64 @@
 
               <!-- Sign In Form -->
               <form [formGroup]="form" (ngSubmit)="submit()">
-                <div class="form-floating mb-3">
-                  <input
-                    formControlName="email"
-                    type="email"
-                    class="form-control"
-                    id="floatingInput"
-                    placeholder="name@example.com"
-                  />
-                  <label for="floatingInput">Correo electronico</label>
+                <div class="row">
+                  <mat-form-field class="mat-form" appearance="outline">
+                    <mat-label>Correo electronico</mat-label>
+                    <input formControlName="email" matInput type="email" />
+                    <mat-error *ngIf="form.get('email')?.hasError('required')">
+                      El correo es requerido
+                    </mat-error>
+                    <mat-error *ngIf="form.get('email')?.hasError('email')">
+                      El correo no es valido
+                    </mat-error>
+                  </mat-form-field>
                 </div>
-                <div class="form-floating mb-3">
-                  <input
-                    [type]="show ? 'text' : 'password'"
-                    formControlName="password"
-                    class="form-control"
-                    id="floatingPassword"
-                    placeholder="Password"
-                  />
-                  <label for="floatingPassword" class="floatingPassword">Contraseña
-                    <i (click)="password()" class="fa fa-eye eye" aria-hidden="false"></i>
-                  </label>
-                  
 
+                <div class="row">
+                  <mat-form-field class="mat-form" appearance="outline">
+                    <mat-label>Contraseña</mat-label>
+                    <input
+                      formControlName="password"
+                      matInput
+                      [type]="hide ? 'password' : 'text'"
+                    />
+                    <button
+                      mat-icon-button
+                      matSuffix
+                      (click)="hide = !hide"
+                      [attr.aria-label]="'Hide password'"
+                      [attr.aria-pressed]="hide"
+                    >
+                      <mat-icon>{{
+                        hide ? "visibility_off" : "visibility"
+                      }}</mat-icon>
+                    </button>
+                    <mat-error
+                      *ngIf="form.get('password')?.hasError('required')"
+                    >
+                      La contraseña es requerida
+                    </mat-error>
+                  </mat-form-field>
                 </div>
+
                 <div *ngIf="IsLoading" class="text-center mb-4">
-                  <div class="spinner-border" role="status">
+                  <div class="spinner-border text-primary" role="status">
                     <span class="visually-hidden">Loading...</span>
                   </div>
                 </div>
-                <div class="d-grid">
+
+                <div class="d-grid" >
                   <button
-                    class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2"
+                    *ngIf="!IsLoading"
+                    class="button mb-3"
                     type="submit"
-                  >
-                    Inicia sesión
-                  </button>
+                    mat-raised-button
+                  >INICIAR SESION</button>
                   <div class="text-center">
-                    ¿Eres nuevo?
-                    &nbsp;
-                    <a class="register-link" (click)="onRegister()">Registrate aquí</a>
+                    ¿Eres nuevo? &nbsp;
+                    <a class="register-link" (click)="onRegister()"
+                      >Registrate aquí</a
+                    >
                   </div>
                 </div>
               </form>

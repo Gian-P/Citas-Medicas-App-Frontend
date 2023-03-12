@@ -1,36 +1,48 @@
 <app-page title="Administradores">
-  <button class="btn" (click)="openDialogCreate()">Agregar administrador</button>
-  <button class="btn" (click)="openDialogStandbyList()">
-    Administradores en espera
-  </button>
-  <button class="btn" (click)="openDialogRolCreate()">Agregar nuevo rol</button>
-  <table class="table table-striped">
-    <thead style="background-color: #13b0f0; color: #fff">
-      <tr>
-        <th scope="col">Cedula</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Apellido</th>
-        <th scope="col">Correo Electronico</th>
-        <th scope="col">Numero Telefonico</th>
-        <th scope="col">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let administrador of administradores">
-        <td>{{ administrador.cedula }}</td>
-        <td>{{ administrador.nombre }}</td>
-        <td>{{ administrador.apellido }}</td>
-        <td>{{ administrador.email }}</td>
-        <td>{{ administrador.numero || "No asignado" }}</td>
-        <td>
-          <i (click)="deleteAdmin(administrador.idAdministrador)">
-            <mat-icon style="color: red">delete</mat-icon>
-          </i>
-          <i (click)="openDialogUpdate(administrador)">
-            <mat-icon style="color: green">edit</mat-icon>
-          </i>
-        </td>
-      </tr>
-    </tbody>
+  <div class="button-container">
+    <button mat-raised-button (click)="openDialogCreate()" class="button">Agregar medico</button>
+    <button mat-raised-button (click)="openDialogStandbyList()" class="button">Medicos en espera</button>
+  </div>
+
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="cedula">
+      <th mat-header-cell *matHeaderCellDef>Cedula</th>
+      <td mat-cell class="tdcedula" *matCellDef="let element">{{ element.cedula }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="apellido">
+      <th mat-header-cell *matHeaderCellDef>Apellido</th>
+      <td mat-cell *matCellDef="let element">{{ element.apellido }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="numero">
+      <th mat-header-cell *matHeaderCellDef>Numero</th>
+      <td mat-cell *matCellDef="let element">{{ element.numero }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td class="tdacciones" mat-cell *matCellDef="let element">
+        <button mat-mini-fab color="accent" (click)="openDialogUpdate(element)">
+          <mat-icon color="">edit</mat-icon>
+        </button>
+        <button mat-mini-fab color="warn" (click)="deleteAdmin(element.idMedico)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 </app-page>

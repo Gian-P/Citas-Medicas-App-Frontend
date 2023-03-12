@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { User } from 'src/app/Core/Models/users/users.models';
 import { AdminService } from 'src/app/Core/Service/Admin/admin.service';
 import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.service';
@@ -13,21 +15,40 @@ import { AdministradoresStandbyListComponent } from '../administradores-standby-
 })
 export class AdministradoresListComponent implements OnInit {
   administradores: User[] = [];
+  public dataSource: any;
+
+  displayedColumns: string[] = [
+    'cedula',
+    'nombre',
+    'apellido',
+    'email',
+    'numero',
+    'actions',
+  ];
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private adminService: AdminService,
     private dialog: MatDialog,
     private sweetAlert: SweetAlertService
-  ) {}
+  ) {
+    this.getAdministradores();
+  }
 
   ngOnInit(): void {
     this.getAdministradores();
   }
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
   getAdministradores(): void {
-    this.adminService.getAdminsPaged(0, 10).subscribe(
+    this.adminService.getAdminsPaged(0, 8).subscribe(
       (res) => {
         this.administradores = res;
+        this.dataSource = new MatTableDataSource<User>(this.administradores);
       },
       (err) => {
         this.sweetAlert.opensweetalerterror(
@@ -103,10 +124,9 @@ export class AdministradoresListComponent implements OnInit {
       width: '40%',
       height: '30%',
     });
-    
-    dialogRef.afterClosed().subscribe(() => {
-      console.log('done')
-    });
 
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('done');
+    });
   }
 }

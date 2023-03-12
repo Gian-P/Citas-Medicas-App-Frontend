@@ -7,6 +7,8 @@ import { EspecialidadesListComponent } from './Especialidades-list/especialidade
 import { SharedModule } from 'src/app/Shared/shared.module';
 import { MatTableModule } from '@angular/material/table';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 const COMPONENTS = [
   EspecialidadesListComponent,
@@ -22,7 +24,10 @@ const COMPONENTS = [
     EspecialidadesRoutingModule,
     SharedModule,
     MatTableModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule
   ]
 })
 export class EspecialidadesModule { }

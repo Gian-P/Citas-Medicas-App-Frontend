@@ -6,6 +6,9 @@ import { PacientesRoutingModule } from './pacientes-routing.module';
 import { PacientesListComponent } from './pacientes-list/pacientes-list.component';
 import { PacientesFormComponent } from './pacientes-form/pacientes-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -17,7 +20,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     PacientesRoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule
   ]
 })
 export class PacientesModule { }

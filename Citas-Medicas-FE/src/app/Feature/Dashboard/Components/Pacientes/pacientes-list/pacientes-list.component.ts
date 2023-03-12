@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { User } from 'src/app/Core/Models/users/users.models';
 import { PacienteService } from 'src/app/Core/Service/Pacientes/pacientes.service';
 import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.service';
@@ -12,20 +14,39 @@ import { PacientesFormComponent } from '../pacientes-form/pacientes-form.compone
 })
 export class PacientesListComponent implements OnInit {
   public pacientes: User[] = [];
+  public dataSource: any;
+
+  displayedColumns: string[] = [
+    'cedula',
+    'nombre',
+    'apellido',
+    'email',
+    'numero',
+    'actions',
+  ];
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private pacienteService: PacienteService,
     private dialog: MatDialog,
     private sweeAlertService: SweetAlertService
-  ) {}
+  ) {
+    this.getPacientes();
+  }
 
   ngOnInit(): void {
     this.getPacientes();
   }
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
   public getPacientes() {
     this.pacienteService.getPacientesPaged(0, 10).subscribe((res) => {
       this.pacientes = res;
+      this.dataSource = new MatTableDataSource<User>(this.pacientes);
     });
   }
 

@@ -17,7 +17,15 @@ export class MedicosListComponent implements OnInit {
   public medicos: User[] = [];
   public dataSource: any;
 
-  displayedColumns: string[] = ['cedula', 'nombre', 'apellido', 'email', 'numero', 'nombreEspecialidad', 'actions'];
+  displayedColumns: string[] = [
+    'cedula',
+    'nombre',
+    'apellido',
+    'email',
+    'numero',
+    'nombreEspecialidad',
+    'actions',
+  ];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -31,7 +39,6 @@ export class MedicosListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMedicos();
-
   }
 
   ngAfterViewInit() {
@@ -46,15 +53,18 @@ export class MedicosListComponent implements OnInit {
   }
 
   public deleteMedico(id: number) {
-    this.sweetAlertService.opensweetalertdelete('¿Estas seguro de eliminar este empleado?')
-    .subscribe((result : any) => {
-      if (result) {
-        this.medicoService.deleteDoctor(id).subscribe(() => {
-          this.sweetAlertService.opensweetalertsuccess('El empleado ha sido eliminado con exito');
-          this.getMedicos();
-        });
-      }
-    });
+    this.sweetAlertService
+      .opensweetalertdelete('¿Estas seguro de eliminar este empleado?')
+      .subscribe((result: any) => {
+        if (result) {
+          this.medicoService.deleteDoctor(id).subscribe(() => {
+            this.sweetAlertService.opensweetalertsuccess(
+              'El empleado ha sido eliminado con exito'
+            );
+            this.getMedicos();
+          });
+        }
+      });
   }
 
   public openEditMedicoDialog(medico: User) {
@@ -71,7 +81,7 @@ export class MedicosListComponent implements OnInit {
   public openAddMedicoDialog() {
     const dialogRef = this.dialog.open(MedicosFormComponent, {
       width: '40%',
-      height: '100%'
+      height: '100%',
     });
 
     dialogRef.afterClosed().subscribe(() => {

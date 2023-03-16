@@ -5,6 +5,14 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
+      import('./Components/calendario/calendario.module').then(
+        (m) => m.CalendarioModule
+      ),
+  },
+
+  {
+    path: '',
+    loadChildren: () =>
       import('./Components/Especialidades/especialidades.module').then(
         (m) => m.EspecialidadesModule
       ),
@@ -28,15 +36,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./Components/Administradores/administradores.module').then(
         (m) => m.AdministradoresModule
-      )
+      ),
   },
   {
     path: '',
     loadChildren: () =>
-      import('./Components/Citas/citas.module').then(
-        (m) => m.CitasModule
-      )
-  }
+      import('./Components/Citas/citas.module').then((m) => m.CitasModule),
+  },
 ];
 
 @NgModule({

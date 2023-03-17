@@ -35,7 +35,7 @@
     <div class="btn-group">
       <div
         class="btn btn-primary"
-        (click)="setView(CalendarView.Month)"
+        (click)="setView(CalendarView.Month) "
         [class.active]="view === CalendarView.Month"
       >
         Month
@@ -57,6 +57,9 @@
     </div>
   </div>
 </div>
+
+<!-- -->
+
 <br />
 <div [ngSwitch]="view">
   <mwl-calendar-month-view
@@ -91,9 +94,9 @@
 </div>
 
 <!-- Everything you see below is just for the demo, you don't need to include it in your app -->
-
-<br /><br /><br />
 <!--
+<br /><br /><br />
+
 <h3>
   Edit events
   <button class="btn btn-primary float-end" (click)="addEvent()">

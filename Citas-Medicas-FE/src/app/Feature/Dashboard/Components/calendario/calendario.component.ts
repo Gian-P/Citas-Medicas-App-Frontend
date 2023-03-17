@@ -13,9 +13,9 @@ import {
   isSameDay,
   isSameMonth,
   addHours,
+  parseISO,
 } from 'date-fns';
 import { Subject } from 'rxjs';
-//import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   CalendarEvent,
   CalendarEventAction,
@@ -23,22 +23,29 @@ import {
   CalendarView,
 } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
-import { TokenService } from '../../../../Core/Service/Auth/Common/token.service';
+import { CitaService } from '../../../../Core/Service/Citas/citas.service';
+import { OnInit } from '@angular/core';
+import { Citas } from '../../../../Core/Models/citas/citas.models';
 
 const colors: Record<string, EventColor> = {
+  /* el color red se utiliza para las citas que han sido eliminadas */
   red: {
     primary: '#ad2121',
     secondary: '#FAE3E3',
   },
+  /* el color blue se utiliza para las citas que han sido aprobadas */
   blue: {
     primary: '#1e90ff',
     secondary: '#D1E8FF',
   },
+  /* el color yellow se utiliza para las citas que estan en espera de ser aprobadas */
   yellow: {
     primary: '#e3bc08',
     secondary: '#FDF1BA',
   },
 };
+
+const utilityColors: string[] = ['red', 'blue', 'yellow'];
 
 @Component({
   selector: 'app-calendario',
@@ -57,10 +64,12 @@ const colors: Record<string, EventColor> = {
   ],
   templateUrl: './calendario.component.html',
 })
-export class CalendarioComponent  {
+export class CalendarioComponent implements OnInit {
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
 
-  constructor(private TokenService: TokenService) {}
+  public citas: Citas[] = [];
+
+  index: number = 0;
 
   view: CalendarView = CalendarView.Month;
 
@@ -94,6 +103,7 @@ export class CalendarioComponent  {
   refresh = new Subject<void>();
 
   events: CalendarEvent[] = [
+    /*
     {
       start: subDays(startOfDay(new Date()), 1),
       end: addDays(new Date(), 1),
@@ -131,12 +141,38 @@ export class CalendarioComponent  {
         afterEnd: true,
       },
       draggable: true,
-    },
+    },*/
   ];
 
   activeDayIsOpen: boolean = true;
 
-  //constructor(private modal: NgbModal) {}
+  constructor(private citasService: CitaService) {}
+
+  ngOnInit(): void {
+    this.getCitas();
+  }
+
+  public getCitas() {
+    let rol = localStorage.getItem('rol');
+
+    if (rol === 'Cliente') {
+      let id = parseInt(localStorage.getItem('id') || '0');
+      this.getCitasByPacienteId(id);
+    }
+
+    if (rol === 'Medico') {
+      let id = parseInt(localStorage.getItem('id') || '0');
+      //this.getCitasByMedicoId(id);
+    }
+  }
+
+  public getCitasByPacienteId(id: number) {
+    this.citasService.getCitasByPaciente(id, 0, 10).subscribe((data) => {
+      this.citas = data;
+      this.addEvent();
+      console.log(this.citas);
+    });
+  }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -172,14 +208,32 @@ export class CalendarioComponent  {
 
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
-    //this.modal.open(this.modalContent, { size: 'lg' });
   }
 
   addEvent(): void {
+
+    for(const cita of this.citas){
+      this.events.push({
+        title: `Cita de ${cita.nombre} desde ${cita.fechaDesde} hasta ${cita.fechaHasta}`,
+        start: new Date(cita.fechaDesde),
+        end: new Date(cita.fechaHasta),
+        color: colors[utilityColors[this.index]],
+        draggable: true,
+        resizable: {
+          beforeStart: true,
+          afterEnd: true,
+        },
+      });
+      this.index += 1;
+    }
+    this.events = [
+      ...this.events
+    ]
+/*
     this.events = [
       ...this.events,
       {
-        title: 'New event',
+        title: 'Cita de {{this.cita}}',
         start: startOfDay(new Date()),
         end: endOfDay(new Date()),
         color: colors['red'],
@@ -190,6 +244,8 @@ export class CalendarioComponent  {
         },
       },
     ];
+    
+*/
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {

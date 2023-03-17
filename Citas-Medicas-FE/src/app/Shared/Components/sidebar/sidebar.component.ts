@@ -8,6 +8,11 @@ import { modules } from 'src/app/Core/Models/modules.models';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
+  
+  calendario: modules[] = [
+    { name: 'Calendario', route: 'dashboard/calendario', icon: 'Calendario' },
+  ];
+
   generales: modules[] = [
     {
       name: 'Citas',
@@ -33,12 +38,10 @@ export class SidebarComponent implements OnInit {
       name: 'Especialidades',
       route: 'dashboard/especialidades/list',
       icon: 'bubble_chart',
-    }
+    },
   ];
 
-  preferencias: modules[] = [
-    { name: 'Account', route: '#', icon: 'person' },
-  ];
+  preferencias: modules[] = [{ name: 'Account', route: '#', icon: 'person' }];
 
   constructor(private router: Router) {}
 

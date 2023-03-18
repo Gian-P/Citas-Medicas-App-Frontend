@@ -1,7 +1,7 @@
 <app-page title="Administradores">
   <div class="button-container">
-    <button mat-raised-button (click)="openDialogCreate()" class="button">Agregar administrador</button>
-    <button mat-raised-button (click)="openDialogStandbyList()" class="button">Administradores en espera</button>
+    <button mat-raised-button (click)="openDialogCreate()" class="button">AGREGAR ADMINISTRADOR</button>
+    <button mat-raised-button (click)="openDialogStandbyList()" class="button">ADMINISTRADORES EN ESPERA</button>
   </div>
 
   <table mat-table [dataSource]="dataSource">
@@ -26,7 +26,7 @@
     </ng-container>
 
     <ng-container matColumnDef="numero">
-      <th mat-header-cell *matHeaderCellDef>Numero</th>
+      <th mat-header-cell *matHeaderCellDef>Número</th>
       <td mat-cell *matCellDef="let element">{{ element.numero }}</td>
     </ng-container>
 

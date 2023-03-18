@@ -1,19 +1,11 @@
 import {
   Component,
-  ChangeDetectionStrategy,
   ViewChild,
   TemplateRef,
 } from '@angular/core';
 import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
   isSameDay,
   isSameMonth,
-  addHours,
-  parseISO,
 } from 'date-fns';
 import { Subject } from 'rxjs';
 import {
@@ -49,7 +41,6 @@ const utilityColors: string[] = ['red', 'blue', 'yellow'];
 
 @Component({
   selector: 'app-calendario',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [
     `
       h3 {
@@ -71,6 +62,10 @@ export class CalendarioComponent implements OnInit {
 
   index: number = 0;
 
+  idCita: number = 0;
+
+  rol = localStorage.getItem('rol');
+
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
@@ -83,6 +78,7 @@ export class CalendarioComponent implements OnInit {
   };
 
   actions: CalendarEventAction[] = [
+
     {
       label: '<i class="fas fa-fw fa-pencil-alt"></i>',
       a11yLabel: 'Edit',
@@ -94,55 +90,37 @@ export class CalendarioComponent implements OnInit {
       label: '<i class="fas fa-fw fa-trash-alt"></i>',
       a11yLabel: 'Delete',
       onClick: ({ event }: { event: CalendarEvent }): void => {
+        console.log(event.id);
         this.events = this.events.filter((iEvent) => iEvent !== event);
+        this.citasService.deleteCitas(event.id!).subscribe((resp) => {
+          console.log(resp)
+        });
         this.handleEvent('Deleted', event);
       },
     },
+
+    /*
+    {
+      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
+      a11yLabel: 'Edit',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        this.handleEvent('Edited', event);
+      },
+    },
+    {
+      label: '<i class="fas fa-fw fa-trash-alt"></i>',
+      a11yLabel: 'Delete',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        console.log(event);
+        this.events = this.events.filter((iEvent) => iEvent !== event);
+        this.handleEvent('Deleted', event);
+      },
+    },*/
   ];
 
   refresh = new Subject<void>();
 
-  events: CalendarEvent[] = [
-    /*
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: { ...colors['red'] },
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: { ...colors['yellow'] },
-      actions: this.actions,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: { ...colors['blue'] },
-      allDay: true,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: { ...colors['yellow'] },
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },*/
-  ];
+  events: CalendarEvent[] = [];
 
   activeDayIsOpen: boolean = true;
 
@@ -153,16 +131,9 @@ export class CalendarioComponent implements OnInit {
   }
 
   public getCitas() {
-    let rol = localStorage.getItem('rol');
-
-    if (rol === 'Cliente') {
+    if (this.rol === 'Cliente') {
       let id = parseInt(localStorage.getItem('id') || '0');
       this.getCitasByPacienteId(id);
-    }
-
-    if (rol === 'Medico') {
-      let id = parseInt(localStorage.getItem('id') || '0');
-      //this.getCitasByMedicoId(id);
     }
   }
 
@@ -211,41 +182,28 @@ export class CalendarioComponent implements OnInit {
   }
 
   addEvent(): void {
-
-    for(const cita of this.citas){
+    /*
+    > new Date().toLocaleString()
+    > "11/10/2016, 11:49:36 AM"
+    */
+    for (const cita of this.citas) {
       this.events.push({
-        title: `Cita de ${cita.nombre} desde ${cita.fechaDesde} hasta ${cita.fechaHasta}`,
-        start: new Date(cita.fechaDesde),
-        end: new Date(cita.fechaHasta),
+        title: `Cita de <strong>${
+          cita.nombre
+        }</strong> desde las horas <strong>${cita.fechaDesde
+          .toString()
+          .substring(11, 19)}</strong> hasta las horas <strong>${cita.fechaHasta
+          .toString()
+          .substring(11, 19)}</strong>`,
+        start: new Date(cita.fechaDesde.toLocaleString()),
+        end: new Date(cita.fechaHasta.toLocaleString()),
         color: colors[utilityColors[this.index]],
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
+        actions: this.actions,
+        id: cita.idCita,
       });
       this.index += 1;
     }
-    this.events = [
-      ...this.events
-    ]
-/*
-    this.events = [
-      ...this.events,
-      {
-        title: 'Cita de {{this.cita}}',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors['red'],
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
-    
-*/
+    this.events = [...this.events];
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {

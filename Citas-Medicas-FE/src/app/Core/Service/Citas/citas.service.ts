@@ -33,8 +33,8 @@ export class CitaService {
     return this.http.get(environment.baseUrl + 'citas-por-paciente/' + id + '/' + pageNo + '/' + pageSize);
   }
 
-  public deleteCitas(id: number): Observable<any> {
-    return this.http.delete(environment.baseUrl + 'eliminar-cita/' + id);
+  public deleteCitas(id: number | string): Observable<any> {
+    return this.http.put(environment.baseUrl + 'eliminar-cita/' + id, null);
   }
 
   public updateCita(cita: any): Observable<any> {

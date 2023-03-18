@@ -8,7 +8,6 @@ import { modules } from 'src/app/Core/Models/modules.models';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
-  
   calendario: modules[] = [
     { name: 'Calendario', route: 'dashboard/calendario', icon: 'Calendario' },
   ];
@@ -20,7 +19,7 @@ export class SidebarComponent implements OnInit {
       icon: 'date_range',
     },
     {
-      name: 'Medicos',
+      name: 'Médicos',
       route: 'dashboard/medicos/list',
       icon: 'people',
     },

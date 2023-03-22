@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
+import { Citas } from 'src/app/Core/Models/citas/citas.models';
 
 @Injectable({
   providedIn: 'root',
@@ -38,7 +39,10 @@ export class CitaService {
   }
 
   public updateCita(cita: any): Observable<any> {
-    return this.http.put(environment.baseUrl + 'actualizar-cita/' + cita.id , cita);
+    return this.http.put(
+      environment.baseUrl + 'actualizar-cita/' + cita.idCita,
+      cita
+    );
   }
 
   public addGoogleMeetLink(idCita: number, meet: any): Observable<any> {

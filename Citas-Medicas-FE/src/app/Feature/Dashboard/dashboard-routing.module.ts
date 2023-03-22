@@ -5,7 +5,7 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('./Components/calendario/calendario.module').then(
+      import('./Components/Calendario/calendario.module').then(
         (m) => m.CalendarioModule
       ),
   },

@@ -1,23 +1,21 @@
-import {
-  Component,
-  ViewChild,
-  TemplateRef,
-} from '@angular/core';
-import {
-  isSameDay,
-  isSameMonth,
-} from 'date-fns';
+import { Component, ViewChild, TemplateRef } from '@angular/core';
+import { isSameDay, isSameMonth } from 'date-fns';
 import { Subject } from 'rxjs';
 import {
   CalendarEvent,
+  CalendarMonthViewBeforeRenderEvent,
   CalendarEventAction,
   CalendarEventTimesChangedEvent,
   CalendarView,
 } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
-import { CitaService } from '../../../../Core/Service/Citas/citas.service';
+import { CitaService } from '../../../../../Core/Service/Citas/citas.service';
 import { OnInit } from '@angular/core';
-import { Citas } from '../../../../Core/Models/citas/citas.models';
+import { Citas } from '../../../../../Core/Models/citas/citas.models';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+import { MatDialog } from '@angular/material/dialog';
+import { CalendarioFormComponent } from '../calendario-form/calendario-form.component';
 
 const colors: Record<string, EventColor> = {
   /* el color red se utiliza para las citas que han sido eliminadas */
@@ -53,9 +51,10 @@ const utilityColors: string[] = ['red', 'blue', 'yellow'];
       }
     `,
   ],
-  templateUrl: './calendario.component.html',
+  styleUrls: ['./calendario-list.component.scss'],
+  templateUrl: './calendario-list.component.html',
 })
-export class CalendarioComponent implements OnInit {
+export class CalendarioListComponent implements OnInit {
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
 
   public citas: Citas[] = [];
@@ -66,26 +65,44 @@ export class CalendarioComponent implements OnInit {
 
   rol = localStorage.getItem('rol');
 
+  PopUpElement: any;
+  ModifyIcon: any;
+
+  locale: string = 'es';
+
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
 
   viewDate: Date = new Date();
 
+  activeDayIsOpen: boolean = false;
   modalData!: {
     action: string;
     event: CalendarEvent;
   };
 
-  actions: CalendarEventAction[] = [
+  beforeMonthViewRender(renderEvent: CalendarMonthViewBeforeRenderEvent): void {
+    if (!this.activeDayIsOpen) return;
+    this.PopUpElement = document.getElementsByClassName('cal-open-day-events');
+    this.ModifyIcon = document.getElementsByClassName('fa-pencil-alt');
 
+    setTimeout(() => {
+      this.PopUpElement[0].classList.value += ' bg-primary shadow-none';
+      this.ModifyIcon[0].classList.value += ' text-white link-secondary';
+    }, 0);
+  }
+
+  actions: CalendarEventAction[] = [
     {
       label: '<i class="fas fa-fw fa-pencil-alt"></i>',
       a11yLabel: 'Edit',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.handleEvent('Edited', event);
+        this.openAddMedicoDialog();
       },
     },
+    /*
     {
       label: '<i class="fas fa-fw fa-trash-alt"></i>',
       a11yLabel: 'Delete',
@@ -93,40 +110,22 @@ export class CalendarioComponent implements OnInit {
         console.log(event.id);
         this.events = this.events.filter((iEvent) => iEvent !== event);
         this.citasService.deleteCitas(event.id!).subscribe((resp) => {
-          console.log(resp)
+          console.log(resp);
         });
         this.handleEvent('Deleted', event);
       },
     },
-
-    /*
-    {
-      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-      a11yLabel: 'Edit',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      },
-    },
-    {
-      label: '<i class="fas fa-fw fa-trash-alt"></i>',
-      a11yLabel: 'Delete',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        console.log(event);
-        this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      },
-    },*/
+    */
   ];
 
   refresh = new Subject<void>();
 
   events: CalendarEvent[] = [];
 
-  activeDayIsOpen: boolean = true;
-
-  constructor(private citasService: CitaService) {}
+  constructor(private citasService: CitaService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
+    registerLocaleData(localeEs);
     this.getCitas();
   }
 
@@ -141,7 +140,6 @@ export class CalendarioComponent implements OnInit {
     this.citasService.getCitasByPaciente(id, 0, 10).subscribe((data) => {
       this.citas = data;
       this.addEvent();
-      console.log(this.citas);
     });
   }
 
@@ -216,5 +214,17 @@ export class CalendarioComponent implements OnInit {
 
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
+  }
+
+  public openAddMedicoDialog() {
+
+    const dialogRef = this.dialog.open(CalendarioFormComponent, {
+      width: '40%',
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      //this.getMedicos();
+    });
+    
   }
 }

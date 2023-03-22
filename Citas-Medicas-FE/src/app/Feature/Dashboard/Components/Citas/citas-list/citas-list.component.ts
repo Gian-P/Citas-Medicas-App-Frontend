@@ -17,6 +17,7 @@ export class CitasListComponent implements OnInit {
   public citas: Citas[] = [];
 
   displayedColumns: string[] = [
+    'id',
     'nombre',
     'apellido',
     'email',

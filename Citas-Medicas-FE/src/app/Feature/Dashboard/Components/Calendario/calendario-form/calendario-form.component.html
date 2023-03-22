@@ -1,0 +1,97 @@
+<div class="container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="d-flex justify-content-end">
+      <button
+        (click)="closeDialog()"
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="row align-items-center">
+      <div class="col">
+        <h1 class="text-center">Formulario para modificar cita</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+        <label for="exampleInputIdCita" class="form-label">Id de la cita a modificar</label>
+        <div class="form-floating mb-3">
+          <input
+            formControlName="IdCita"
+            type="number"
+            class="form-control"
+            id="floatingInput"
+            placeholder="name@example.com"
+          />
+          <label for="floatingInput">Id cita</label>
+        </div>
+      </div>
+
+      <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+        <label for="exampleInputFechaDesde" class="form-label">Nueva fecha de comienzo de la cita</label>
+        <div class="form-floating mb-3">
+          <input
+            formControlName="FechaDesde"
+            type="text"
+            class="form-control"
+            id="floatingInput"
+            placeholder="name@example.com"
+          />
+          <label for="floatingInput">Formato: yyyy-mm-dd hh:mm:ss</label>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+
+       <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+        <label for="exampleInputFechaHasta" class="form-label">Nueva fecha de acabado de la cita</label>
+        <div class="form-floating mb-3">
+          <input
+            formControlName="FechaHasta"
+            type="text"
+            class="form-control"
+            id="floatingInput"
+            placeholder="name@example.com"
+          />
+          <label for="floatingInput">Formato: yyyy-mm-dd hh:mm:ss</label>
+        </div>
+      </div>
+
+      <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+        <label for="exampleInputTipoCita" class="form-label">Modalidad de la cita</label>
+        <div class="form-floating mb-3">
+          <select class="form-control" formControlName="TipoCita">
+            <option [disabled]="true" value="">Selecciona el nuevo tipo de la cita</option>
+            <option
+              value="Presencial"
+            >
+            Presencial
+            </option>
+            <option
+              value="Virtual"
+            >
+            Virtual
+            </option>
+          </select>
+          <label for="floatingInput">Ingresa tu dirección</label>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="IsLoading" class="text-center mb-4">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div class="d-grid">
+      <button
+        class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2"
+        type="submit"
+      >
+        Guardar
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CalendarioComponent } from "./calendario.component";
+import { CalendarioListComponent } from './calendario-list/calendario-list.component';
 
 const routes: Routes = [
   {
     path: 'calendario',
-    component: CalendarioComponent,
+    component: CalendarioListComponent,
   },
 ];
 

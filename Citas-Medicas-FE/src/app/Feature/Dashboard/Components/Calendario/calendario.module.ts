@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { CalendarioComponent } from './calendario.component';
 import { CalendarioRoutingModule } from './calendario-routing.module';
 import { SharedModule } from '../../../../Shared/shared.module';
+import { CalendarioFormComponent } from './calendario-form/calendario-form.component';
+import { CalendarioListComponent } from './calendario-list/calendario-list.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
+    ReactiveFormsModule,
     CalendarioRoutingModule,
     SharedModule,
     FlatpickrModule.forRoot(),
@@ -20,7 +21,10 @@ import { SharedModule } from '../../../../Shared/shared.module';
       useFactory: adapterFactory,
     }),
   ],
-  declarations: [CalendarioComponent],
-  exports: [CalendarioComponent],
+  declarations: [
+    CalendarioFormComponent,
+    CalendarioListComponent,
+  ],
+  exports: [],
 })
 export class CalendarioModule {}

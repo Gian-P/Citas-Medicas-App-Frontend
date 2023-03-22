@@ -13,13 +13,13 @@
         <h1 class="text-center">Formulario para modificar cita</h1>
       </div>
     </div>
-    <div class="row">
 
-      <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+    <div class="row">
+      <div class="col offset-sm-2 offset-md-0">
         <label for="exampleInputFechaDesde" class="form-label">Nueva fecha de comienzo de la cita</label>
         <div class="form-floating mb-3">
           <input
-            formControlName="FechaDesde"
+            formControlName="fechaDesde"
             type="text"
             class="form-control"
             id="floatingInput"
@@ -31,12 +31,11 @@
     </div>
     
     <div class="row">
-
-       <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+       <div class="col offset-sm-2 offset-md-0">
         <label for="exampleInputFechaHasta" class="form-label">Nueva fecha de acabado de la cita</label>
         <div class="form-floating mb-3">
           <input
-            formControlName="FechaHasta"
+            formControlName="fechaHasta"
             type="text"
             class="form-control"
             id="floatingInput"
@@ -45,11 +44,13 @@
           <label for="floatingInput">Formato: yyyy-mm-dd hh:mm:ss</label>
         </div>
       </div>
+    </div>
 
-      <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+    <div class="row">
+      <div class="col offset-sm-2 offset-md-0">
         <label for="exampleInputTipoCita" class="form-label">Modalidad de la cita</label>
         <div class="form-floating mb-3">
-          <select class="form-control" formControlName="TipoCita">
+          <select class="form-control" formControlName="tipoCita">
             <option [disabled]="true" value="">Selecciona el nuevo tipo de la cita</option>
             <option
               value="Presencial"

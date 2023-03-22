@@ -1,8 +1,7 @@
 import { Base } from '../base.models';
 
-export interface ModificarCitas {
+export interface CitaModificada extends Base {
   fechaDesde: Date;
   fechaHasta: Date;
   tipoCita: string;
-  IdCita: number;
 }

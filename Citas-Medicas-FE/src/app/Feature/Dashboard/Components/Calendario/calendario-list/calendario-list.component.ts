@@ -86,6 +86,7 @@ export class CalendarioListComponent implements OnInit {
     if (!this.activeDayIsOpen) return;
     this.PopUpElement = document.getElementsByClassName('cal-open-day-events');
     this.ModifyIcon = document.getElementsByClassName('fa-pencil-alt');
+    console.log(this.PopUpElement);
 
     setTimeout(() => {
       this.PopUpElement[0].classList.value += ' bg-primary shadow-none';
@@ -99,7 +100,7 @@ export class CalendarioListComponent implements OnInit {
       a11yLabel: 'Edit',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.handleEvent('Edited', event);
-        this.openAddMedicoDialog();
+        this.openAddMedicoDialog(event);
       },
     },
     /*
@@ -204,9 +205,13 @@ export class CalendarioListComponent implements OnInit {
     this.events = [...this.events];
   }
 
+  /*
+  
   deleteEvent(eventToDelete: CalendarEvent) {
     this.events = this.events.filter((event) => event !== eventToDelete);
   }
+  
+  */
 
   setView(view: CalendarView) {
     this.view = view;
@@ -216,8 +221,9 @@ export class CalendarioListComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
 
-  public openAddMedicoDialog() {
+  public openAddMedicoDialog(event: CalendarEvent) {
 
+    localStorage.setItem('idCita', event.id!.toString());
     const dialogRef = this.dialog.open(CalendarioFormComponent, {
       width: '40%',
     });
@@ -225,6 +231,5 @@ export class CalendarioListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(() => {
       //this.getMedicos();
     });
-    
   }
 }

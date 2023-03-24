@@ -20,13 +20,13 @@ export class CalendarioFormComponent implements OnInit {
 
   public myObserver = {
     next: (resp: any) => {
-      console.log(resp);
+      this.closeDialog();
+      this.sweetAlertService.opensweetalertsuccess("Su cita ha sido modicada correctamente.");
     },
 
     error: (err: Error) => {
-      console.log(err);
       this.sweetAlertService.opensweetalerterror(
-        'Su solicitud no fue satisfactoria, inténtelo de nuevo.'
+        'Puedes cambiar la cita hasta 7 días antes de la fecha de inicio de la misma.'
       );
     },
 
@@ -41,7 +41,6 @@ export class CalendarioFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
-    //this.setData();
   }
 
   public onSubmit() {
@@ -49,6 +48,17 @@ export class CalendarioFormComponent implements OnInit {
       ...this.form.value,
     };
 
+    this.convertDate();
+    this.IsLoading = true;
+    this.CitaService.updateCita(this.citaModificada)
+      .subscribe(this.myObserver)
+      .add(() =>{
+        this.IsLoading = false;
+      });
+
+  }
+
+  convertDate(){
     this.Fecha1 = new Date(this.citaModificada.fechaDesde);
 
     this.Fecha1 = this.subtractHours(this.Fecha1, 4);
@@ -60,14 +70,6 @@ export class CalendarioFormComponent implements OnInit {
     this.Fecha2 = this.subtractHours(this.Fecha2, 4);
 
     this.citaModificada.fechaHasta = this.Fecha2.toISOString();
-
-    console.log(this.citaModificada);
-
-    this.modidifyCitaPaciente();
-  }
-
-  public modidifyCitaPaciente() {
-    this.CitaService.updateCita(this.citaModificada).subscribe(this.myObserver);
   }
 
   public closeDialog() {

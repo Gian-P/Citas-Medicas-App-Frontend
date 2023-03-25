@@ -6,11 +6,11 @@ import { CitaService } from '../../../../../Core/Service/Citas/citas.service';
 import { CitaModificada } from '../../../../../Core/Models/calendario/citaModificada.models';
 
 @Component({
-  selector: 'app-calendario-form',
-  templateUrl: './calendario-form.component.html',
-  styleUrls: ['./calendario-form.component.scss'],
+  selector: 'app-calendario-form-update',
+  templateUrl: './calendario-form-update.component.html',
+  styleUrls: ['./calendario-form-update.component.scss'],
 })
-export class CalendarioFormComponent implements OnInit {
+export class CalendarioFormUpdateComponent implements OnInit {
   public form: FormGroup = new FormGroup([]);
   public IsLoading: boolean = false;
   public citaModificada!: CitaModificada;
@@ -21,7 +21,9 @@ export class CalendarioFormComponent implements OnInit {
   public myObserver = {
     next: (resp: any) => {
       this.closeDialog();
-      this.sweetAlertService.opensweetalertsuccess("Su cita ha sido modicada correctamente.");
+      this.sweetAlertService.opensweetalertsuccess(
+        'Su cita ha sido modicada correctamente.'
+      );
     },
 
     error: (err: Error) => {
@@ -35,7 +37,7 @@ export class CalendarioFormComponent implements OnInit {
 
   constructor(
     private CitaService: CitaService,
-    private dialogRef: MatDialogRef<CalendarioFormComponent>,
+    private dialogRef: MatDialogRef<CalendarioFormUpdateComponent>,
     private sweetAlertService: SweetAlertService
   ) {}
 
@@ -52,13 +54,12 @@ export class CalendarioFormComponent implements OnInit {
     this.IsLoading = true;
     this.CitaService.updateCita(this.citaModificada)
       .subscribe(this.myObserver)
-      .add(() =>{
+      .add(() => {
         this.IsLoading = false;
       });
-
   }
 
-  convertDate(){
+  convertDate() {
     this.Fecha1 = new Date(this.citaModificada.fechaDesde);
 
     this.Fecha1 = this.subtractHours(this.Fecha1, 4);
@@ -84,7 +85,7 @@ export class CalendarioFormComponent implements OnInit {
     });
   }
 
-  subtractHours(date: Date, hours:number) {
+  subtractHours(date: Date, hours: number) {
     date.setHours(date.getHours() - hours);
     return date;
   }

@@ -6,8 +6,9 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarioRoutingModule } from './calendario-routing.module';
 import { SharedModule } from '../../../../Shared/shared.module';
-import { CalendarioFormComponent } from './calendario-form/calendario-form.component';
+import { CalendarioFormUpdateComponent } from './calendario-form-update/calendario-form-update.component';
 import { CalendarioListComponent } from './calendario-list/calendario-list.component';
+import { CalendarioFormDeleteComponent } from './calendario-form-delete/calendario-form-delete.component';
 
 @NgModule({
   imports: [
@@ -21,10 +22,7 @@ import { CalendarioListComponent } from './calendario-list/calendario-list.compo
       useFactory: adapterFactory,
     }),
   ],
-  declarations: [
-    CalendarioFormComponent,
-    CalendarioListComponent,
-  ],
+  declarations: [CalendarioFormUpdateComponent, CalendarioListComponent, CalendarioFormDeleteComponent],
   exports: [],
 })
 export class CalendarioModule {}

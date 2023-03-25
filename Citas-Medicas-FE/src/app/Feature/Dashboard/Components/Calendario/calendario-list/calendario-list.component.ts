@@ -14,7 +14,7 @@ import { Citas } from '../../../../../Core/Models/citas/citas.models';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { MatDialog } from '@angular/material/dialog';
-import { CalendarioFormComponent } from '../calendario-form/calendario-form.component';
+import { CalendarioFormUpdateComponent } from '../calendario-form-update/calendario-form-update.component';
 import { SweetAlertService } from '../../../../../Miscelaneo/SweetAlert/sweet-alert.service';
 
 const colors: Record<string, EventColor> = {
@@ -64,8 +64,11 @@ export class CalendarioListComponent implements OnInit {
 
   rol = localStorage.getItem('rol');
 
+  id = parseInt(localStorage.getItem('id') || '0');
+
   PopUpElement: any;
   ModifyIcon: any;
+  DeleteIcon: any;
 
   view: CalendarView = CalendarView.Month;
 
@@ -75,12 +78,30 @@ export class CalendarioListComponent implements OnInit {
 
   activeDayIsOpen: boolean = false;
 
-  actions: CalendarEventAction[] = [
+  patientActions: CalendarEventAction[] = [
     {
       label: '<i class="fas fa-fw fa-pencil-alt"></i>',
       a11yLabel: 'Edit',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.openAddMedicoDialog(event);
+        this.openModifyDialog(event);
+      },
+    },
+  ];
+
+  DoctorActions: CalendarEventAction[] = [
+    {
+      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
+      a11yLabel: 'Edit',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        this.openModifyDialog(event);
+      },
+    },
+
+    {
+      label: '<i class="fas fa-fw fa-trash-alt"></i>',
+      a11yLabel: 'Delete',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        this.openDeleteDialog(event);
       },
     },
   ];
@@ -89,8 +110,9 @@ export class CalendarioListComponent implements OnInit {
 
   events: CalendarEvent[] = [];
 
-  CitasPacienteObservable = {
+  Observable = {
     next: (data: Citas[]) => {
+      console.log(data);
       this.events = [];
       this.citas = data;
       this.addEvent();
@@ -121,29 +143,45 @@ export class CalendarioListComponent implements OnInit {
 
     this.PopUpElement = document.getElementsByClassName('cal-open-day-events');
     this.ModifyIcon = document.getElementsByClassName('fa-pencil-alt');
+    this.DeleteIcon = document.getElementsByClassName('fa-trash-alt');
 
     setTimeout(() => {
-      for (let element of this.PopUpElement) {
-        this.setPopUpElementColor(element);
-      }
-      for (let element of this.ModifyIcon) {
-        this.setIconElementColor(element);
+      for (let i = 0; i < this.PopUpElement.length; i++) {
+        this.setPopUpElementColor(this.PopUpElement[i]);
+        this.setIconElementColor(this.ModifyIcon[i]);
+        if (this.DeleteIcon.length > 0) {
+          this.setIconElementColor(this.DeleteIcon[i]);
+        }
       }
     }, 0);
   }
 
-  public getCitas() {
+  getCitas() {
     if (this.rol === 'Cliente') {
-      let id = parseInt(localStorage.getItem('id') || '0');
-      this.getCitasByPacienteId(id);
+      this.getCitasByPacienteId(this.id);
+    } else if (this.rol === 'Medico') {
+      this.getCitasByMedicoId(this.id);
     }
   }
 
-  public getCitasByPacienteId(id: number) {
-    this.citaService
-      .getCitasByPaciente(id, 0, 10)
-      .subscribe(this.CitasPacienteObservable);
+  getCitasByPacienteId(id: number) {
+    this.citaService.getCitasByPaciente(id, 0, 15).subscribe(this.Observable);
   }
+
+  getCitasByMedicoId(id: number) {
+    this.citaService.getCitasByDoctor(id, 0, 15).subscribe(this.Observable);
+  }
+
+  deleteCitaPaciente(){
+    this.citaService.deleteCitas((localStorage.getItem('idCita') || 0))
+      .subscribe(() => {
+        this.sweetAlertService.opensweetalertsuccess("La cita ha sido eliminada satisfactoriamente.");
+        this.activeDayIsOpen = false;
+        this.getCitas();
+      })
+  }
+
+
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -161,9 +199,11 @@ export class CalendarioListComponent implements OnInit {
 
   addEvent(): void {
     for (const cita of this.citas) {
-      if(cita.estatus !== 'ACEPTADA') continue;
+      if (cita.estatus !== 'ACEPTADA') continue;
       this.events.push({
-        title: `Cita con el doctor <strong>${
+        title: `Cita con el ${
+          this.rol === 'Cliente' ? 'medico' : 'paciente'
+        } <strong>${
           cita.nombre
         }</strong> desde las horas <strong>${cita.fechaDesde
           .toString()
@@ -173,7 +213,8 @@ export class CalendarioListComponent implements OnInit {
         start: new Date(cita.fechaDesde.toLocaleString()),
         end: new Date(cita.fechaHasta.toLocaleString()),
         color: this.calculateHoursDiff(cita.fechaDesde),
-        actions: this.actions,
+        actions:
+          this.rol === 'Cliente' ? this.patientActions : this.DoctorActions,
         id: cita.idCita,
       });
     }
@@ -188,15 +229,31 @@ export class CalendarioListComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
 
-  openAddMedicoDialog(event: CalendarEvent) {
+  /* falta bregarlo */
+  openModifyDialog(event: CalendarEvent) {
     localStorage.setItem('idCita', event.id!.toString());
-    const dialogRef = this.dialog.open(CalendarioFormComponent, {
+    const dialogRef = this.dialog.open(CalendarioFormUpdateComponent, {
       width: '40%',
     });
 
     dialogRef.afterClosed().subscribe(() => {
-       this.getCitas();
+      this.activeDayIsOpen = false;
+      this.getCitas();
     });
+  }
+
+  openDeleteDialog(event: CalendarEvent) {
+    localStorage.setItem('idCita', event.id!.toString());
+
+    this.sweetAlertService
+      .opensweetalertdelete(
+        `Está a punto de eliminar esta cita, elija la opción que considere.`
+      )
+      .subscribe((confirm) => {
+        if(confirm){
+          this.deleteCitaPaciente();
+        }
+      });
   }
 
   setPopUpElementColor(element: any) {
@@ -208,24 +265,21 @@ export class CalendarioListComponent implements OnInit {
   }
 
   calculateHoursDiff(citaFechaDesde: Date) {
-
     const currentTime = new Date();
 
-    const time = new Date(citaFechaDesde).valueOf() - new Date(currentTime).valueOf();
+    const time =
+      new Date(citaFechaDesde).valueOf() - new Date(currentTime).valueOf();
 
     const diffInHours = Math.trunc(time / 1000 / 60 / 60);
 
-    if(diffInHours < 0) return colors['expire'];
+    if (diffInHours < 0) return colors['expire'];
 
     if (diffInHours > 72) {
       return colors['blue'];
-    } 
-
-    else if (diffInHours >= 48 && diffInHours <= 72) {
+    } else if (diffInHours >= 48 && diffInHours <= 72) {
       return colors['yellow'];
     }
 
     return colors['red'];
-
   }
 }

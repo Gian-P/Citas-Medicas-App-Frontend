@@ -22,12 +22,7 @@ const MODULES : any = [
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [
-    CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory,
-    }),
-    ...MODULES,
+  imports: [...MODULES,
   ],
   providers: [
     {

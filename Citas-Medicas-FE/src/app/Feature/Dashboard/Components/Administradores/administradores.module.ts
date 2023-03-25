@@ -10,6 +10,7 @@ import { SharedModule } from 'src/app/Shared/shared.module';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { MatButtonModule } from '@angular/material/button';
     ReactiveFormsModule,
     MatTableModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatPaginatorModule
   ]
 })
 export class AdministradoresModule { }

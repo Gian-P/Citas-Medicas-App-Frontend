@@ -1,13 +1,19 @@
 <app-page title="Administradores">
   <div class="button-container">
-    <button mat-raised-button (click)="openDialogCreate()" class="button">AGREGAR ADMINISTRADOR</button>
-    <button mat-raised-button (click)="openDialogStandbyList()" class="button">ADMINISTRADORES EN ESPERA</button>
+    <button mat-raised-button (click)="openDialogCreate()" class="button">
+      AGREGAR ADMINISTRADOR
+    </button>
+    <button mat-raised-button (click)="openDialogStandbyList()" class="button">
+      ADMINISTRADORES EN ESPERA
+    </button>
   </div>
 
   <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="cedula">
       <th mat-header-cell *matHeaderCellDef>Cedula</th>
-      <td mat-cell class="tdcedula" *matCellDef="let element">{{ element.cedula }}</td>
+      <td mat-cell class="tdcedula" *matCellDef="let element">
+        {{ element.cedula }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="nombre">
@@ -36,7 +42,11 @@
         <button mat-mini-fab color="accent" (click)="openDialogUpdate(element)">
           <mat-icon color="">edit</mat-icon>
         </button>
-        <button mat-mini-fab color="warn" (click)="deleteAdmin(element.idMedico)">
+        <button
+          mat-mini-fab
+          color="warn"
+          (click)="deleteAdmin(element.idMedico)"
+        >
           <mat-icon>delete</mat-icon>
         </button>
       </td>
@@ -45,4 +55,11 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
+  <mat-paginator
+    [pageSizeOptions]="[5, 8, 25, 50]"
+    [pageSize]="8"
+    [length]="paginator?.length"
+    (page)="getAdministradores($event.pageIndex, $event.pageSize)"
+  >
+  </mat-paginator>
 </app-page>

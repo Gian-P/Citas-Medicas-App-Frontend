@@ -33,22 +33,22 @@ export class AdministradoresListComponent implements OnInit {
     private dialog: MatDialog,
     private sweetAlert: SweetAlertService
   ) {
-    this.getAdministradores();
   }
 
   ngOnInit(): void {
-    this.getAdministradores();
+    this.getAdministradores(0, 8);
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
 
-  getAdministradores(): void {
-    this.adminService.getAdminsPaged(0, 8).subscribe(
+  getAdministradores(pageNo: number, pageSize: number): void {
+    this.adminService.getAdminsPaged(pageNo, pageSize).subscribe(
       (res) => {
         this.administradores = res;
         this.dataSource = new MatTableDataSource<User>(this.administradores);
+        this.paginator.length = 100;
       },
       (err) => {
         this.sweetAlert.opensweetalerterror(
@@ -68,7 +68,7 @@ export class AdministradoresListComponent implements OnInit {
               this.sweetAlert.opensweetalertsuccess(
                 'Administrador eliminado correctamente'
               );
-              this.getAdministradores();
+              this.getAdministradores(0, 10);
             },
             (err) => {
               this.sweetAlert.opensweetalerterror(
@@ -88,7 +88,7 @@ export class AdministradoresListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.getAdministradores();
+        this.getAdministradores(0, 10);
       }
     });
   }
@@ -100,7 +100,7 @@ export class AdministradoresListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.getAdministradores();
+        this.getAdministradores(0, 10);
       }
     });
   }
@@ -112,7 +112,7 @@ export class AdministradoresListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.getAdministradores();
+        this.getAdministradores(0,10);
       }
     });
   }

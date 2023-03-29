@@ -20,13 +20,13 @@
   <!-- fecha desde Column -->
   <ng-container matColumnDef="fechaDesde">
     <th mat-header-cell *matHeaderCellDef>Desde</th>
-    <td mat-cell *matCellDef="let element">{{ element.fechaDesde }}</td>
+    <td mat-cell *matCellDef="let element">{{ element.fechaDesde.toString().replace("T"," - ") }}</td>
   </ng-container>
 
-  <!-- fecha desde Column -->
+  <!-- fecha hasta Column -->
   <ng-container matColumnDef="fechaHasta">
     <th mat-header-cell *matHeaderCellDef>Hasta</th>
-    <td mat-cell *matCellDef="let element">{{ element.fechaHasta }}</td>
+    <td mat-cell *matCellDef="let element">{{ element.fechaHasta.toString().replace("T"," - ") }}</td>
   </ng-container>
 
   <!-- estatus Column -->

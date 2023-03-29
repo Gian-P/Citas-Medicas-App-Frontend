@@ -2,11 +2,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { User } from 'src/app/Core/Models/users/users.models';
 import { AdminService } from 'src/app/Core/Service/Admin/admin.service';
 import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.service';
 import { AdministradoresFormComponent } from '../administradores-form/administradores-form.component';
 import { AdministradoresStandbyListComponent } from '../administradores-standby-list/administradores-standby-list.component';
+import {
+  BaseResponseAdministrador,
+  Administrador,
+} from '../../../../../Core/Models/users/administrador.models';
 
 @Component({
   selector: 'app-administradores-list',
@@ -14,8 +17,9 @@ import { AdministradoresStandbyListComponent } from '../administradores-standby-
   styleUrls: ['./administradores-list.component.scss'],
 })
 export class AdministradoresListComponent implements OnInit {
-  administradores: User[] = [];
+  administradores!: BaseResponseAdministrador;
   public dataSource: any;
+  public rol: string = '';
 
   displayedColumns: string[] = [
     'cedula',
@@ -32,11 +36,11 @@ export class AdministradoresListComponent implements OnInit {
     private adminService: AdminService,
     private dialog: MatDialog,
     private sweetAlert: SweetAlertService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.getAdministradores(0, 8);
+    this.rol = localStorage.getItem('rol') as string;
   }
 
   ngAfterViewInit() {
@@ -47,8 +51,10 @@ export class AdministradoresListComponent implements OnInit {
     this.adminService.getAdminsPaged(pageNo, pageSize).subscribe(
       (res) => {
         this.administradores = res;
-        this.dataSource = new MatTableDataSource<User>(this.administradores);
-        this.paginator.length = 100;
+        this.dataSource = new MatTableDataSource<Administrador>(
+          this.administradores.administradoresProjection
+        );
+        this.paginator.length = this.administradores.total;
       },
       (err) => {
         this.sweetAlert.opensweetalerterror(
@@ -80,7 +86,7 @@ export class AdministradoresListComponent implements OnInit {
       });
   }
 
-  openDialogUpdate(admin: User): void {
+  openDialogUpdate(admin: Administrador): void {
     const dialogRef = this.dialog.open(AdministradoresFormComponent, {
       width: '50%',
       data: admin,
@@ -112,13 +118,12 @@ export class AdministradoresListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.getAdministradores(0,10);
+        this.getAdministradores(0, 10);
       }
     });
   }
 
   openDialogRolCreate(): void {
-    // aqui va la funcionalidad para crear un rol. guiate por el metodo openDialogCreate()
 
     const dialogRef = this.dialog.open(AdministradoresFormComponent, {
       width: '40%',

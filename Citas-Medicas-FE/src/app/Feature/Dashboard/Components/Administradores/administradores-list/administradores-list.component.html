@@ -1,5 +1,5 @@
 <app-page title="Administradores">
-  <div class="button-container">
+  <div  *ngIf="rol === 'Administrador' "class="button-container">
     <button mat-raised-button (click)="openDialogCreate()" class="button">
       AGREGAR ADMINISTRADOR
     </button>

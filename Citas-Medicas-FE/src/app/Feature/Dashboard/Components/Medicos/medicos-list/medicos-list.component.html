@@ -1,5 +1,5 @@
 <app-page title="Medicos">
-  <div class="button-container">
+  <div *ngIf=" rol === 'Administrador' "class="button-container">
     <button mat-raised-button (click)="openAddMedicoDialog()" class="button">AGREGAR MEDICO</button>
     <button mat-raised-button (click)="openStanbyMedicoDialog()" class="button">MEDICOS EN ESPERA</button>
   </div>

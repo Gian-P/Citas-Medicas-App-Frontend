@@ -15,6 +15,7 @@ import { EspecialidadesFormComponent } from '../Especialidades-form/especialidad
 export class EspecialidadesListComponent implements OnInit {
   especialidades: especialidad[] = [];
   public dataSource: any;
+  public rol: string = '';
 
   displayedColumns: string[] = ['id', 'tipo', 'actions'];
 
@@ -30,6 +31,7 @@ export class EspecialidadesListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEspecialidades();
+    this.rol = localStorage.getItem('rol') as string;
   }
 
   ngAfterViewInit() {
@@ -41,7 +43,9 @@ export class EspecialidadesListComponent implements OnInit {
       .getEspecialidadesPaged(0, 10)
       .subscribe((especialidades) => {
         this.especialidades = especialidades;
-        this.dataSource = new MatTableDataSource<especialidad>(this.especialidades);
+        this.dataSource = new MatTableDataSource<especialidad>(
+          this.especialidades
+        );
       });
   }
 

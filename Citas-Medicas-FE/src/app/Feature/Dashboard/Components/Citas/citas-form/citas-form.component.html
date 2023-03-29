@@ -19,7 +19,7 @@
           <mat-label>Seleccione doctor</mat-label>
           <mat-select formControlName="idMedico">
             <mat-option
-              *ngFor="let doctor of doctors"
+              *ngFor="let doctor of doctors?.medicosEnEsperaProjections"
               value="{{ doctor.idMedico }}"
               >{{ doctor.nombre }}</mat-option
             >

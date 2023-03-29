@@ -2,11 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { User } from 'src/app/Core/Models/users/users.models';
 import { DoctorService } from 'src/app/Core/Service/Doctor/doctor.service';
 import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.service';
 import { MedicosFormComponent } from '../medicos-form/medicos-form.component';
 import { MedicosStandbyListComponent } from '../medicos-standby-list/medicos-standby-list.component';
+import { BaseResponseMedico, Medico } from '../../../../../Core/Models/users/medico.models';
 
 @Component({
   selector: 'app-medicos-list',
@@ -14,8 +14,9 @@ import { MedicosStandbyListComponent } from '../medicos-standby-list/medicos-sta
   styleUrls: ['./medicos-list.component.scss'],
 })
 export class MedicosListComponent implements OnInit {
-  public medicos: User[] = [];
+  public medicos!: BaseResponseMedico;
   public dataSource: any;
+  public rol: string = '';
 
   displayedColumns: string[] = [
     'cedula',
@@ -39,6 +40,7 @@ export class MedicosListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMedicos();
+    this.rol = localStorage.getItem('rol') as string;
   }
 
   ngAfterViewInit() {
@@ -48,7 +50,9 @@ export class MedicosListComponent implements OnInit {
   public getMedicos() {
     this.medicoService.getDoctorsPaged(0, 6).subscribe((data) => {
       this.medicos = data;
-      this.dataSource = new MatTableDataSource<User>(this.medicos);
+      this.dataSource = new MatTableDataSource<Medico>(
+        this.medicos.medicosEnEsperaProjections
+      );
     });
   }
 
@@ -67,7 +71,7 @@ export class MedicosListComponent implements OnInit {
       });
   }
 
-  public openEditMedicoDialog(medico: User) {
+  public openEditMedicoDialog(medico: Medico) {
     const dialogRef = this.dialog.open(MedicosFormComponent, {
       width: '600px',
       data: { medico },

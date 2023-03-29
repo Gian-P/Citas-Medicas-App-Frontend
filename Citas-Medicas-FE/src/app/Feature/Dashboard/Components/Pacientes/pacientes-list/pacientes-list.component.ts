@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { User } from 'src/app/Core/Models/users/users.models';
 import { PacienteService } from 'src/app/Core/Service/Pacientes/pacientes.service';
 import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.service';
 import { PacientesFormComponent } from '../pacientes-form/pacientes-form.component';
+import { BaseResponsePaciente, Paciente } from '../../../../../Core/Models/users/paciente.models';
 
 @Component({
   selector: 'app-pacientes-list',
@@ -13,7 +13,7 @@ import { PacientesFormComponent } from '../pacientes-form/pacientes-form.compone
   styleUrls: ['./pacientes-list.component.scss'],
 })
 export class PacientesListComponent implements OnInit {
-  public pacientes: User[] = [];
+  public pacientes!: BaseResponsePaciente;
   public dataSource: any;
 
   displayedColumns: string[] = [
@@ -46,7 +46,9 @@ export class PacientesListComponent implements OnInit {
   public getPacientes() {
     this.pacienteService.getPacientesPaged(0, 8).subscribe((res) => {
       this.pacientes = res;
-      this.dataSource = new MatTableDataSource<User>(this.pacientes);
+      this.dataSource = new MatTableDataSource<Paciente>(
+        this.pacientes.pacientesProjection
+      );
     });
   }
 
@@ -63,7 +65,7 @@ export class PacientesListComponent implements OnInit {
       });
   }
 
-  openDialogUpdate(paciente: User) {
+  openDialogUpdate(paciente: Paciente) {
     this.dialog.open(PacientesFormComponent, { data: paciente });
 
     this.dialog.afterAllClosed.subscribe(() => {

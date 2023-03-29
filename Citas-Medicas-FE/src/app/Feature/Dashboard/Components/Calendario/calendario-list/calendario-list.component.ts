@@ -146,13 +146,19 @@ export class CalendarioListComponent implements OnInit {
     this.DeleteIcon = document.getElementsByClassName('fa-trash-alt');
 
     setTimeout(() => {
-      for (let i = 0; i < this.PopUpElement.length; i++) {
-        this.setPopUpElementColor(this.PopUpElement[i]);
-        this.setIconElementColor(this.ModifyIcon[i]);
-        if (this.DeleteIcon.length > 0) {
-          this.setIconElementColor(this.DeleteIcon[i]);
-        }
+
+      for(let element of this.PopUpElement){
+        this.setPopUpElementColor(element);
       }
+
+      for(let element of this.ModifyIcon){
+        this.setIconElementColor(element);
+      }
+
+      for(let element of this.DeleteIcon){
+        this.setIconElementColor(element);
+      }
+      
     }, 0);
   }
 

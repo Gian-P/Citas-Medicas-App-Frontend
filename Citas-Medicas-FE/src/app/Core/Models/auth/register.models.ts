@@ -12,6 +12,8 @@ export interface Register extends Base {
     tipoTelefonoCasa: string
     numeroTelefonoCelular: string
     tipoTelefonoCelular: string
-    idEspecialidad: number
+    idEspecialidad?: number
+    estatus: string;
+    rol: string;
     usuarioDTO: login
 }

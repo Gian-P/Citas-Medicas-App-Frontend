@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment.prod';
 import { BaseService } from '../base.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PacienteRegisterService {
   private myAppUrl: string;
@@ -14,7 +14,15 @@ export class PacienteRegisterService {
     this.myAppUrl = environment.baseUrl;
   }
 
-  public post(register: Register): any {
+  public postPaciente(register: Register): any {
     return this.http.post(this.myAppUrl + 'registrar-paciente', register);
+  }
+
+  public postMedico(register: Register): any {
+    return this.http.post(this.myAppUrl + 'registrar-medico', register);
+  }
+
+  public postAdministrador(register: Register): any {
+    return this.http.post(this.myAppUrl + 'registrar-administrador', register);
   }
 }

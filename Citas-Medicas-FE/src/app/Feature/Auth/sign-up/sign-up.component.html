@@ -16,7 +16,7 @@
     <div class="row">
       <div class="col-sm-5 col-md-6">
         <mat-form-field class="mat-form" appearance="outline">
-          <mat-label>Correo electronico</mat-label>
+          <mat-label>Correo electrónico</mat-label>
           <input formControlName="email" matInput type="email" />
           <mat-error *ngIf="form.get('email')?.hasError('required')">
             El correo es requerido
@@ -27,7 +27,7 @@
         </mat-form-field>
       </div>
       <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
-        <mat-form-field class="mat-form" appearance="outline">
+        <mat-form-field class="mat-form minus-width" appearance="outline">
           <mat-label>Contraseña</mat-label>
           <input
             formControlName="password"
@@ -141,14 +141,28 @@
         </mat-form-field>
       </div>
     </div>
-    <div *ngIf="IsLoading" class="text-center mb-4">
+
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Select</mat-label>
+          <mat-select formControlName="rol">
+              <mat-option value="Administrador">Administrador</mat-option>
+              <mat-option value="Medico">Medico</mat-option>
+              <mat-option value="Paciente">Paciente</mat-option>
+          </mat-select>
+      </mat-form-field>
+    </div>
+
+    
+
+    <div *ngIf="isLoading" class="text-center mb-4">
       <div class="spinner-border text-primary" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>
     </div>
     <div class="d-grid">
       <button
-        *ngIf="!IsLoading"
+        *ngIf="!isLoading"
         mat-raised-button
         class="button"
         type="submit"

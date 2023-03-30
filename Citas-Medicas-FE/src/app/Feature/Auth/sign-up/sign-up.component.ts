@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { Register } from 'src/app/Core/Models/auth/register.models';
 import { PacienteRegisterService } from 'src/app/Core/Service/Auth/paciente-register.service';
 import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.service';
@@ -14,20 +13,65 @@ import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.ser
 export class SignUpComponent implements OnInit {
   public form: FormGroup = new FormGroup([]);
   public user!: Register;
-  public IsLoading: boolean = false;
+  public isLoading: boolean = false;
   public hide: boolean = true;
+  errorMsg: string = '';
+  public errorNames : string[] = [
+    'apellido',
+    'direccion',
+    'nombre',
+    'password',
+    'message',
+    'email',
+    'numeroTelefonoCasa',
+    'numeroTelefonoCelular',
+    'cedula'
+  ];
+
+  public registrationObserver = {
+    next: (x: any) => {
+      this.isLoading = false;
+      this.sweetAlertService.opensweetalertsuccess('Registro exitoso');
+      this.closeDialog();
+    },
+
+    error: (err: any) => {
+       this.isLoading = false;
+       this.errorMsg = this.findErrorName(err);
+
+       if (this.errorMsg === 'Email ya existe') {
+         this.errorMsg = 'El email que usted está tratando de utilizar ya se encuentra en uso.';
+       }
+
+       this.sweetAlertService.opensweetalerterror(
+         this.errorMsg ? this.errorMsg : 'Error al registrar'
+       );      
+    },
+
+    complete: () => {
+
+    },
+
+  };
+
   constructor(
     private dialogRef: MatDialogRef<SignUpComponent>,
     private registerService: PacienteRegisterService,
-    private sweetAlertService: SweetAlertService,
+    private sweetAlertService: SweetAlertService
   ) {}
 
   ngOnInit(): void {
     this.initializeForm();
   }
 
+  public findErrorName({error}:any){
+    for(let errorName of this.errorNames){
+      if(error[errorName]) return error[errorName];
+    }
+  }
+
   public onSubmit(): void {
-    this.IsLoading = true;
+    this.isLoading = true;
     const user: Register = {
       ...this.form.value,
     } as Register;
@@ -35,21 +79,36 @@ export class SignUpComponent implements OnInit {
     user.tipoTelefonoCasa = 'Casa';
     user.tipoTelefonoCelular = 'Celular';
 
-    this.registerService.post(user).subscribe(
-      (res: any) => {
-        this.IsLoading = false;
-        this.sweetAlertService.opensweetalertsuccess(
-          'Registro exitoso',
-        );
-        this.closeDialog();
-      },
-      (err: any) => {
-        this.IsLoading = false;
-        this.sweetAlertService.opensweetalerterror(
-          err.error ? err.error : 'Error al registrar',
-        );
-      }
-    );
+    if(user.rol === "") {
+      this.sweetAlertService.opensweetalerterror(
+        'La opción de rol está vacía, por favor elija uno de ellos.'
+      );
+      this.isLoading = false;
+      return;
+    };
+
+    if (user.rol === 'Paciente') {
+      this.registerService
+        .postPaciente(user)
+        .subscribe(this.registrationObserver);
+    }
+
+    else if(user.rol === 'Medico') {
+      user.idEspecialidad = 1;
+      user.estatus = "ESPERA"
+      console.log(user);
+      this.registerService
+        .postMedico(user)
+        .subscribe(this.registrationObserver);
+    }
+
+    else{
+      this.registerService
+        .postAdministrador(user)
+        .subscribe(this.registrationObserver);
+    }
+
+
   }
 
   private initializeForm(): void {
@@ -59,9 +118,8 @@ export class SignUpComponent implements OnInit {
       cedula: new FormControl('', [Validators.required]),
       direccion: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [
-        Validators.required
-      ]),
+      rol: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required]),
       numeroTelefonoCasa: new FormControl('', [Validators.required]),
       numeroTelefonoCelular: new FormControl('', [Validators.required]),
     });
@@ -69,10 +127,11 @@ export class SignUpComponent implements OnInit {
     this.user.usuarioDTO = {
       email: this.user.email,
       password: this.user.password,
-    }
+    };
   }
 
   closeDialog() {
     this.dialogRef.close();
   }
+
 }

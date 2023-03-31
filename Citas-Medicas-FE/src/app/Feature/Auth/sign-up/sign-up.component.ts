@@ -94,9 +94,6 @@ export class SignUpComponent implements OnInit {
     }
 
     else if(user.rol === 'Medico') {
-      user.idEspecialidad = 1;
-      user.estatus = "ESPERA"
-      console.log(user);
       this.registerService
         .postMedico(user)
         .subscribe(this.registrationObserver);

@@ -39,7 +39,7 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>Acciones</th>
       <td class="tdacciones" mat-cell *matCellDef="let element">
-        <button mat-mini-fab color="accent" (click)="openDialogUpdate(element)">
+        <button mat-mini-fab class="button-edit" (click)="openDialogUpdate(element)">
           <mat-icon color="">edit</mat-icon>
         </button>
         <button

@@ -38,7 +38,7 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>Acciones</th>
       <td class="tdacciones" mat-cell *matCellDef="let element">
-        <button mat-mini-fab color="accent" (click)="openEditMedicoDialog(element)">
+        <button mat-mini-fab class="button-edit" (click)="openEditMedicoDialog(element)">
           <mat-icon color="">edit</mat-icon>
         </button>
         <button mat-mini-fab color="warn" (click)="deleteMedico(element.idMedico)">

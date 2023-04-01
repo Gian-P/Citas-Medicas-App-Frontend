@@ -13,5 +13,6 @@ export interface Citas extends Base {
   idPaciente: number;
   tipoCita: string;
   idCita: number;
+  googleMeetLink: string;
   nombre: string;
 }

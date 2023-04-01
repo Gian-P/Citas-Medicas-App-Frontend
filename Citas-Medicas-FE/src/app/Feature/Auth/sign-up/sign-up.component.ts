@@ -15,7 +15,7 @@ export class SignUpComponent implements OnInit {
   public user!: Register;
   public isLoading: boolean = false;
   public hide: boolean = true;
-  errorMsg: string = '';
+  public errorMsg: string = '';
   public errorNames : string[] = [
     'apellido',
     'direccion',
@@ -37,7 +37,7 @@ export class SignUpComponent implements OnInit {
 
     error: (err: any) => {
        this.isLoading = false;
-       this.errorMsg = this.findErrorName(err);
+       this.errorMsg = this.findErrorMsg(err);
 
        if (this.errorMsg === 'Email ya existe') {
          this.errorMsg = 'El email que usted está tratando de utilizar ya se encuentra en uso.';
@@ -64,13 +64,14 @@ export class SignUpComponent implements OnInit {
     this.initializeForm();
   }
 
-  public findErrorName({error}:any){
+  public findErrorMsg({error}:any){
     for(let errorName of this.errorNames){
       if(error[errorName]) return error[errorName];
     }
   }
 
   public onSubmit(): void {
+    console.log("1");
     this.isLoading = true;
     const user: Register = {
       ...this.form.value,

@@ -69,6 +69,7 @@ export class CalendarioListComponent implements OnInit {
   PopUpElement: any;
   ModifyIcon: any;
   DeleteIcon: any;
+  GoogleMeetIcon: any;
 
   view: CalendarView = CalendarView.Month;
 
@@ -82,6 +83,14 @@ export class CalendarioListComponent implements OnInit {
     {
       label: '<i class="fas fa-fw fa-pencil-alt"></i>',
       a11yLabel: 'Edit',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        this.openModifyDialog(event);
+      },
+    },
+
+    {
+      label: "<div class='googleMeet d-inline'> - Ir al meet - </div>",
+      a11yLabel: 'googleMeet',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.openModifyDialog(event);
       },
@@ -112,7 +121,6 @@ export class CalendarioListComponent implements OnInit {
 
   Observable = {
     next: (data: Citas[]) => {
-      console.log(data);
       this.events = [];
       this.citas = data;
       this.addEvent();
@@ -144,21 +152,26 @@ export class CalendarioListComponent implements OnInit {
     this.PopUpElement = document.getElementsByClassName('cal-open-day-events');
     this.ModifyIcon = document.getElementsByClassName('fa-pencil-alt');
     this.DeleteIcon = document.getElementsByClassName('fa-trash-alt');
+    this.GoogleMeetIcon = document.getElementsByClassName('googleMeet');
+
+    console.log(this.GoogleMeetIcon);
 
     setTimeout(() => {
-
-      for(let element of this.PopUpElement){
+      for (let element of this.PopUpElement) {
         this.setPopUpElementColor(element);
       }
 
-      for(let element of this.ModifyIcon){
+      for (let element of this.ModifyIcon) {
         this.setIconElementColor(element);
       }
 
-      for(let element of this.DeleteIcon){
+      for (let element of this.DeleteIcon) {
         this.setIconElementColor(element);
       }
-      
+
+      for (let element of this.GoogleMeetIcon) {
+        this.setIconElementColor(element);
+      }
     }, 0);
   }
 
@@ -171,23 +184,24 @@ export class CalendarioListComponent implements OnInit {
   }
 
   getCitasByPacienteId(id: number) {
-    this.citaService.getCitasByPaciente(id, 0, 15).subscribe(this.Observable);
+    this.citaService.getCitasByPaciente(id, 0, 25).subscribe(this.Observable);
   }
 
   getCitasByMedicoId(id: number) {
-    this.citaService.getCitasByDoctor(id, 0, 15).subscribe(this.Observable);
+    this.citaService.getCitasByDoctor(id, 0, 25).subscribe(this.Observable);
   }
 
-  deleteCitaPaciente(){
-    this.citaService.deleteCitas((localStorage.getItem('idCita') || 0))
+  deleteCitaPaciente() {
+    this.citaService
+      .deleteCitas(localStorage.getItem('idCita') || 0)
       .subscribe(() => {
-        this.sweetAlertService.opensweetalertsuccess("La cita ha sido eliminada satisfactoriamente.");
+        this.sweetAlertService.opensweetalertsuccess(
+          'La cita ha sido eliminada satisfactoriamente.'
+        );
         this.activeDayIsOpen = false;
         this.getCitas();
-      })
+      });
   }
-
-
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -235,11 +249,10 @@ export class CalendarioListComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
 
-  /* falta bregarlo */
   openModifyDialog(event: CalendarEvent) {
     localStorage.setItem('idCita', event.id!.toString());
     const dialogRef = this.dialog.open(CalendarioFormUpdateComponent, {
-      width: '40%',
+      width: '25%',
     });
 
     dialogRef.afterClosed().subscribe(() => {
@@ -256,7 +269,7 @@ export class CalendarioListComponent implements OnInit {
         `Está a punto de eliminar esta cita, elija la opción que considere.`
       )
       .subscribe((confirm) => {
-        if(confirm){
+        if (confirm) {
           this.deleteCitaPaciente();
         }
       });

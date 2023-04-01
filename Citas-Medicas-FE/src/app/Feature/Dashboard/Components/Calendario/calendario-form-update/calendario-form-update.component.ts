@@ -19,14 +19,15 @@ export class CalendarioFormUpdateComponent implements OnInit {
   public Fecha2!: any;
 
   public myObserver = {
-    next: (resp: any) => {
+    next: () => {
       this.closeDialog();
       this.sweetAlertService.opensweetalertsuccess(
         'Su cita ha sido modicada correctamente.'
       );
     },
 
-    error: (err: Error) => {
+    error: (err: any) => {
+      console.log(err);
       this.sweetAlertService.opensweetalerterror(
         'Puedes cambiar la cita hasta 7 días antes de la fecha de inicio de la misma.'
       );
@@ -50,6 +51,14 @@ export class CalendarioFormUpdateComponent implements OnInit {
       ...this.form.value,
     };
 
+    if(this.citaModificada.fechaDesde === "" || this.citaModificada.fechaHasta === "" || this.citaModificada.tipoCita === ""){
+      this.sweetAlertService.opensweetalerterror(
+        "No completo uno de los campos, por favor revisar e intentar de nuevo."
+      );
+
+      return;
+    }
+
     this.convertDate();
     this.IsLoading = true;
     this.CitaService.updateCita(this.citaModificada)
@@ -57,6 +66,7 @@ export class CalendarioFormUpdateComponent implements OnInit {
       .add(() => {
         this.IsLoading = false;
       });
+
   }
 
   convertDate() {

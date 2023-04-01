@@ -22,6 +22,7 @@ export class CitasListComponent implements OnInit {
     'email',
     'fechaDesde',
     'fechaHasta',
+    'googleMeet',
     'estado',
   ];
   dataSource = new MatTableDataSource<Citas>(this.citas);

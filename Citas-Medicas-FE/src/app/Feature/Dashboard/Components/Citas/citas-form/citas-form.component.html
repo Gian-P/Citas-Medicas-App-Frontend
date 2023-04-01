@@ -9,7 +9,7 @@
   </div>
   <div class="row align-items-center">
     <div class="col">
-      <h1 class="text-center">Crear cita</h1>
+      <h1 class="text-center">Formulario para crear cita</h1>
     </div>
   </div>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -36,18 +36,23 @@
         </mat-form-field>
       </div>
     </div>
-    <div class="row mb-1">
+
+    
+     <div class="row mb-1">
+
       <mat-form-field appearance="fill">
-        <mat-label> Fecha de la cita </mat-label>
-        <mat-date-range-input [rangePicker]="picker">
-          <input formControlName="fechaDesde" matStartDate  placeholder="Fecha inicio" />
-          <input formControlName="fechaHasta" matEndDate placeholder="Fecha fin" />
-          <label>hola</label>
-        </mat-date-range-input>
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
+        <mat-label>Fecha y hora de comienzo de la cita</mat-label>
+        <input matInput type="datetime-local" formControlName="fechaDesde">
       </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Fecha y hora de acabado de la cita</mat-label>
+        <input formControlName="fechaHasta" matInput type="datetime-local">
+      </mat-form-field>
+
     </div>
+
+
     <div class="d-grid">
       <button class="button" mat-raised-button>Guardar</button>
     </div>

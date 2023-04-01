@@ -40,6 +40,12 @@
       <td mat-cell *matCellDef="let element">{{ element.fechaHasta.toString().replace("T"," - ") }}</td>
     </ng-container>
 
+    <!-- Google meet column -->
+    <ng-container matColumnDef="googleMeet">
+      <th mat-header-cell *matHeaderCellDef>Google meet</th>
+      <td mat-cell *matCellDef="let element">{{ element.googleMeetLink }}</td>
+    </ng-container>
+
     <!-- estatus Column -->
     <ng-container matColumnDef="estado">
       <th mat-header-cell *matHeaderCellDef>Estatus</th>

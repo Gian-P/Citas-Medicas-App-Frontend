@@ -16,6 +16,18 @@ export class CitasFormComponent implements OnInit {
   public doctors!: BaseResponseMedico;
   public citas!: Citas;
   public form: FormGroup = new FormGroup({});
+  public Fecha1!: any;
+  public Fecha2!: any;
+
+  public CitasObserver = {
+    next: () => {
+      this.sweetAlert.opensweetalertsuccess("Cita creada con éxito");
+      this.dialogRef.close();
+    },
+    error:(err: any) => {
+      this.sweetAlert.opensweetalerterror(err.error.message);
+    }
+  };
 
   constructor(
     private citaService: CitaService,
@@ -45,19 +57,40 @@ export class CitasFormComponent implements OnInit {
   }
 
   public onSubmit() {
-    const citas: Citas = {
+    this.citas = {
       ...this.form.value,
     } as Citas;
 
-    citas.idPaciente = localStorage.getItem('id') as unknown as number;
+    if(this.citas.fechaDesde.toString() === "" || this.citas.fechaHasta.toString() === "") {
+      this.sweetAlert.opensweetalerterror(
+        "No completo uno de los campos, por favor revisar e intentar de nuevo."
+      );
+      return;
+    }
 
-    this.citaService.createCita(citas).subscribe((res: any) => {
-      this.sweetAlert.opensweetalertsuccess('Cita creada con éxito');
-      this.dialogRef.close();
-    });
+    if(this.citas.idMedico.toString() === "" || this.citas.tipoCita.toString() === ""){
+      this.sweetAlert.opensweetalerterror(
+        'No completo uno de los campos, porfavor revisar e intentar de nuevo.'
+      );
+      return;
+    }
+
+    this.citas.idPaciente = localStorage.getItem('id') as unknown as number;
+    this.citaService.createCita(this.citas).subscribe(this.CitasObserver);
+
   }
 
   public close() {
     this.dialogRef.close();
+  }
+
+  convertDate() {
+    this.Fecha1 = new Date(this.citas.fechaDesde);
+
+    this.Fecha1 = this.Fecha1.toISOString();
+
+    this.Fecha2 = new Date(this.citas.fechaHasta);
+
+    this.Fecha2 = this.Fecha2.toISOString();
   }
 }

@@ -1,84 +1,50 @@
 <div class="container">
+  <div class="d-flex justify-content-end mb-2">
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="closeDialog()"
+    ></button>
+  </div>
+  <div class="row align-items-center">
+    <div class="col">
+      <h1 class="text-center">Formulario para cambiar cita</h1>
+    </div>
+  </div>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="d-flex justify-content-end">
-      <button
-        (click)="closeDialog()"
-        type="button"
-        class="btn-close"
-        aria-label="Close"
-      ></button>
-    </div>
-    <div class="row align-items-center">
+    <div class="row mb-2">
+
       <div class="col">
-        <h1 class="text-center">Formulario para modificar cita</h1>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col offset-sm-2 offset-md-0">
-        <label for="exampleInputFechaDesde" class="form-label">Nueva fecha de comienzo de la cita</label>
-        <div class="form-floating mb-3">
-          <input
-            formControlName="fechaDesde"
-            type="text"
-            class="form-control"
-            id="floatingInput"
-            placeholder="name@example.com"
-          />
-          <label for="floatingInput">Formato: yyyy-mm-dd hh:mm:ss</label>
-        </div>
-      </div>
-    </div>
-    
-    <div class="row">
-       <div class="col offset-sm-2 offset-md-0">
-        <label for="exampleInputFechaHasta" class="form-label">Nueva fecha de acabado de la cita</label>
-        <div class="form-floating mb-3">
-          <input
-            formControlName="fechaHasta"
-            type="text"
-            class="form-control"
-            id="floatingInput"
-            placeholder="name@example.com"
-          />
-          <label for="floatingInput">Formato: yyyy-mm-dd hh:mm:ss</label>
+        <div class="row">
+          <mat-form-field appearance="fill">
+          <mat-label>Seleccione modalidad</mat-label>
+          <mat-select formControlName="tipoCita">
+            <mat-option value="Presencial">Presencial</mat-option>
+            <mat-option value="Virtual">Virtual</mat-option>
+          </mat-select>
+        </mat-form-field>
         </div>
       </div>
     </div>
 
-    <div class="row">
-      <div class="col offset-sm-2 offset-md-0">
-        <label for="exampleInputTipoCita" class="form-label">Modalidad de la cita</label>
-        <div class="form-floating mb-3">
-          <select class="form-control" formControlName="tipoCita">
-            <option [disabled]="true" value="">Selecciona el nuevo tipo de la cita</option>
-            <option
-              value="Presencial"
-            >
-            Presencial
-            </option>
-            <option
-              value="Virtual"
-            >
-            Virtual
-            </option>
-          </select>
-          <label for="floatingInput">Ingresa tu dirección</label>
-        </div>
-      </div>
+     <div class="row mb-1">
+
+      <mat-form-field appearance="fill">
+        <mat-label>Fecha y hora de comienzo de la cita</mat-label>
+        <input matInput type="datetime-local" formControlName="fechaDesde">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Fecha y hora de acabado de la cita</mat-label>
+        <input formControlName="fechaHasta" matInput type="datetime-local">
+      </mat-form-field>
+
     </div>
-    <div *ngIf="IsLoading" class="text-center mb-4">
-      <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    </div>
+
+
     <div class="d-grid">
-      <button
-        class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2"
-        type="submit"
-      >
-        Guardar
-      </button>
+      <button class="button" mat-raised-button>Guardar</button>
     </div>
   </form>
 </div>

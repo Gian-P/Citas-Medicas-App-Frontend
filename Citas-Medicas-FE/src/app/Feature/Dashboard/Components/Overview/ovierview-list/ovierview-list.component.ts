@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { modules } from 'src/app/Core/Models/modules.models';
+
+
 
 @Component({
   selector: 'app-ovierview-list',
@@ -8,18 +9,18 @@ import { modules } from 'src/app/Core/Models/modules.models';
 })
 export class OvierviewListComponent implements OnInit {
   public cards: Cards[] = [{
-    title: 'Usuarios creados',
-    image: 'https://example.com/user.png',
+    title: 'Administradores',
+    image: 'admin.png',
     records: 5
   },
   {
-    title: 'Productos vendidos',
-    image: 'https://example.com/product.png',
+    title: 'Medicos',
+    image: 'doctor.png',
     records: 10
   },
   {
-    title: 'Ventas totales',
-    image: 'https://example.com/sale.png',
+    title: 'Pacientes',
+    image: 'sale.png',
     records: 100
   }];
 

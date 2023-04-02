@@ -1,7 +1,7 @@
 <app-page title="Descripción general">
   <mat-grid-list cols="3" rowHeight="250px">
     <mat-grid-tile *ngFor="let card of cards" [colspan]="1" [rowspan]="1">
-      <mat-card class="card">
+      <mat-card class="card text-center">
         <mat-card-title>{{card.title}}</mat-card-title>
         <img mat-card-image src="{{card.image}}" alt="{{card.title}}">
         <mat-card-content>
@@ -11,3 +11,5 @@
     </mat-grid-tile>
   </mat-grid-list>
 </app-page>
+
+<div></div>

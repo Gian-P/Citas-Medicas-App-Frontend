@@ -3,4 +3,5 @@ export interface modules {
   route: string;
   icon: string;
   rol?: string;
+  registrosCount?: number;
 }

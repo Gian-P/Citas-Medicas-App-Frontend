@@ -12,6 +12,10 @@ export class SidebarComponent implements OnInit {
     { name: 'Calendario', route: 'dashboard/calendario', icon: 'Calendario' },
   ];
 
+  overview: modules[] = [
+    { name: 'Descripción general', route: 'dashboard/overview/list', icon: 'bubble_chart'  },
+  ];
+
   generales: modules[] = [
     {
       name: 'Citas',
@@ -40,7 +44,7 @@ export class SidebarComponent implements OnInit {
     },
   ];
 
-  preferencias: modules[] = [{ name: 'Account', route: '#', icon: 'person' }];
+  preferencias: modules[] = [{ name: 'Cuenta', route: '#', icon: 'person' }];
 
   constructor(private router: Router) {}
 

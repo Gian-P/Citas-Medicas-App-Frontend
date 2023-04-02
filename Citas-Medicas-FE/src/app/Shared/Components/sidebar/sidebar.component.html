@@ -5,13 +5,27 @@
     </a>
   </div>
 
-  <h2 matSubheader class="mt-2">CALENDARIO</h2>
+  <h2 matSubheader>DESCRIPCIÓN GENERAL</h2>
+
+  <div *ngFor="let module of overview">
+    <button
+      mat-list-item
+      routerLinkActive="list-item-active"
+      (click)="goto(module.route)"
+    >
+      <mat-icon>{{module.icon}}</mat-icon> {{module.name}}
+    </button>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <h2 matSubheader>CALENDARIO</h2>
   <button mat-list-item routerLinkActive="list-item-active" (click)="goto(calendario[0].route)">
     <mat-icon>calendar_today</mat-icon>Calendario
   </button>
 
   <mat-divider></mat-divider>
-  <h2 matSubheader class="mt-2">GENERALES</h2>
+  <h2 matSubheader>GENERALES</h2>
 
   <div *ngFor="let module of generales">
     <button
@@ -24,8 +38,8 @@
   </div>
 
   <mat-divider></mat-divider>
-  <h2 mat-subheader class="mt-2">PREFERENCIAS</h2>
-  <div *ngFor="let module of preferencias">
+  <h2 mat-subheader>PREFERENCIAS</h2>
+  <div *ngFor="let module of preferencias" class="mb-2">
     <button
       mat-list-item
       routerLinkActive="list-item-active"

@@ -43,6 +43,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./Components/Citas/citas.module').then((m) => m.CitasModule),
   },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./Components/Overview/overview.module').then((m) => m.OverviewModule),
+  }
 ];
 
 @NgModule({

@@ -9,13 +9,14 @@ import { MedicosStandbyListComponent } from './medicos-standby-list/medicos-stan
 import { MedicosFormComponent } from './medicos-form/medicos-form.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
   declarations: [
     MedicosListComponent,
     MedicosStandbyListComponent,
-    MedicosFormComponent
+    MedicosFormComponent,
   ],
   imports: [
     CommonModule,
@@ -23,7 +24,8 @@ import { MatButtonModule } from '@angular/material/button';
     SharedModule,
     ReactiveFormsModule,
     MatTableModule,
-    MatButtonModule
-  ]
+    MatButtonModule,
+    MatPaginatorModule,
+  ],
 })
-export class MedicosModule { }
+export class MedicosModule {}

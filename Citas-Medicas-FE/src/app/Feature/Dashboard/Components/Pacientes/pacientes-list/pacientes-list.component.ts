@@ -43,13 +43,16 @@ export class PacientesListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  public getPacientes() {
-    this.pacienteService.getPacientesPaged(0, 8).subscribe((res) => {
-      this.pacientes = res;
-      this.dataSource = new MatTableDataSource<Paciente>(
-        this.pacientes.pacientesProjection
-      );
-    });
+  public getPacientes(pageNo: number = 0, pageSize: number = 10) {
+    this.pacienteService
+      .getPacientesPaged(pageNo, pageSize)
+      .subscribe((res) => {
+        this.pacientes = res;
+        this.dataSource = new MatTableDataSource<Paciente>(
+          this.pacientes.pacientesProjection
+        );
+        this.paginator.length = this.pacientes.total;
+      });
   }
 
   public deletePaciente(id: number) {

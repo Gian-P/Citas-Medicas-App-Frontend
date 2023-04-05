@@ -47,12 +47,13 @@ export class MedicosListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  public getMedicos() {
-    this.medicoService.getDoctorsPaged(0, 6).subscribe((data) => {
+  public getMedicos(pageNo: number = 0, pageSize: number = 10) {
+    this.medicoService.getDoctorsPaged(pageNo, pageSize).subscribe((data) => {
       this.medicos = data;
       this.dataSource = new MatTableDataSource<Medico>(
         this.medicos.medicosEnEsperaProjections
       );
+      this.paginator.length = this.medicos.total;
     });
   }
 

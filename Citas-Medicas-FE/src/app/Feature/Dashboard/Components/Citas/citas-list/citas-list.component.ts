@@ -15,6 +15,8 @@ import { CitasStandbyListComponent } from '../citas-standby-list/citas-standby-l
 })
 export class CitasListComponent implements OnInit {
   public citas: Citas[] = [];
+  public dataSource: any;
+  public rol: string = '';
 
   displayedColumns: string[] = [
     'nombre',
@@ -25,7 +27,6 @@ export class CitasListComponent implements OnInit {
     'googleMeet',
     'estado',
   ];
-  dataSource = new MatTableDataSource<Citas>(this.citas);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -36,39 +37,45 @@ export class CitasListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getCitas();
+    this.rol = localStorage.getItem('rol') as string;
+    this.getCitas(0, 10);
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
 
-  public getCitas() {
-    let rol = localStorage.getItem('rol');
+  public getCitas(pageNo: number, pageSize: number) {
 
-    if (rol === 'Cliente') {
+    if (this.rol === 'Cliente') {
       let id = parseInt(localStorage.getItem('id') || '0');
-      this.getCitasByPacienteId(id);
+      this.getCitasByPacienteId(id, pageNo, pageSize);
     }
 
-    if (rol === 'Medico') {
+    if (this.rol === 'Medico') {
       let id = parseInt(localStorage.getItem('id') || '0');
-      this.getCitasByMedicoId(id);
+      this.getCitasByMedicoId(id, pageNo, pageSize);
     }
   }
 
-  public getCitasByPacienteId(id: number) {
-    this.citasService.getCitasByPaciente(id, 0, 10).subscribe((data) => {
-      this.citas = data;
-      this.dataSource = new MatTableDataSource<Citas>(this.citas);
-    });
+  public getCitasByPacienteId(id: number, pageNo: number, pageSize: number) {
+    this.citasService
+      .getCitasByPaciente(id, pageNo, pageSize)
+      .subscribe((data) => {
+        console.log(data);
+        this.citas = data;
+        this.dataSource = new MatTableDataSource<Citas>(this.citas);
+      });
+      this.paginator.length = this.citas.length;
   }
 
-  public getCitasByMedicoId(id: number) {
-    this.citasService.getStandByCitasDoctor(id, 0, 10).subscribe((data) => {
-      this.citas = data;
-      this.dataSource = new MatTableDataSource<Citas>(this.citas);
-    });
+  public getCitasByMedicoId(id: number, pageNo: number, pageSize: number) {
+    this.citasService
+      .getStandByCitasDoctor(id, pageNo, pageSize)
+      .subscribe((data) => {
+        this.citas = data;
+        this.dataSource = new MatTableDataSource<Citas>(this.citas);
+      });
   }
 
   public addCreateDialog() {
@@ -77,11 +84,11 @@ export class CitasListComponent implements OnInit {
 
   public openStandbyDialog() {
     const dialogRef = this.dialog.open(CitasStandbyListComponent, {
-      width: '100%'
+      width: '100%',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      this.getCitas();
+      this.getCitas(0, 30);
     });
   }
 }

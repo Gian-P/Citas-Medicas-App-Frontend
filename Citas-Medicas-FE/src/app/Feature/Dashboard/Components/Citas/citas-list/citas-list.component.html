@@ -3,7 +3,7 @@
     <button mat-raised-button class="button" (click)="addCreateDialog()">
       CREAR NUEVA CITA
     </button>
-    <button mat-raised-button class="button" (click)="openStandbyDialog()">
+    <button mat-raised-button class="button" (click)="openStandbyDialog()" *ngIf="rol === 'Medico' ">
       CITAS EN ESPERA
     </button>
   </div>
@@ -43,7 +43,7 @@
     <!-- Google meet column -->
     <ng-container matColumnDef="googleMeet">
       <th mat-header-cell *matHeaderCellDef>Google meet</th>
-      <td mat-cell *matCellDef="let element">{{ element.googleMeetLink }}</td>
+      <td mat-cell *matCellDef="let element"><a class="anchor" href="{{element.googleMeetLink}}" target="_blank">{{element.googleMeetLink ? 'Ir al meet' : ''}}</a></td>
     </ng-container>
 
     <!-- estatus Column -->
@@ -67,4 +67,12 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 8, 25, 50]"
+    [pageSize]="8"
+    [length]="paginator?.length"
+    (page)="getCitas($event.pageIndex, $event.pageSize)"
+  >
+  </mat-paginator>
 </app-page>

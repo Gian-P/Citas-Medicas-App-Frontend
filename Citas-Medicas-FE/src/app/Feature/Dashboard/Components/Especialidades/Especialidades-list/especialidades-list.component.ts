@@ -38,14 +38,16 @@ export class EspecialidadesListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  public getEspecialidades() {
+  public getEspecialidades(pageNo: number = 0, pageSize: number = 10) {
     this.especialidadService
-      .getEspecialidadesPaged(0, 10)
+      .getEspecialidadesPaged(pageNo, pageSize)
       .subscribe((especialidades) => {
         this.especialidades = especialidades;
         this.dataSource = new MatTableDataSource<especialidad>(
           this.especialidades
         );
+        //this.paginator.length = this.especialidades.total;
+        this.paginator.length = 10;
       });
   }
 

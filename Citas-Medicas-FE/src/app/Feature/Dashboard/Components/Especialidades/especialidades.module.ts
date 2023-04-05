@@ -9,6 +9,7 @@ import { MatTableModule } from '@angular/material/table';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 const COMPONENTS = [
   EspecialidadesListComponent,
@@ -16,9 +17,7 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  declarations: [
-    ...COMPONENTS
-  ],
+  declarations: [...COMPONENTS],
   imports: [
     CommonModule,
     EspecialidadesRoutingModule,
@@ -27,7 +26,8 @@ const COMPONENTS = [
     ReactiveFormsModule,
     MatTableModule,
     MatButtonModule,
-    MatIconModule
-  ]
+    MatIconModule,
+    MatPaginatorModule,
+  ],
 })
-export class EspecialidadesModule { }
+export class EspecialidadesModule {}

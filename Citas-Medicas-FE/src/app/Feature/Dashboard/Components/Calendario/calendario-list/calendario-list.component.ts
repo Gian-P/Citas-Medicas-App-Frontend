@@ -89,10 +89,11 @@ export class CalendarioListComponent implements OnInit {
     },
 
     {
-      label: "<div class='googleMeet d-inline'> - Ir al meet - </div>",
+      label:
+        "<img src='../../../../../../assets/img/meetImg.png' class= 'mb-1 ms-2'>",
       a11yLabel: 'googleMeet',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.openModifyDialog(event);
+        window.open(event.googleMeetLink, '_blank');
       },
     },
   ];
@@ -107,10 +108,19 @@ export class CalendarioListComponent implements OnInit {
     },
 
     {
-      label: '<i class="fas fa-fw fa-trash-alt"></i>',
+      label: '<i class="fas fa-fw fa-trash-alt ms-1"></i>',
       a11yLabel: 'Delete',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.openDeleteDialog(event);
+      },
+    },
+
+    {
+      label:
+        "<img src='../../../../../../assets/img/meetImg.png' class= 'mb-1 ms-2'>",
+      a11yLabel: 'googleMeet',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        window.open(event.googleMeetLink, '_blank');
       },
     },
   ];
@@ -236,6 +246,7 @@ export class CalendarioListComponent implements OnInit {
         actions:
           this.rol === 'Cliente' ? this.patientActions : this.DoctorActions,
         id: cita.idCita,
+        googleMeetLink: cita.googleMeetLink,
       });
     }
     this.events = [...this.events];

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Citas } from 'src/app/Core/Models/citas/citas.models';
+import { BaseResponseCitas, Citas } from 'src/app/Core/Models/citas/citas.models';
 import { CitaService } from 'src/app/Core/Service/Citas/citas.service';
 import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.service';
 import { CitasFormComponent } from '../citas-form/citas-form.component';
@@ -14,7 +14,7 @@ import { CitasStandbyListComponent } from '../citas-standby-list/citas-standby-l
   styleUrls: ['./citas-list.component.scss'],
 })
 export class CitasListComponent implements OnInit {
-  public citas: Citas[] = [];
+  public citas!: BaseResponseCitas;
   public dataSource: any;
   public rol: string = '';
 
@@ -62,20 +62,20 @@ export class CitasListComponent implements OnInit {
     this.citasService
       .getCitasByPaciente(id, pageNo, pageSize)
       .subscribe((data) => {
-        console.log(data);
         this.citas = data;
-        this.dataSource = new MatTableDataSource<Citas>(this.citas);
+        this.dataSource = new MatTableDataSource<Citas>(this.citas.citasPorPacienteProjection);
+        this.paginator.length = this.citas.total;
       });
-      this.paginator.length = this.citas.length;
   }
 
   public getCitasByMedicoId(id: number, pageNo: number, pageSize: number) {
     this.citasService
-      .getStandByCitasDoctor(id, pageNo, pageSize)
+      .getCitasByDoctor(id, pageNo, pageSize)
       .subscribe((data) => {
         this.citas = data;
-        this.dataSource = new MatTableDataSource<Citas>(this.citas);
-      });
+        this.dataSource = new MatTableDataSource<Citas>(this.citas.citasPorMedicoProjections);
+        this.paginator.length = this.citas.total;
+      });  
   }
 
   public addCreateDialog() {
@@ -88,7 +88,7 @@ export class CitasListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      this.getCitas(0, 30);
+      this.getCitas(0, 10);
     });
   }
 }

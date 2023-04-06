@@ -7,6 +7,7 @@ import { Estatus } from 'src/app/Core/Models/estatus.models';
 import { CitaService } from 'src/app/Core/Service/Citas/citas.service';
 import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.service';
 import { CitasFormMeetComponent } from '../citas-form-meet/citas-form-meet.component';
+import { BaseResponseCitas } from '../../../../../Core/Models/citas/citas.models';
 
 @Component({
   selector: 'app-citas-standby-list',
@@ -14,7 +15,9 @@ import { CitasFormMeetComponent } from '../citas-form-meet/citas-form-meet.compo
   styleUrls: ['./citas-standby-list.component.scss'],
 })
 export class CitasStandbyListComponent implements OnInit {
-  public citas: Citas[] = [];
+  public citas!: BaseResponseCitas;
+  public dataSource: any;
+  public rol: string = '';
 
   displayedColumns: string[] = [
     'nombre',
@@ -24,7 +27,6 @@ export class CitasStandbyListComponent implements OnInit {
     'fechaHasta',
     'acciones',
   ];
-  dataSource = new MatTableDataSource<Citas>(this.citas);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -35,46 +37,30 @@ export class CitasStandbyListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getCitas();
+    this.getCitas(0,10);
+    this.rol = localStorage.getItem('rol') as string;
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
 
-  public getCitas() {
+  public getCitas(pageNo: number, pageSize: number) {
     let rol = localStorage.getItem('rol');
-
-    if (rol === 'Cliente') {
-      let id = parseInt(localStorage.getItem('id') || '0');
-      this.getCitasByPacienteId(id);
-    }
 
     if (rol === 'Medico') {
       let id = parseInt(localStorage.getItem('id') || '0');
-      this.getCitasByMedicoId(id);
+      this.getCitasByMedicoId(id, 0, 10);
     }
   }
 
-  public getCitasByPacienteId(id: number) {
-    this.citasService.getStandByCitasPaciente(id, 0, 10).subscribe(
+  public getCitasByMedicoId(id: number, pageNo: number, pageSize: number) {
+    this.citasService.getStandByCitasDoctor(id, pageNo, pageSize).subscribe(
       (data) => {
         this.citas = data;
-        this.dataSource = new MatTableDataSource<Citas>(this.citas);
-      },
-      (error) => {
-        this.sweetAlertService.opensweetalerterror(
-          'Error al obtener las citas'
+        this.dataSource = new MatTableDataSource<Citas>(
+          this.citas.citasPorMedicoProjections
         );
-      }
-    );
-  }
-
-  public getCitasByMedicoId(id: number) {
-    this.citasService.getStandByCitasDoctor(id, 0, 10).subscribe(
-      (data) => {
-        this.citas = data;
-        this.dataSource = new MatTableDataSource<Citas>(this.citas);
       },
       (error) => {
         this.sweetAlertService.opensweetalerterror(
@@ -89,25 +75,25 @@ export class CitasStandbyListComponent implements OnInit {
       estatus: 'RECHAZADA',
     } as Estatus;
 
-    this.sweetAlertService.opensweetalertwarning(
-      '¿Está seguro que desea cancelar la cita?'
-    ).subscribe((result) => {
-      if (result) {
-        this.citasService.cambiarEstatusCita(id, estatus).subscribe(
-          (data) => {
-            this.sweetAlertService.opensweetalertsuccess(
-              'Cita cancelada exitosamente'
-            );
-            this.getCitas();
-          },
-          (error) => {
-            this.sweetAlertService.opensweetalerterror(
-              'Error al cancelar la cita'
-            );
-          }
-        );
-      }
-    })
+    this.sweetAlertService
+      .opensweetalertwarning('¿Está seguro que desea cancelar la cita?')
+      .subscribe((result) => {
+        if (result) {
+          this.citasService.cambiarEstatusCita(id, estatus).subscribe(
+            (data) => {
+              this.sweetAlertService.opensweetalertsuccess(
+                'Cita cancelada exitosamente'
+              );
+              this.getCitas(0,10);
+            },
+            (error) => {
+              this.sweetAlertService.opensweetalerterror(
+                'Error al cancelar la cita'
+              );
+            }
+          );
+        }
+      });
   }
 
   public aceptarCita(id: number) {

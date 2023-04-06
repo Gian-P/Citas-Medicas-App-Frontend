@@ -10,7 +10,7 @@ import {
 import { EventColor } from 'calendar-utils';
 import { CitaService } from '../../../../../Core/Service/Citas/citas.service';
 import { OnInit } from '@angular/core';
-import { Citas } from '../../../../../Core/Models/citas/citas.models';
+import { BaseResponseCitas, Citas } from '../../../../../Core/Models/citas/citas.models';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { MatDialog } from '@angular/material/dialog';
@@ -58,7 +58,9 @@ const colors: Record<string, EventColor> = {
   templateUrl: './calendario-list.component.html',
 })
 export class CalendarioListComponent implements OnInit {
-  citas: Citas[] = [];
+  citas!: BaseResponseCitas;
+
+  CurrentProjections: Citas[] = [];
 
   locale: string = 'es';
 
@@ -130,7 +132,7 @@ export class CalendarioListComponent implements OnInit {
   events: CalendarEvent[] = [];
 
   Observable = {
-    next: (data: Citas[]) => {
+    next: (data: BaseResponseCitas) => {
       this.events = [];
       this.citas = data;
       this.addEvent();
@@ -164,8 +166,6 @@ export class CalendarioListComponent implements OnInit {
     this.DeleteIcon = document.getElementsByClassName('fa-trash-alt');
     this.GoogleMeetIcon = document.getElementsByClassName('googleMeet');
 
-    console.log(this.GoogleMeetIcon);
-
     setTimeout(() => {
       for (let element of this.PopUpElement) {
         this.setPopUpElementColor(element);
@@ -186,9 +186,12 @@ export class CalendarioListComponent implements OnInit {
   }
 
   getCitas() {
+
     if (this.rol === 'Cliente') {
       this.getCitasByPacienteId(this.id);
-    } else if (this.rol === 'Medico') {
+    } 
+
+    else if (this.rol === 'Medico') {
       this.getCitasByMedicoId(this.id);
     }
   }
@@ -228,7 +231,8 @@ export class CalendarioListComponent implements OnInit {
   }
 
   addEvent(): void {
-    for (const cita of this.citas) {
+    this.getCurrentProjections();
+    for (const cita of this.CurrentProjections) {
       if (cita.estatus !== 'ACEPTADA') continue;
       this.events.push({
         title: `Cita con el ${
@@ -311,5 +315,17 @@ export class CalendarioListComponent implements OnInit {
     }
 
     return colors['red'];
+  }
+
+  getCurrentProjections(){
+    if(this.rol === "Cliente"){
+      this.CurrentProjections = this.citas.citasPorPacienteProjection;
+    }
+
+    else{
+      this.CurrentProjections = this.citas.citasPorMedicoProjections;
+    }
+    
+
   }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { especialidad } from 'src/app/Core/Models/especialidades/especialidades.models';
+import { BaseResponseEspecialidades, especialidad } from 'src/app/Core/Models/especialidades/especialidades.models';
 import { EspecialidadService } from 'src/app/Core/Service/Especialidades/especialidades.service';
 import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.service';
 import { EspecialidadesFormComponent } from '../Especialidades-form/especialidades-form.component';
@@ -13,7 +13,7 @@ import { EspecialidadesFormComponent } from '../Especialidades-form/especialidad
   styleUrls: ['./especialidades-list.component.scss'],
 })
 export class EspecialidadesListComponent implements OnInit {
-  especialidades: especialidad[] = [];
+  especialidades!: BaseResponseEspecialidades;
   public dataSource: any;
   public rol: string = '';
 
@@ -44,10 +44,9 @@ export class EspecialidadesListComponent implements OnInit {
       .subscribe((especialidades) => {
         this.especialidades = especialidades;
         this.dataSource = new MatTableDataSource<especialidad>(
-          this.especialidades
+          this.especialidades.especialidadesProjection
         );
-        //this.paginator.length = this.especialidades.total;
-        this.paginator.length = 10;
+        this.paginator.length = this.especialidades.total;
       });
   }
 

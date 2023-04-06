@@ -16,3 +16,9 @@ export interface Citas extends Base {
   googleMeetLink: string;
   nombre: string;
 }
+
+export interface BaseResponseCitas {
+  citasPorPacienteProjection: Citas[];
+  citasPorMedicoProjections: Citas[];
+  total: number;
+}

@@ -10,6 +10,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 const COMPONENTS = [
   EspecialidadesListComponent,
@@ -28,6 +30,9 @@ const COMPONENTS = [
     MatButtonModule,
     MatIconModule,
     MatPaginatorModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatInputModule
   ],
 })
 export class EspecialidadesModule {}

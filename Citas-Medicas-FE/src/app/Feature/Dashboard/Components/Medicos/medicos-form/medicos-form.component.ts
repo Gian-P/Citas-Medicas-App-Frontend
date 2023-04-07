@@ -18,6 +18,7 @@ export class MedicosFormComponent implements OnInit {
   public user!: Register;
   public especialidades: especialidad[] = [];
   public IsLoading: boolean = false;
+  public hide: boolean = false;
 
   constructor(
     private _medicosService: MedicoRegisterService,

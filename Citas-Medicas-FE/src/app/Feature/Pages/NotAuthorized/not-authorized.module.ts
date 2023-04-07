@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { NotAuthorizedRoutingModule } from './not-authorized-routing.module';
 import { NotAuthorizedComponent } from './not-authorized.component';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { NotAuthorizedComponent } from './not-authorized.component';
   ],
   imports: [
     CommonModule,
-    NotAuthorizedRoutingModule
+    NotAuthorizedRoutingModule,
+    MatButtonModule
   ]
 })
 export class NotAuthorizedModule { }

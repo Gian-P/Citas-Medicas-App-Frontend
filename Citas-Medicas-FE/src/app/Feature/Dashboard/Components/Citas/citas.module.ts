@@ -17,6 +17,7 @@ import { MatCardModule } from '@angular/material/card';
 import { CitasFormMeetComponent } from './citas-form-meet/citas-form-meet.component';
 import { TutorialCreateMeetComponent } from './tutorial-create-meet/tutorial-create-meet.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { AddPaymentMethodComponent } from './add-payment-method/add-payment-method.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     CitasStandbyListComponent,
     CitasFormMeetComponent,
     TutorialCreateMeetComponent,
+    AddPaymentMethodComponent,
   ],
   imports: [
     CommonModule,

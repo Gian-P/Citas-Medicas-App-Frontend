@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Citas } from 'src/app/Core/Models/citas/citas.models';
 import { CitaService } from 'src/app/Core/Service/Citas/citas.service';
 import { DoctorService } from 'src/app/Core/Service/Doctor/doctor.service';
 import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.service';
 import { BaseResponseMedico } from '../../../../../Core/Models/users/medico.models';
+import { AddPaymentMethodComponent } from '../add-payment-method/add-payment-method.component';
 
 @Component({
   selector: 'app-citas-form',
@@ -33,7 +34,8 @@ export class CitasFormComponent implements OnInit {
     private citaService: CitaService,
     private doctorService: DoctorService,
     private sweetAlert: SweetAlertService,
-    private dialogRef: MatDialogRef<CitasFormComponent>
+    private dialogRef: MatDialogRef<CitasFormComponent>,
+    private paymentDialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -61,27 +63,43 @@ export class CitasFormComponent implements OnInit {
       ...this.form.value,
     } as Citas;
 
-    if(this.citas.fechaDesde.toString() === "" || this.citas.fechaHasta.toString() === "") {
-      this.sweetAlert.opensweetalerterror(
-        "No completo uno de los campos, por favor revisar e intentar de nuevo."
-      );
-      return;
+    if (this.validateDate()) {
+      this.paymentDialog.open(AddPaymentMethodComponent).afterClosed().subscribe((res: boolean) => {
+        if (res) {
+          this.citas.idPaciente = localStorage.getItem('id') as unknown as number;
+          this.citaService.createCita(this.citas).subscribe(this.CitasObserver);
+        }
+      });
     }
-
-    if(this.citas.idMedico.toString() === "" || this.citas.tipoCita.toString() === ""){
-      this.sweetAlert.opensweetalerterror(
-        'No completo uno de los campos, porfavor revisar e intentar de nuevo.'
-      );
-      return;
-    }
-
-    this.citas.idPaciente = localStorage.getItem('id') as unknown as number;
-    this.citaService.createCita(this.citas).subscribe(this.CitasObserver);
-
   }
 
   public close() {
     this.dialogRef.close();
+  }
+
+  private validateDate() : boolean {
+    if (this.citas.fechaDesde > this.citas.fechaHasta) {
+      this.sweetAlert.opensweetalerterror(
+        'La fecha de inicio no puede ser mayor a la fecha de finalización'
+      );
+      return false;
+    }
+
+    if(this.citas.fechaDesde.toString() === "" || this.citas.fechaHasta.toString() === "") {
+      this.sweetAlert.opensweetalerterror(
+        "No completó uno de los campos, por favor revisar e intentar de nuevo."
+      );
+      return false;
+    }
+
+    if(this.citas.idMedico.toString() === "" || this.citas.tipoCita.toString() === ""){
+      this.sweetAlert.opensweetalerterror(
+        'No completó uno de los campos, por favor revisar e intentar de nuevo.'
+      );
+      return false;
+    }
+
+    return true;
   }
 
   convertDate() {

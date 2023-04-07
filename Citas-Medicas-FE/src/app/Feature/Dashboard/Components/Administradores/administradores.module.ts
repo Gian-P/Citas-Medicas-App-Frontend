@@ -11,6 +11,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatTableModule,
     MatIconModule,
     MatButtonModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatInputModule
   ]
 })
 export class AdministradoresModule { }

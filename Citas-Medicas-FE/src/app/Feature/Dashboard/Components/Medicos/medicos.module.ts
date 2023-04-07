@@ -10,6 +10,9 @@ import { MedicosFormComponent } from './medicos-form/medicos-form.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -26,6 +29,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatTableModule,
     MatButtonModule,
     MatPaginatorModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule
   ],
 })
 export class MedicosModule {}

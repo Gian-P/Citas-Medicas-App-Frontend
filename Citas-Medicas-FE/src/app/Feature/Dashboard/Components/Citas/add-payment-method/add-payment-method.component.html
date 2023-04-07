@@ -1,0 +1,43 @@
+<h2 mat-dialog-title>Agregar método de pago</h2>
+<div mat-dialog-content>
+  <form [formGroup]="paymentForm">
+    <div class="row">
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre en la tarjeta</mat-label>
+          <input matInput formControlName="name" required />
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Número de tarjeta</mat-label>
+          <input matInput formControlName="cardNumber" required />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha de vencimiento</mat-label>
+          <input matInput formControlName="expirationDate" required />
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field appearance="outline" style="width: 88%;">
+          <mat-label>CVV</mat-label>
+          <input matInput formControlName="cvv" required />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <p><strong>Total a pagar: </strong>50$US</p>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions class="d-flex justify-content-end">
+  <button mat-button (click)="cancel()">Cancelar</button>
+  <button mat-button color="primary" (click)="submit()">
+    Confirmar método de pago
+  </button>
+</div>

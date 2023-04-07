@@ -88,7 +88,7 @@ export class AdministradoresListComponent implements OnInit {
 
   openDialogUpdate(admin: Administrador): void {
     const dialogRef = this.dialog.open(AdministradoresFormComponent, {
-      width: '50%',
+      width: 'auto',
       data: admin,
     });
 
@@ -101,7 +101,7 @@ export class AdministradoresListComponent implements OnInit {
 
   openDialogCreate(): void {
     const dialogRef = this.dialog.open(AdministradoresFormComponent, {
-      width: '50%',
+      width: 'auto',
     });
 
     dialogRef.afterClosed().subscribe((result) => {

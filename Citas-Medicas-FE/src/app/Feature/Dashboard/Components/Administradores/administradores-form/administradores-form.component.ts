@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { rol } from '../../../../../Core/Models/rol/rol.model';
-import { RolService } from '../../../../../Core/Service/rol/rol.service';
 import { SweetAlertService } from '../../../../../Miscelaneo/SweetAlert/sweet-alert.service';
+import { Administrador } from 'src/app/Core/Models/users/administrador.models';
+import { AdministradorRegisterService } from 'src/app/Core/Service/Auth/administrador.service';
+import { Register } from 'src/app/Core/Models/auth/register.models';
 
 @Component({
   selector: 'app-administradores-form',
@@ -13,10 +14,11 @@ import { SweetAlertService } from '../../../../../Miscelaneo/SweetAlert/sweet-al
 export class AdministradoresFormComponent implements OnInit {
   IsLoading: boolean = false;
   public form: FormGroup = new FormGroup([]);
+  public hide: boolean = false;
 
   constructor(
     private dialogRef: MatDialogRef<AdministradoresFormComponent>,
-    private rolService: RolService,
+    private adminService: AdministradorRegisterService,
     private SweetAlertService: SweetAlertService
   ) {}
 
@@ -24,40 +26,44 @@ export class AdministradoresFormComponent implements OnInit {
     this.initializeForm();
   }
 
-  public closeDialog() {
-    this.dialogRef.close();
-  }
-
   public onSubmit() {
-    const rol: rol = {
+    const admin: Register = {
       ...this.form.value,
-    } as rol;
+    } as Register;
 
-    this.CreateRol(rol);
+    admin.tipoTelefonoCasa = 'Casa';
+    admin.tipoTelefonoCelular = 'Celular';
+
+    admin.usuarioDTO = {
+      email: admin.email,
+      password: admin.password,
+    }
+
+    this.create(admin);
   }
 
-  private CreateRol(rol: rol) {
+  public create(admin: Register){
     this.IsLoading = true;
-    this.rolService.post(rol).subscribe({
-      next:(position : any) => {
-        this.SweetAlertService.opensweetalertsuccess('El rol ha sido creado');
-      },
-
-      error:(msg : any) => {
-         this.SweetAlertService.opensweetalerterror('El rol no se pudo crear');
-      },
-
-      complete:() => {
-        this.IsLoading = false;
-        this.closeDialog();
-        console.log('Observer got a complete notification');
-      }
+    this.adminService.post(admin).subscribe((res) => {
+      this.IsLoading = false;
+      this.SweetAlertService.opensweetalertsuccess('Administrador creado con exito');
+      this.dialogRef.close();
+    }, (err) => {
+      this.IsLoading = false;
+      this.SweetAlertService.opensweetalerterror('Error al crear administrador. Por favor intente de nuevo');
     });
   }
 
   private initializeForm() {
     this.form = new FormGroup({
-      nombreRol: new FormControl('', [Validators.required]),
+      apellido: new FormControl('', [Validators.required]),
+      cedula: new FormControl('', [Validators.required]),
+      direccion: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required]),
+      nombre: new FormControl('', [Validators.required]),
+      numeroTelefonoCasa: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required]),
+      numeroTelefonoCelular: new FormControl('', [Validators.required]),
     });
   }
 }

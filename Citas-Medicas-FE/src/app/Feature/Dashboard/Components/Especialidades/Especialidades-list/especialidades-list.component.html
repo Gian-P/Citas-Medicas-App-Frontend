@@ -1,11 +1,15 @@
 <app-page title="Especialidades">
-  <div *ngIf=" rol === 'Administrador' " class="button-container">
-    <button mat-raised-button (click)="openDialogCreate()" class="button">AGREGAR ESPECIALIDAD</button>
+  <div *ngIf="rol === 'Administrador'" class="button-container">
+    <button mat-raised-button (click)="openDialogCreate()" class="button">
+      AGREGAR ESPECIALIDAD
+    </button>
   </div>
   <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef>Identificador</th>
-      <td mat-cell class="tdid" *matCellDef="let element">{{ element.idEspecialidad }}</td>
+      <td mat-cell class="tdid" *matCellDef="let element">
+        {{ element.idEspecialidad }}
+      </td>
     </ng-container>
     <ng-container matColumnDef="tipo">
       <th mat-header-cell *matHeaderCellDef>Nombre</th>
@@ -14,10 +18,18 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>Acciones</th>
       <td class="tdacciones" mat-cell *matCellDef="let element">
-        <button mat-mini-fab class="button-edit" (click)="openDialogUpdate(element)">
+        <button
+          mat-mini-fab
+          class="button-edit"
+          (click)="openDialogUpdate(element)"
+        >
           <mat-icon color="">edit</mat-icon>
         </button>
-        <button mat-mini-fab color="warn" (click)="deleteEspecialidad(element.idEspecialidad)">
+        <button
+          mat-mini-fab
+          color="warn"
+          (click)="deleteEspecialidad(element.idEspecialidad)"
+        >
           <mat-icon>delete</mat-icon>
         </button>
       </td>
@@ -26,12 +38,19 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 
-   <mat-paginator
+  <ng-container *ngIf="dataSource.data.length === 0" class="my-5">
+    <div class="text-center mt-3">
+      <h2 class="text-muted">No hay contenido disponible</h2>
+      <i class="far fa-sad-tear fa-3x text-muted"></i>
+    </div>
+  </ng-container>
+
+  <mat-paginator
+    *ngIf="dataSource.data.length !== 0"
     [pageSizeOptions]="[5, 8, 25, 50]"
-    [pageSize]="8"
+    [pageSize]="5"
     [length]="paginator?.length"
     (page)="getEspecialidades($event.pageIndex, $event.pageSize)"
   >
   </mat-paginator>
-
 </app-page>

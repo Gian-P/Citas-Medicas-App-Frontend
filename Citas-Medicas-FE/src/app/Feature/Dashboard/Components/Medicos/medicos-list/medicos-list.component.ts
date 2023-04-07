@@ -74,7 +74,7 @@ export class MedicosListComponent implements OnInit {
 
   public openEditMedicoDialog(medico: Medico) {
     const dialogRef = this.dialog.open(MedicosFormComponent, {
-      width: '600px',
+      width: 'auto',
       data: { medico },
     });
 
@@ -85,8 +85,8 @@ export class MedicosListComponent implements OnInit {
 
   public openAddMedicoDialog() {
     const dialogRef = this.dialog.open(MedicosFormComponent, {
-      width: '40%',
-      height: '100%',
+      width: 'auto',
+      height: 'auto',
     });
 
     dialogRef.afterClosed().subscribe(() => {

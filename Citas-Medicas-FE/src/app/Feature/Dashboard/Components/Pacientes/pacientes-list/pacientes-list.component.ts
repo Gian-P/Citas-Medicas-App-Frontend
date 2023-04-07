@@ -43,7 +43,7 @@ export class PacientesListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  public getPacientes(pageNo: number = 0, pageSize: number = 10) {
+  public getPacientes(pageNo: number = 0, pageSize: number = 8) {
     this.pacienteService
       .getPacientesPaged(pageNo, pageSize)
       .subscribe((res) => {

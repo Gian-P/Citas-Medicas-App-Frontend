@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminGuard } from 'src/app/Core/Helpers/admin-guard.guard';
+import { UserGuard } from 'src/app/Core/Helpers/user-guard.guard';
 
 const routes: Routes = [
   {
@@ -8,6 +10,7 @@ const routes: Routes = [
       import('./Components/Calendario/calendario.module').then(
         (m) => m.CalendarioModule
       ),
+      canActivate: [UserGuard],
   },
 
   {
@@ -16,6 +19,7 @@ const routes: Routes = [
       import('./Components/Especialidades/especialidades.module').then(
         (m) => m.EspecialidadesModule
       ),
+      canActivate: [AdminGuard]
   },
   {
     path: '',
@@ -23,6 +27,7 @@ const routes: Routes = [
       import('./Components/Pacientes/pacientes.module').then(
         (m) => m.PacientesModule
       ),
+      canActivate: [AdminGuard]
   },
   {
     path: '',
@@ -30,6 +35,7 @@ const routes: Routes = [
       import('./Components/Medicos/medicos.module').then(
         (m) => m.MedicosModule
       ),
+      canActivate: [AdminGuard]
   },
   {
     path: '',
@@ -37,16 +43,19 @@ const routes: Routes = [
       import('./Components/Administradores/administradores.module').then(
         (m) => m.AdministradoresModule
       ),
+      canActivate: [AdminGuard]
   },
   {
     path: '',
     loadChildren: () =>
       import('./Components/Citas/citas.module').then((m) => m.CitasModule),
+      canActivate: [UserGuard]
   },
   {
     path: '',
     loadChildren: () =>
       import('./Components/Overview/overview.module').then((m) => m.OverviewModule),
+      canActivate: [AdminGuard],
   }
 ];
 

@@ -11,17 +11,19 @@ import { especialidad } from 'src/app/Core/Models/especialidades/especialidades.
 })
 export class EspecialidadesFormComponent implements OnInit {
   public form: FormGroup = new FormGroup({});
+  public isLoading: boolean = false;
 
   constructor(
     private especialidadService: EspecialidadService,
     private dialogRef: MatDialogRef<EspecialidadesFormComponent>,
     private sweetAlertService: SweetAlertService,
     @Inject(MAT_DIALOG_DATA) public data: especialidad
-  ) {}
+  ) {
+    this.setData();
+  }
 
   ngOnInit(): void {
     this.initializeForm();
-    this.setData();
   }
 
   private initializeForm() {
@@ -44,18 +46,28 @@ export class EspecialidadesFormComponent implements OnInit {
   }
 
   public createEspecialidad(especialidad: especialidad) {
+    this.isLoading = true;
     this.especialidadService
       .createEspecialidad(especialidad)
       .subscribe((res) => {
         this.sweetAlertService.opensweetalertsuccess('Especialidad creada con éxito');
+        this.dialogRef.close();
+      }, (err) => {
+        this.isLoading = false;
+        this.sweetAlertService.opensweetalerterror('Error al crear la especialidad');
       });
   }
 
   public updateEspecialidad(especialidad: especialidad) {
+    this.isLoading = true;
     this.especialidadService
       .updateEspecialidad(especialidad, this.data.idEspecialidad)
       .subscribe((res) => {
         this.sweetAlertService.opensweetalertsuccess('Especialidad actualizada con éxito');
+        this.dialogRef.close();
+      }, (err) => {
+        this.isLoading = false;
+        this.sweetAlertService.opensweetalerterror('Error al actualizar la especialidad');
       });
   }
 

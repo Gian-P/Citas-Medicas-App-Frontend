@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { User } from 'src/app/Core/Models/users/users.models';
 import { PacienteService } from 'src/app/Core/Service/Pacientes/pacientes.service';
 import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.service';
@@ -12,10 +12,12 @@ import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.ser
 })
 export class PacientesFormComponent implements OnInit {
   public form: FormGroup = new FormGroup({});
+  public isLoading = false;
 
   constructor(
     private pacienteService: PacienteService,
     private sweetAlertService: SweetAlertService,
+    private dialogRef: MatDialogRef<PacientesFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: User
   ) {}
 
@@ -36,17 +38,22 @@ export class PacientesFormComponent implements OnInit {
   }
 
   public update() {
+    this.isLoading = true;
     const paciente: User = {
       ...this.form.value,
     } as User;
 
     paciente.tipoTelefono = 'Celular';
 
-    this.pacienteService.updatePaciente(this.data.idPaciente, paciente).subscribe((res) => {
-      this.sweetAlertService.opensweetalertsuccess(res);
-    }, (err) => {
-      this.sweetAlertService.opensweetalerterror(err);
-    });
+    if(this.form.valid){
+      this.pacienteService.updatePaciente(this.data.idPaciente, paciente).subscribe((res) => {
+        this.sweetAlertService.opensweetalertsuccess(res);
+        this.dialogRef.close();
+      }, (err) => {
+        this.sweetAlertService.opensweetalerterror("Error al actualizar el paciente");
+        this.isLoading = false;
+      });
+    }
   }
 
   public setData() {

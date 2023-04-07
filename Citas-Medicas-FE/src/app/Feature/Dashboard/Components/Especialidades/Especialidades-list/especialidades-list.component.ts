@@ -38,7 +38,7 @@ export class EspecialidadesListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  public getEspecialidades(pageNo: number = 0, pageSize: number = 10) {
+  public getEspecialidades(pageNo: number = 0, pageSize: number = 5) {
     this.especialidadService
       .getEspecialidadesPaged(pageNo, pageSize)
       .subscribe((especialidades) => {

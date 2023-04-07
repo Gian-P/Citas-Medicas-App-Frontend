@@ -19,11 +19,11 @@ export class EspecialidadesFormComponent implements OnInit {
     private sweetAlertService: SweetAlertService,
     @Inject(MAT_DIALOG_DATA) public data: especialidad
   ) {
-    this.setData();
   }
 
   ngOnInit(): void {
     this.initializeForm();
+    this.setData();
   }
 
   private initializeForm() {

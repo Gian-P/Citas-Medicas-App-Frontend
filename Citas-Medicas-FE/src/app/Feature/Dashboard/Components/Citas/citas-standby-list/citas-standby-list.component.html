@@ -47,7 +47,16 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
 
+
+<ng-container *ngIf="dataSource.data.length === 0" class="my-5">
+  <div class="text-center mt-3">
+    <h2 class="text-muted">No hay contenido disponible</h2>
+    <i class="far fa-sad-tear fa-3x text-muted"></i>
+  </div>
+</ng-container>
+
 <mat-paginator
+    *ngIf="dataSource.data.length !== 0"
     [pageSizeOptions]="[5, 8, 25, 50]"
     [pageSize]="8"
     [length]="paginator?.length"

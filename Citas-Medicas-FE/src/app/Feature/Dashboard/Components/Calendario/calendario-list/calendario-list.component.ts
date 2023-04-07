@@ -16,6 +16,7 @@ import localeEs from '@angular/common/locales/es';
 import { MatDialog } from '@angular/material/dialog';
 import { CalendarioFormUpdateComponent } from '../calendario-form-update/calendario-form-update.component';
 import { SweetAlertService } from '../../../../../Miscelaneo/SweetAlert/sweet-alert.service';
+import { CitaModificada } from 'src/app/Core/Models/calendario/citaModificada.models';
 
 const colors: Record<string, EventColor> = {
   /* el color red se utiliza para las citas que han sido eliminadas */
@@ -189,7 +190,7 @@ export class CalendarioListComponent implements OnInit {
 
     if (this.rol === 'Cliente') {
       this.getCitasByPacienteId(this.id);
-    } 
+    }
 
     else if (this.rol === 'Medico') {
       this.getCitasByMedicoId(this.id);
@@ -265,9 +266,10 @@ export class CalendarioListComponent implements OnInit {
   }
 
   openModifyDialog(event: CalendarEvent) {
+
     localStorage.setItem('idCita', event.id!.toString());
     const dialogRef = this.dialog.open(CalendarioFormUpdateComponent, {
-      width: '25%',
+      width: 'auto',
     });
 
     dialogRef.afterClosed().subscribe(() => {
@@ -325,7 +327,7 @@ export class CalendarioListComponent implements OnInit {
     else{
       this.CurrentProjections = this.citas.citasPorMedicoProjections;
     }
-    
+
 
   }
 }

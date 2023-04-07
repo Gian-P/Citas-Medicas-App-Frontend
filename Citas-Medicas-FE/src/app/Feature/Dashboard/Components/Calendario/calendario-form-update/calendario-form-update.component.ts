@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SweetAlertService } from '../../../../../Miscelaneo/SweetAlert/sweet-alert.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CitaService } from '../../../../../Core/Service/Citas/citas.service';
 import { CitaModificada } from '../../../../../Core/Models/calendario/citaModificada.models';
+import { especialidad } from 'src/app/Core/Models/especialidades/especialidades.models';
 
 @Component({
   selector: 'app-calendario-form-update',
@@ -39,8 +40,10 @@ export class CalendarioFormUpdateComponent implements OnInit {
   constructor(
     private CitaService: CitaService,
     private dialogRef: MatDialogRef<CalendarioFormUpdateComponent>,
-    private sweetAlertService: SweetAlertService
-  ) {}
+    private sweetAlertService: SweetAlertService,
+    @Inject(MAT_DIALOG_DATA) public data: CitaModificada
+  ) {
+  }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -51,9 +54,13 @@ export class CalendarioFormUpdateComponent implements OnInit {
       ...this.form.value,
     };
 
-    if(this.citaModificada.fechaDesde === "" || this.citaModificada.fechaHasta === "" || this.citaModificada.tipoCita === ""){
+    if (
+      this.citaModificada.fechaDesde === '' ||
+      this.citaModificada.fechaHasta === '' ||
+      this.citaModificada.tipoCita === ''
+    ) {
       this.sweetAlertService.opensweetalerterror(
-        "No completo uno de los campos, por favor revisar e intentar de nuevo."
+        'No completo uno de los campos, por favor revisar e intentar de nuevo.'
       );
 
       return;
@@ -66,7 +73,6 @@ export class CalendarioFormUpdateComponent implements OnInit {
       .add(() => {
         this.IsLoading = false;
       });
-
   }
 
   convertDate() {

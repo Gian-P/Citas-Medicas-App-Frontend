@@ -30,7 +30,6 @@ export class EspecialidadesListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getEspecialidades();
     this.rol = localStorage.getItem('rol') as string;
   }
 

@@ -1,21 +1,28 @@
 <div class="container">
-  <div class="d-flex justify-content-end mb-2">
-    <button
-      type="button"
-      class="btn-close"
-      aria-label="Close"
-      (click)="close()"
-    ></button>
-  </div>
   <div class="row align-items-center">
     <div class="col">
-      <h1 class="text-center">Formulario para crear cita</h1>
+      <h1 class="text-center">Crear cita</h1>
     </div>
   </div>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
+     <div class="row mb-1">
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha y hora de comienzo de la cita</mat-label>
+          <input matInput type="datetime-local" formControlName="fechaDesde">
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha y hora de acabado de la cita</mat-label>
+          <input formControlName="fechaHasta" matInput type="datetime-local">
+        </mat-form-field>
+      </div>
+    </div>
+
     <div class="row mb-2">
       <div class="col">
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
           <mat-label>Seleccione doctor</mat-label>
           <mat-select formControlName="idMedico">
             <mat-option
@@ -27,7 +34,7 @@
         </mat-form-field>
       </div>
       <div class="col">
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
           <mat-label>Seleccione modalidad</mat-label>
           <mat-select formControlName="tipoCita">
             <mat-option value="Presencial">Presencial</mat-option>
@@ -36,22 +43,6 @@
         </mat-form-field>
       </div>
     </div>
-
-    
-     <div class="row mb-1">
-
-      <mat-form-field appearance="fill">
-        <mat-label>Fecha y hora de comienzo de la cita</mat-label>
-        <input matInput type="datetime-local" formControlName="fechaDesde">
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Fecha y hora de acabado de la cita</mat-label>
-        <input formControlName="fechaHasta" matInput type="datetime-local">
-      </mat-form-field>
-
-    </div>
-
 
     <div class="d-grid">
       <button class="button" mat-raised-button>Guardar</button>

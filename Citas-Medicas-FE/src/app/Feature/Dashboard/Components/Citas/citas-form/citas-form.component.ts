@@ -36,10 +36,11 @@ export class CitasFormComponent implements OnInit {
     private sweetAlert: SweetAlertService,
     private dialogRef: MatDialogRef<CitasFormComponent>,
     private paymentDialog: MatDialog
-  ) {}
+  ) {
+    this.getDoctors();
+  }
 
   ngOnInit(): void {
-    this.getDoctors();
     this.initializeForm();
   }
 

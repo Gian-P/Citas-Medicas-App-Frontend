@@ -1,0 +1,65 @@
+<app-page title="Pacientes">
+  <div *ngIf="isLoading" class="mx-auto d-flex justify-content-center mt-5">
+    <mat-spinner color="accent"></mat-spinner>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="cedula">
+        <th mat-header-cell *matHeaderCellDef>Cedula</th>
+        <td mat-cell class="tdcedula" *matCellDef="let element">{{ element.cedula }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="apellido">
+        <th mat-header-cell *matHeaderCellDef>Apellido</th>
+        <td mat-cell *matCellDef="let element">{{ element.apellido }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="numero">
+        <th mat-header-cell *matHeaderCellDef>Número</th>
+        <td mat-cell *matCellDef="let element">{{ element.numero }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td class="tdacciones" mat-cell *matCellDef="let element">
+          <button mat-mini-fab class="button-edit" (click)="openDialogUpdate(element)">
+            <mat-icon color="">edit</mat-icon>
+          </button>
+          <button mat-mini-fab color="warn" (click)="deletePaciente(element.idPaciente)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <ng-container *ngIf="dataSource.data.length === 0" class="my-5">
+      <div class="text-center mt-3">
+        <h2 class="text-muted">No hay contenido disponible</h2>
+        <i class="far fa-sad-tear fa-3x text-muted"></i>
+      </div>
+    </ng-container>
+
+    <mat-paginator
+      *ngIf="dataSource.data.length !== 0"
+      [pageSizeOptions]="[5, 8, 25, 50]"
+      [pageSize]="8"
+      [length]="paginator?.length"
+      (page)="getPacientes($event.pageIndex, $event.pageSize)"
+    >
+    </mat-paginator>
+  </div>
+</app-page>

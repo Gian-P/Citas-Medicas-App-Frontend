@@ -1,0 +1,176 @@
+<div class="container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="d-flex justify-content-end">
+      <button
+        (click)="closeDialog()"
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="row align-items-center">
+      <div class="col">
+        <h1 class="text-center">Registrate</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-5 col-md-6">
+        <mat-form-field class="mat-form" appearance="outline">
+          <mat-label>Correo electrónico</mat-label>
+          <input formControlName="email" matInput type="email" />
+          <mat-error *ngIf="form.get('email')?.hasError('required')">
+            El correo es requerido
+          </mat-error>
+          <mat-error *ngIf="form.get('email')?.hasError('email')">
+            El correo no es valido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+        <mat-form-field class="mat-form minus-width" appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input
+            formControlName="password"
+            matInput
+            [type]="hide ? 'password' : 'text'"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+            type="button"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+          <mat-error *ngIf="form.get('password')?.hasError('required')">
+            La contraseña es requerida
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-5 col-md-6">
+        <mat-form-field class="mat-form" appearance="outline">
+          <mat-label>Nombre completo</mat-label>
+          <input formControlName="nombre" matInput type="text" />
+          <mat-error *ngIf="form.get('nombre')?.hasError('required')">
+            El nombre es requerido
+          </mat-error>
+          <mat-error *ngIf="form.get('nombre')?.hasError('nombre')">
+            El nombre no es valido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+        <mat-form-field class="mat-form" appearance="outline">
+          <mat-label>Apellido completo</mat-label>
+          <input formControlName="apellido" matInput type="text" />
+          <mat-error *ngIf="form.get('apellido')?.hasError('required')">
+            El apellido es requerido
+          </mat-error>
+          <mat-error *ngIf="form.get('apellid')?.hasError('apellido')">
+            El apellido no es valido
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-5 col-md-6">
+        <mat-form-field class="mat-form" appearance="outline">
+          <mat-label>Número tel. celular</mat-label>
+          <input formControlName="numeroTelefonoCelular" matInput type="text" />
+          <mat-error
+            *ngIf="form.get('numeroTelefonoCelular')?.hasError('required')"
+          >
+            El número es requerido
+          </mat-error>
+          <mat-error
+            *ngIf="
+              form
+                .get('numeroTelefonoCelular')
+                ?.hasError('numeroTelefonoCelular')
+            "
+          >
+            El número no es valido
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+        <mat-form-field class="mat-form" appearance="outline">
+          <mat-label>Número tel. casa</mat-label>
+          <input formControlName="numeroTelefonoCasa" matInput type="text" />
+          <mat-error
+            *ngIf="form.get('numeroTelefonoCasa')?.hasError('required')"
+          >
+            El número es requerido
+          </mat-error>
+          <mat-error
+            *ngIf="
+              form.get('numeroTelefonoCasa')?.hasError('numeroTelefonoCasa')
+            "
+          >
+            El número no es valido
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-5 col-md-6">
+        <mat-form-field class="mat-form" appearance="outline">
+          <mat-label>Dirección de residencia</mat-label>
+          <input formControlName="direccion" matInput type="text" />
+          <mat-error *ngIf="form.get('direccion')?.hasError('required')">
+            la direccion es requerida
+          </mat-error>
+          <mat-error *ngIf="form.get('direccion')?.hasError('direccion')">
+            la direccion no es valida
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+        <mat-form-field class="mat-form" appearance="outline">
+          <mat-label>Número de identidad</mat-label>
+          <input formControlName="cedula" matInput type="text" />
+          <mat-error *ngIf="form.get('cedula')?.hasError('required')">
+            la cedula es requerida
+          </mat-error>
+          <mat-error *ngIf="form.get('cedula')?.hasError('cedula')">
+            la cedula no es valida
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Rol</mat-label>
+          <mat-select formControlName="rol">
+              <mat-option value="Administrador">Administrador</mat-option>
+              <mat-option value="Medico">Medico</mat-option>
+              <mat-option value="Paciente">Paciente</mat-option>
+          </mat-select>
+      </mat-form-field>
+    </div>
+
+    
+
+    <div *ngIf="isLoading" class="text-center mb-4">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div class="d-grid">
+      <button
+        *ngIf="!isLoading"
+        mat-raised-button
+        class="button"
+        type="submit"
+        (click)="onSubmit()"
+      >
+        Registrarse
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="d-flex justify-content-end mb-2">
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="close()"
+    ></button>
+  </div>
+
+  <div class="row align-items-center">
+    <div class="col">
+      <h1 class="text-center">CONFIRMAR CITA</h1>
+    </div>
+  </div>
+  <!--Enlance para crear una reunion en google meet-->
+  <div class="mb-3">
+    <div class="text-center">
+      <button
+        class="button"
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="openDialog()"
+      > ¿cómo crear una reunión? </button>
+    </div>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row mb-4">
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label>Introduce enlace</mat-label>
+          <input formControlName="googleMeetLink" matInput />
+          <mat-icon matSuffix>insert_link</mat-icon>
+          <mat-hint
+            ><strong>crea una reunión e introduce el enlace</strong></mat-hint
+          >
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="d-grid">
+      <button class="button" type="submit" mat-raised-button>ENVIAR</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,60 @@
+.logo {
+  margin-top: -1.5rem;
+  margin-bottom: -1rem;
+  text-align: center;
+  padding: 2.6rem 1rem;
+
+  img {
+    width: 200px;
+    cursor: pointer;
+  }
+}
+
+.mat-icon {
+  vertical-align: center;
+  margin-right: 1rem;
+}
+
+.mat-divider {
+  border-top-width: 2px;
+  border-color: #fff;
+}
+
+.mat-list-item {
+  color: #95a3b8 !important;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  height: 44px !important;
+  margin-bottom: 4px;
+  ::ng-deep {
+    .mat-list-item-content {
+      border-radius: 5px;
+      margin: 0.8px;
+      &:hover {
+        padding-left: -100px;
+        color: #000;
+        background: #dcfdff !important;
+      }
+    }
+  }
+}
+
+.list-item-active{
+  color: #f2f5f7 !important;
+  ::ng-deep{
+    .mat-list-item-content{
+      background: #2c3344 !important;
+      &:hover{
+        background: #2c3344 !important;
+      }
+    }
+  }
+}
+
+.mat-subheader{
+  color: #818cf8;
+  font-size: 0.6rem;
+  font-weight: 100;
+  letter-spacing: 1px;
+}

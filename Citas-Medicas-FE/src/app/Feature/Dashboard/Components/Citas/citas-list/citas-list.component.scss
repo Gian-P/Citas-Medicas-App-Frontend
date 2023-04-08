@@ -1,0 +1,65 @@
+table {
+  width: 100%;
+}
+
+.mat-table{
+  background: none;
+  border: none;
+
+}
+
+.tdnombre{
+  border-left: 1px solid #E5E5E5;
+}
+
+.tdestatus{
+  border-right: 1px solid #E5E5E5;
+}
+
+table{
+  th{
+    background-color: #13B0F0;
+    color: white;
+    font-size: 14px;
+    text-transform: uppercase;
+
+    // centrar texto
+    text-align: center;
+
+    &:first-child{
+      border-top-left-radius: 10px;
+    }
+    &:last-child{
+      border-top-right-radius: 10px;
+    }
+  }
+
+  td{
+    text-align: center;
+  }
+}
+
+.button-container{
+  padding-bottom: 16px;
+}
+
+.button{
+  background-color: #13B0F0;
+  color: #fff;
+}
+
+.button + .button {
+  margin-left: 8px;
+}
+
+.anchor{
+  color: rgba(0,0,0,.87);
+  text-decoration: none;
+}
+
+.anchor:hover{
+  color: #13B0F0;
+}
+
+
+

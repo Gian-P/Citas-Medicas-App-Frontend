@@ -1,0 +1,29 @@
+<mat-toolbar>
+  <mat-toolbar-row class="justify-content-between">
+    <button mat-icon-button>
+      <mat-icon (click)="toggleSidebar()">menu</mat-icon>
+    </button>
+    <div class="row mr-2 ml-auto">
+      <ul>
+        <li>
+          <button
+            mat-button
+            [matMenuTriggerFor]="menu"
+            class="user mt-2 d-flex align-items-center"
+          >
+            <span class="mr-2">{{userName}}</span>
+            <img
+              src="../../../../assets/img/user.jpg"
+              class="user-image mr-2 p-2"
+            />
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>Cuenta</button>
+            <button (click)="logOut()" mat-menu-item>Cerrar sesión</button>
+          </mat-menu>
+        </li>
+      </ul>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

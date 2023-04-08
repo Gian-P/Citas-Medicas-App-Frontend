@@ -1,0 +1,81 @@
+<div class="container-fluid ps-md-0">
+  <div class="row g-0">
+    <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+    <div class="col-md-8 col-lg-6">
+      <div class="login d-flex align-items-center py-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-9 col-lg-8 mx-auto">
+              <h3 class="login-heading mb-4">Bienvenido!</h3>
+
+              <!-- Sign In Form -->
+              <form [formGroup]="form" (ngSubmit)="submit()">
+                <div class="row">
+                  <mat-form-field class="mat-form" appearance="outline">
+                    <mat-label>Correo electronico</mat-label>
+                    <input formControlName="email" matInput type="email" />
+                    <mat-error *ngIf="form.get('email')?.hasError('required')">
+                      El correo es requerido
+                    </mat-error>
+                    <mat-error *ngIf="form.get('email')?.hasError('email')">
+                      El correo no es valido
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="row">
+                  <mat-form-field class="mat-form" appearance="outline">
+                    <mat-label>Contraseña</mat-label>
+                    <input
+                      formControlName="password"
+                      matInput
+                      [type]="hide ? 'password' : 'text'"
+                    />
+                    <button
+                      mat-icon-button
+                      matSuffix
+                      type="button"
+                      (click)="hide = !hide"
+                      [attr.aria-label]="'Hide password'"
+                      [attr.aria-pressed]="hide"
+                    >
+                      <mat-icon>{{
+                        hide ? "visibility_off" : "visibility"
+                      }}</mat-icon>
+                    </button>
+                    <mat-error
+                      *ngIf="form.get('password')?.hasError('required')"
+                    >
+                      La contraseña es requerida
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div *ngIf="IsLoading" class="text-center mb-4">
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+
+                <div class="d-grid" >
+                  <button
+                    *ngIf="!IsLoading"
+                    class="button mb-3"
+                    type="submit"
+                    mat-raised-button
+                  >INICIAR SESION</button>
+                  <div class="text-center">
+                    ¿Eres nuevo? &nbsp;
+                    <a class="register-link" (click)="onRegister()"
+                      >Registrate aquí</a
+                    >
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

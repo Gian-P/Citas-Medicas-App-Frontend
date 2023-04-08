@@ -1,0 +1,62 @@
+<app-page title="Especialidades">
+  <div *ngIf="isLoading" class="mx-auto d-flex justify-content-center mt-5">
+    <mat-spinner color="accent"></mat-spinner>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <div *ngIf="rol === 'Administrador'" class="button-container">
+      <button mat-raised-button (click)="openDialogCreate()" class="button">
+        AGREGAR ESPECIALIDAD
+      </button>
+    </div>
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>Identificador</th>
+        <td mat-cell class="tdid" *matCellDef="let element">
+          {{ element.idEspecialidad }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="tipo">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let element">{{ element.tipo }}</td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td class="tdacciones" mat-cell *matCellDef="let element">
+          <button
+            mat-mini-fab
+            class="button-edit"
+            (click)="openDialogUpdate(element)"
+          >
+            <mat-icon color="">edit</mat-icon>
+          </button>
+          <button
+            mat-mini-fab
+            color="warn"
+            (click)="deleteEspecialidad(element.idEspecialidad)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <ng-container *ngIf="dataSource.data.length === 0" class="my-5">
+      <div class="text-center mt-3">
+        <h2 class="text-muted">No hay contenido disponible</h2>
+        <i class="far fa-sad-tear fa-3x text-muted"></i>
+      </div>
+    </ng-container>
+
+    <mat-paginator
+      *ngIf="dataSource.data.length !== 0"
+      [pageSizeOptions]="[5, 8, 25, 50]"
+      [pageSize]="5"
+      [length]="paginator?.length"
+      (page)="getEspecialidades($event.pageIndex, $event.pageSize)"
+    >
+    </mat-paginator>
+  </div>
+</app-page>

@@ -1,0 +1,18 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div class="row">
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Descripción</mat-label>
+      <input matInput formControlName="tipo" required />
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="!isLoading" class="d-flex justify-content-end">
+    <button class="button" mat-button type="submit">ACEPTAR</button>
+  </div>
+
+  <div *ngIf="isLoading" class="text-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</form>

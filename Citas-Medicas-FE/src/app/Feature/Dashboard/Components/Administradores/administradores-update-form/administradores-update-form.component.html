@@ -1,0 +1,91 @@
+<div class="container">
+  <h2 mat-dialog-title class="text-center">Modificar datos del administrador</h2>
+  <div mat-dialog-content>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="row">
+        <div class="col-sm-5 col-md-6">
+          <mat-form-field class="mat-form" appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input formControlName="nombre" matInput type="text" />
+            <mat-error *ngIf="form.get('nombre')?.hasError('required')">
+              El nombre es requerido
+            </mat-error>
+            <mat-error *ngIf="form.get('nombre')?.hasError('nombre')">
+              El nombre no es valido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+          <mat-form-field class="mat-form" appearance="outline">
+            <mat-label>Apellido</mat-label>
+            <input formControlName="apellido" matInput type="text" />
+            <mat-error *ngIf="form.get('apellido')?.hasError('required')">
+              El apellido es requerido
+            </mat-error>
+            <mat-error *ngIf="form.get('apellido')?.hasError('apellido')">
+              El apellido no es valido
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-5 col-md-6">
+          <mat-form-field class="mat-form" appearance="outline">
+            <mat-label>Direccón</mat-label>
+            <input formControlName="direccion" matInput type="email" />
+            <mat-error *ngIf="form.get('direccion')?.hasError('required')">
+              La dirección es requerida
+            </mat-error>
+            <mat-error *ngIf="form.get('direccion')?.hasError('direccion')">
+              La dirección no es valida
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+          <mat-form-field class="mat-form" appearance="outline">
+            <mat-label>Número de télefono cedular</mat-label>
+            <input formControlName="numeroTelefono" matInput type="text" />
+            <mat-error
+              *ngIf="form.get('numeroTelefono')?.hasError('numeroTelefono')"
+            >
+              El número telefónico es requerido
+            </mat-error>
+            <mat-error
+              *ngIf="form.get('numeroTelefono')?.hasError('numeroTelefono')"
+            >
+              El número telefónico no es valido
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <mat-form-field class="mat-form" appearance="outline">
+          <mat-label>Número de identidad</mat-label>
+          <input formControlName="cedula" matInput type="text" />
+          <mat-error *ngIf="form.get('cedula')?.hasError('required')">
+            El número de identidad es requerido
+          </mat-error>
+          <mat-error *ngIf="form.get('cedula')?.hasError('cedula')">
+            El número de identidad no es valido
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div *ngIf="isLoading" class="text-center mb-4">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+      <div class="d-grid">
+        <button
+          *ngIf="!isLoading"
+          mat-raised-button
+          class="button"
+          type="submit"
+        >
+          Modificar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

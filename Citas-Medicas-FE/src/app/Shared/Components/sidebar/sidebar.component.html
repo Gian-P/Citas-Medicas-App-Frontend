@@ -1,0 +1,60 @@
+<mat-nav-list>
+  <div class="logo py-4">
+    <a href="dashboard">
+      <img src="../../../../assets/img/logo2.png" alt="logo" />
+    </a>
+  </div>
+
+  <h2 matSubheader *ngIf="rol === 'Administrador' ">DESCRIPCIÓN GENERAL</h2>
+
+  <div *ngFor="let module of overview">
+    <div *ngIf="module.rol?.includes(rol)">
+      <button
+      mat-list-item
+      routerLinkActive="list-item-active"
+      (click)="goto(module.route)"
+    >
+      <mat-icon>{{module.icon}}</mat-icon> {{module.name}}
+    </button>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div *ngIf="rol !== 'Administrador' ">
+    <h2 matSubheader>CALENDARIO</h2>
+    <button mat-list-item routerLinkActive="list-item-active" (click)="goto(calendario[0].route)">
+      <mat-icon>calendar_today</mat-icon>Calendario
+    </button>
+  </div>
+  
+
+  <mat-divider></mat-divider>
+  <h2 matSubheader>GENERALES</h2>
+
+  <div *ngFor="let module of generales">
+
+    <div *ngIf="module.rol?.includes(rol)">
+      <button
+      mat-list-item
+      routerLinkActive="list-item-active"
+      (click)="goto(module.route)"
+    >
+      <mat-icon>{{ module.icon }}</mat-icon> {{ module.name }}
+    </button>
+    </div>
+
+  </div>
+
+  <mat-divider></mat-divider>
+  <h2 mat-subheader>PREFERENCIAS</h2>
+  <div *ngFor="let module of preferencias" class="mb-2">
+    <button
+      mat-list-item
+      routerLinkActive="list-item-active"
+      (click)="goto(module.route)"
+    >
+      <mat-icon>{{ module.icon }}</mat-icon> {{ module.name }}
+    </button>
+  </div>
+</mat-nav-list>

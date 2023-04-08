@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="row align-items-center">
+    <div class="col">
+      <h1 class="text-center">Crear cita</h1>
+    </div>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+     <div class="row mb-1">
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha y hora de comienzo de la cita</mat-label>
+          <input matInput type="datetime-local" formControlName="fechaDesde">
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha y hora de acabado de la cita</mat-label>
+          <input formControlName="fechaHasta" matInput type="datetime-local">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label>Seleccione doctor</mat-label>
+          <mat-select formControlName="idMedico">
+            <mat-option
+              *ngFor="let doctor of doctors?.medicosEnEsperaProjections"
+              value="{{ doctor.idMedico }}"
+              >{{ doctor.nombre }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label>Seleccione modalidad</mat-label>
+          <mat-select formControlName="tipoCita">
+            <mat-option value="Presencial">Presencial</mat-option>
+            <mat-option value="Virtual">Virtual</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="d-grid">
+      <button class="button" mat-raised-button>Guardar</button>
+    </div>
+  </form>
+</div>

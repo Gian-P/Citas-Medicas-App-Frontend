@@ -1,0 +1,27 @@
+table {
+  width: 100%;
+}
+
+.mat-table{
+  background: none;
+  border: none;
+
+}
+
+
+table{
+  th{
+    background-color: #13B0F0;
+    color: white;
+    font-size: 14px;
+    text-transform: uppercase;
+
+    // centrar texto
+    text-align: center;
+
+  }
+
+  td{
+    text-align: center;
+  }
+}

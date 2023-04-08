@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -6,6 +7,12 @@ import {
   Administrador,
   BaseResponseAdministrador,
 } from 'src/app/Core/Models/users/administrador.models';
+=======
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Estatus } from 'src/app/Core/Models/estatus.models';
+import { User } from 'src/app/Core/Models/users/users.models';
+>>>>>>> 43451d4f57ee6f770560971b1b4165a079a86e84
 import { AdminService } from 'src/app/Core/Service/Admin/admin.service';
 import { EstatusService } from 'src/app/Core/Service/Auth/Common/estatus.service';
 import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.service';
@@ -13,6 +20,7 @@ import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.ser
 @Component({
   selector: 'app-administradores-standby-list',
   templateUrl: './administradores-standby-list.component.html',
+<<<<<<< HEAD
   styleUrls: ['./administradores-standby-list.component.scss'],
 })
 export class AdministradoresStandbyListComponent implements OnInit {
@@ -30,17 +38,30 @@ export class AdministradoresStandbyListComponent implements OnInit {
   ];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+=======
+  styleUrls: ['./administradores-standby-list.component.scss']
+})
+export class AdministradoresStandbyListComponent implements OnInit {
+  public administradores: User[] = [];
+>>>>>>> 43451d4f57ee6f770560971b1b4165a079a86e84
 
   constructor(
     private adminService: AdminService,
     private statusService: EstatusService,
+<<<<<<< HEAD
     private sweetAlertService: SweetAlertService
   ) {}
+=======
+    private dialog: MatDialog,
+    private sweetAlertService: SweetAlertService
+  ) { }
+>>>>>>> 43451d4f57ee6f770560971b1b4165a079a86e84
 
   ngOnInit(): void {
     this.getAdministradores();
   }
 
+<<<<<<< HEAD
   public getAdministradores(pageNo: number = 0, pageSize: number = 5) {
     this.isLoading = true;
     this.adminService
@@ -54,6 +75,12 @@ export class AdministradoresStandbyListComponent implements OnInit {
         );
         this.paginator.length = this.administradores.total;
       });
+=======
+  public getAdministradores() {
+    this.adminService.getStandbyAdminPaged(0, 5).subscribe((data) => {
+      this.administradores = data;
+    });
+>>>>>>> 43451d4f57ee6f770560971b1b4165a079a86e84
   }
 
   public updateStatus(email: string, estatus: string) {
@@ -62,6 +89,7 @@ export class AdministradoresStandbyListComponent implements OnInit {
       estatus: estatus,
     } as Estatus;
 
+<<<<<<< HEAD
     this.sweetAlertService
       .opensweetalertwarning(
         '¿Estas seguro de actualizar el estatus del administrador?'
@@ -84,5 +112,27 @@ export class AdministradoresStandbyListComponent implements OnInit {
           );
         }
       });
+=======
+    this.sweetAlertService.opensweetalertwarning(
+      '¿Estas seguro de actualizar el estatus del administrador?'
+    ).subscribe((result : any) => {
+      if (result) {
+        this.statusService.put(status).subscribe(
+          () => {
+            this.sweetAlertService.opensweetalertsuccess(
+              'El estatus del administrador ha sido actualizado con exito'
+            );
+            this.getAdministradores();
+          },
+          (error : any) => {
+            this.sweetAlertService.opensweetalertsuccess(
+              'El estatus del administrador ha sido actualizado con exito'
+            );
+            this.getAdministradores();
+          }
+        );
+      }
+    });
+>>>>>>> 43451d4f57ee6f770560971b1b4165a079a86e84
   }
 }

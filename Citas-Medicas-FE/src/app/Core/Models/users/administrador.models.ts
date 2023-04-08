@@ -15,3 +15,8 @@ export interface BaseResponseAdministrador {
   administradoresEnEsperaProjection: Administrador[];
   total: number;
 }
+
+export interface BaseResponseAdministrador {
+  administradoresProjection: Administrador[];
+  total: number;
+}

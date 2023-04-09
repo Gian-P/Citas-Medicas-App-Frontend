@@ -17,6 +17,9 @@ export class CitasListComponent implements OnInit {
   public citas!: BaseResponseCitas;
   public dataSource: any;
   public rol: string = '';
+  public existenCitas: boolean = true;
+  public isLoading: boolean = true;
+  public show: string = "dontShow";
 
   displayedColumns: string[] = [
     'nombre',
@@ -28,12 +31,30 @@ export class CitasListComponent implements OnInit {
     'estado',
   ];
 
+  public myObserver = {
+    next: (data: any) => { 
+      this.citas = data;
+      this.isLoading = false;
+      this.show = "show";
+      this.dataSource = new MatTableDataSource<Citas>(
+        this.citas.citasPorMedicoProjections
+      );
+      this.paginator.length = this.citas.total;
+    },
+
+    error: (err: any) => {
+      this.existenCitas = false;
+      this.isLoading = false;
+      this.show = 'dontShow';
+      console.log(err);
+    },
+
+    complete: () => {},
+  };
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(
-    private dialog: MatDialog,
-    private citasService: CitaService
-  ) {}
+  constructor(private dialog: MatDialog, private citasService: CitaService) {}
 
   ngOnInit(): void {
     this.rol = localStorage.getItem('rol') as string;
@@ -45,7 +66,6 @@ export class CitasListComponent implements OnInit {
   }
 
   public getCitas(pageNo: number = 0, pageSize: number = 10) {
-
     if (this.rol === 'Cliente') {
       let id = parseInt(localStorage.getItem('id') || '0');
       this.getCitasByPacienteId(id, pageNo, pageSize);
@@ -60,21 +80,13 @@ export class CitasListComponent implements OnInit {
   public getCitasByPacienteId(id: number, pageNo: number, pageSize: number) {
     this.citasService
       .getCitasByPaciente(id, pageNo, pageSize)
-      .subscribe((data) => {
-        this.citas = data;
-        this.dataSource = new MatTableDataSource<Citas>(this.citas.citasPorPacienteProjection);
-        this.paginator.length = this.citas.total;
-      });
+      .subscribe(this.myObserver);
   }
 
   public getCitasByMedicoId(id: number, pageNo: number, pageSize: number) {
     this.citasService
       .getCitasByDoctor(id, pageNo, pageSize)
-      .subscribe((data) => {
-        this.citas = data;
-        this.dataSource = new MatTableDataSource<Citas>(this.citas.citasPorMedicoProjections);
-        this.paginator.length = this.citas.total;
-      });
+      .subscribe(this.myObserver);
   }
 
   public addCreateDialog() {

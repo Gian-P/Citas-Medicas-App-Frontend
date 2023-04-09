@@ -4,7 +4,6 @@ import { SweetAlertService } from '../../../../../Miscelaneo/SweetAlert/sweet-al
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CitaService } from '../../../../../Core/Service/Citas/citas.service';
 import { CitaModificada } from '../../../../../Core/Models/calendario/citaModificada.models';
-import { especialidad } from 'src/app/Core/Models/especialidades/especialidades.models';
 
 @Component({
   selector: 'app-calendario-form-update',
@@ -28,7 +27,6 @@ export class CalendarioFormUpdateComponent implements OnInit {
     },
 
     error: (err: any) => {
-      console.log(err);
       this.sweetAlertService.opensweetalerterror(
         'Puedes cambiar la cita hasta 7 días antes de la fecha de inicio de la misma.'
       );

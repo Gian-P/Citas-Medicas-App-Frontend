@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { especialidad } from '../../Models/especialidades/especialidades.models';
 
@@ -28,7 +28,11 @@ export class EspecialidadService {
   ): Observable<any> {
     return this.http.get(
       this.myAppUrl + 'especialidades-paginadas/' + pageNo + '/' + pageSize
-    );
+    ).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError("Error al obtener las especialidades");
+      })
+    );;
   }
 
   public deleteEspecialidad(id: number): Observable<any> {

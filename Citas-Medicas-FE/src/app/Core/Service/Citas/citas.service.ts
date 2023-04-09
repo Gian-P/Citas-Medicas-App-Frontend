@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { Citas } from 'src/app/Core/Models/citas/citas.models';
 import { CitaModificada } from '../../Models/calendario/citaModificada.models';
@@ -35,6 +35,10 @@ export class CitaService {
         pageNo +
         '/' +
         pageSize
+    ).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError("Error al obtener las citas");
+      })
     );
   }
 
@@ -51,6 +55,10 @@ export class CitaService {
         pageNo +
         '/' +
         pageSize
+    ).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError("Error al obtener las citas");
+      })
     );
   }
 
@@ -67,6 +75,10 @@ export class CitaService {
         pageNo +
         '/' +
         pageSize
+    ).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError("Error al obtener las citas");
+      })
     );
   }
 
@@ -83,6 +95,10 @@ export class CitaService {
         pageNo +
         '/' +
         pageSize
+    ).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError("Error al obtener las citas");
+      })
     );
   }
 

@@ -1,0 +1,115 @@
+<div class="container-fluid page">
+  <div class="page__box p-4 mt-2"></div>
+  <div class="page__content shadow p-3 position-relative">
+    <div class="page__content-data position-relative">
+      <div class="d-flex justify-content-center align-items-center mt-5">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <h3 class="text-center title">Información del usuario</h3>
+          <div class="row mt-3">
+            <div class="col-sm-5 col-md-6">
+              <mat-form-field class="mat-form" appearance="outline">
+                <mat-label>Nombre</mat-label>
+                <input formControlName="nombre" matInput type="text" />
+                <mat-error *ngIf="form.get('nombre')?.hasError('required')">
+                  El nombre es requerido
+                </mat-error>
+                <mat-error *ngIf="form.get('nombre')?.hasError('nombre')">
+                  El nombre no es valido
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+              <mat-form-field class="mat-form" appearance="outline">
+                <mat-label>Apellido</mat-label>
+                <input formControlName="apellido" matInput type="text" />
+                <mat-error *ngIf="form.get('apellido')?.hasError('required')">
+                  El apellido es requerido
+                </mat-error>
+                <mat-error *ngIf="form.get('apellido')?.hasError('apellido')">
+                  El apellido no es valido
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-5 col-md-6">
+              <mat-form-field class="mat-form" appearance="outline">
+                <mat-label>Dirección</mat-label>
+                <input formControlName="direccion" matInput type="email" />
+                <mat-error *ngIf="form.get('direccion')?.hasError('required')">
+                  La dirección es requerida
+                </mat-error>
+                <mat-error *ngIf="form.get('direccion')?.hasError('direccion')">
+                  La dirección no es valida
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+              <mat-form-field class="mat-form" appearance="outline">
+                <mat-label>Número de télefono cedular</mat-label>
+                <input formControlName="numeroTelefono" matInput type="text" />
+                <mat-error
+                  *ngIf="form.get('numeroTelefono')?.hasError('numeroTelefono')"
+                >
+                  El número telefónico es requerido
+                </mat-error>
+                <mat-error
+                  *ngIf="form.get('numeroTelefono')?.hasError('numeroTelefono')"
+                >
+                  El número telefónico no es valido
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row" style="margin-bottom: -10px;">
+            <mat-form-field class="mat-form" appearance="outline">
+              <mat-label>Número de identidad </mat-label>
+              <input formControlName="cedula" matInput type="text" />
+              <mat-error *ngIf="form.get('cedula')?.hasError('required')">
+                El número de identidad es requerido
+              </mat-error>
+              <mat-error *ngIf="form.get('cedula')?.hasError('cedula')">
+                El número de identidad no es valido
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div *ngIf="rol === 'Medico'" class="row" style="margin-bottom: -10px;">
+            <mat-form-field appearance="outline">
+              <mat-label>Seleccione especialidad</mat-label>
+              <mat-select formControlName="idEspecialidad">
+                <mat-option [value]="especialidad.idEspecialidad" *ngFor="let especialidad of especialidades">
+                  {{especialidad.tipo}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <mat-slide-toggle
+            class="mb-3"
+            color="warn"
+            [checked]="!this.form.disabled"
+            (change)="this.form.disabled ? this.form.enable() : this.form.disable()"
+          >
+            Habilidar edición
+          </mat-slide-toggle>
+
+          <div *ngIf="isLoading" class="text-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+
+          <div *ngIf="this.form.enabled" class="d-grid">
+            <button
+              *ngIf="!isLoading"
+              mat-raised-button
+              class="button"
+              type="submit"
+            >
+              Modificar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

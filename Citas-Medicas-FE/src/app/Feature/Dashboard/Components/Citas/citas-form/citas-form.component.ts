@@ -7,6 +7,7 @@ import { DoctorService } from 'src/app/Core/Service/Doctor/doctor.service';
 import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.service';
 import { BaseResponseMedico } from '../../../../../Core/Models/users/medico.models';
 import { AddPaymentMethodComponent } from '../add-payment-method/add-payment-method.component';
+import { PaymentSendData } from 'src/app/Core/Models/payment/payment-intent.models';
 
 @Component({
   selector: 'app-citas-form',
@@ -35,7 +36,7 @@ export class CitasFormComponent implements OnInit {
     private doctorService: DoctorService,
     private sweetAlert: SweetAlertService,
     private dialogRef: MatDialogRef<CitasFormComponent>,
-    private paymentDialog: MatDialog
+    private paymentDialog: MatDialog,
   ) {
     this.getDoctors();
   }
@@ -65,11 +66,19 @@ export class CitasFormComponent implements OnInit {
     } as Citas;
 
     if (this.validateDate()) {
-      this.paymentDialog.open(AddPaymentMethodComponent).afterClosed().subscribe((res: boolean) => {
-        if (res) {
-          this.citas.idPaciente = localStorage.getItem('id') as unknown as number;
-          this.citaService.createCita(this.citas).subscribe(this.CitasObserver);
-        }
+      this.citas.idPaciente = localStorage.getItem('id') as unknown as number;
+      this.citaService.createCita(this.citas).subscribe((res: any) => {
+        console.log(res);
+        const paymentSend = {
+          idCita: 40,
+          idPaciente: 5,
+        } as PaymentSendData;
+
+        this.paymentDialog.open(AddPaymentMethodComponent, {
+          data: paymentSend,
+        });
+      }, (err: any) => {
+        this.sweetAlert.opensweetalerterror(err.error.message);
       });
     }
   }

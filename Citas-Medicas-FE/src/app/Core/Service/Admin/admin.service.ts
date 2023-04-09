@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
@@ -20,12 +20,20 @@ export class AdminService {
         pagesNo +
         '/' +
         pageSize
+    ).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError("Error al obtener los administradores en espera");
+      })
     );
   }
 
   public getAdminsPaged(pageNo: number, pageSize: number): Observable<any> {
     return this.http.get(
       this.myAppUrl + 'administradores-pageados/' + pageNo + '/' + pageSize
+    ).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError("Error al obtener los administradores");
+      })
     );
   }
 

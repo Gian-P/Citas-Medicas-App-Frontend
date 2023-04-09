@@ -57,6 +57,13 @@ const routes: Routes = [
       import('./Components/Overview/overview.module').then((m) => m.OverviewModule),
       canActivate: [AdminGuard],
   }
+  ,
+  {
+    path: '',
+    loadChildren: () =>
+      import('./Components/Cuenta/cuenta.module').then((m) => m.CuentaModule),
+      canActivate: [AdminGuard],
+  }
 ];
 
 @NgModule({

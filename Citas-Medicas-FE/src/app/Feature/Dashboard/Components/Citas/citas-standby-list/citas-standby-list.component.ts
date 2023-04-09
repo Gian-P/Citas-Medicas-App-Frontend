@@ -16,28 +16,9 @@ import { BaseResponseCitas } from '../../../../../Core/Models/citas/citas.models
 })
 export class CitasStandbyListComponent implements OnInit {
   public citas!: BaseResponseCitas;
-  public dataSource: any;
+  public dataSource = new MatTableDataSource<Citas>([]);
   public rol: string = '';
-
-  public myObserver = {
-
-    next: (data:any) => {
-      this.citas = data;
-      this.dataSource = new MatTableDataSource<Citas>(
-        this.citas.citasPorMedicoProjections
-      );
-    },
-
-    error: (err: any) => {
-      this.sweetAlertService.opensweetalerterror(err.error.message);
-      this.close();
-    },
-
-    complete: () => {
-
-    },
-
-  };
+  public isLoading: boolean = true;
 
   displayedColumns: string[] = [
     'nombre',
@@ -54,10 +35,11 @@ export class CitasStandbyListComponent implements OnInit {
     private dialog: MatDialog,
     private citasService: CitaService,
     private sweetAlertService: SweetAlertService
-  ) {}
+  ) {
+    this.rol = localStorage.getItem('rol') as string;
+  }
 
   ngOnInit(): void {
-    this.rol = localStorage.getItem('rol') as string;
     this.getCitas();
   }
 
@@ -65,7 +47,7 @@ export class CitasStandbyListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  public getCitas(pageNo: number = 0, pageSize: number = 10) {
+  public getCitas(pageNo: number = 0, pageSize: number = 5) {
     if (this.rol === 'Medico') {
       let id = parseInt(localStorage.getItem('id') || '0');
       this.getCitasByMedicoId(id, pageNo, pageSize);
@@ -73,7 +55,19 @@ export class CitasStandbyListComponent implements OnInit {
   }
 
   public getCitasByMedicoId(id: number, pageNo: number, pageSize: number) {
-    this.citasService.getStandByCitasDoctor(id, pageNo, pageSize).subscribe(this.myObserver);
+    this.rol = localStorage.getItem('rol') as string;
+    this.citasService.getStandByCitasDoctor(id, pageNo, pageSize).subscribe((data) => {
+      this.isLoading = false;
+      this.citas = data;
+      this.dataSource.data = this.citas.citasPorMedicoProjections;
+
+      if(this.paginator){
+        this.paginator.length = this.citas.total;
+      }
+    }, (error) => {
+      this.isLoading = false;
+      this.sweetAlertService.opensweetalerterror('Error al obtener las citas');
+    });
   }
 
   public cancelarCita(id: number) {
@@ -90,7 +84,7 @@ export class CitasStandbyListComponent implements OnInit {
               this.sweetAlertService.opensweetalertsuccess(
                 'Cita cancelada exitosamente'
               );
-              this.getCitas(0, 10);
+              this.getCitas();
             },
             (error) => {
               this.sweetAlertService.opensweetalerterror(

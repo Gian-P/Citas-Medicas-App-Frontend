@@ -17,8 +17,8 @@ import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.ser
 })
 export class AdministradoresStandbyListComponent implements OnInit {
   public administradores!: BaseResponseAdministrador;
-  public dataSource: any;
-  public isLoading!: boolean;
+  public dataSource = new MatTableDataSource<Administrador>([]);
+  public isLoading: boolean = true;
 
   displayedColumns: string[] = [
     'cedula',
@@ -28,8 +28,6 @@ export class AdministradoresStandbyListComponent implements OnInit {
     'numeroTelefono',
     'acciones',
   ];
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private adminService: AdminService,
@@ -41,19 +39,23 @@ export class AdministradoresStandbyListComponent implements OnInit {
     this.getAdministradores();
   }
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   public getAdministradores(pageNo: number = 0, pageSize: number = 5) {
-    this.isLoading = true;
-    this.adminService
-      .getStandbyAdminPaged(pageNo, pageSize)
-      .subscribe((data) => {
+    this.adminService.getStandbyAdminPaged(pageNo, pageSize).subscribe(
+      (data) => {
         this.isLoading = false;
         this.administradores = data;
-        console.log(this.administradores);
-        this.dataSource = new MatTableDataSource<Administrador>(
-          this.administradores.administradoresEnEsperaProjection
-        );
-        this.paginator.length = this.administradores.total;
-      });
+        this.dataSource.data = this.administradores.administradoresEnEsperaProjection;
+
+        if (this.paginator) {
+          this.paginator.length = this.administradores.total;
+        }
+      },
+      (error) => {
+        this.isLoading = false;
+      }
+    );
   }
 
   public updateStatus(email: string, estatus: string) {

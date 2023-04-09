@@ -1,8 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { especialidad } from '../../Models/especialidades/especialidades.models';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +13,33 @@ export class PagosService {
     this.myAppUrl = environment.baseUrl;
   }
 
-  public createPago(pago: any): Observable<any> {
-    return this.http.post(this.myAppUrl + 'crear-pago', pago);
+  public paymentIntent(pago: any): Observable<any> {
+    return this.http.post(this.myAppUrl + 'payment-intent', pago).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError("Error al obtener el intento de pago");
+      })
+    );
+  }
+
+  public confirmPayment(id: string, idPago: number): Observable<any> {
+    const paymentIntentRequest = {
+      amount: 50,
+      currency: 'USD',
+      description: 'Cita médica',
+    }
+
+    return this.http.post(this.myAppUrl + 'confirm/' + id + '/' + idPago, paymentIntentRequest).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError("Error al confirmar el pago");
+      })
+    );
+  }
+
+  public cancelPayment(id: string, idPago: number): Observable<any> {
+    return this.http.post(this.myAppUrl + 'cancel/' + id + '/' + idPago, undefined).pipe(
+      catchError((err: HttpErrorResponse) => {
+        return throwError("Error al cancelar el pago");
+      })
+    );
   }
 }

@@ -60,8 +60,9 @@
     *ngIf="dataSource.data.length !== 0"
     [pageSizeOptions]="[5, 8, 25, 50]"
     [pageSize]="5"
-    [length]="paginator?.length"
+    [length]="administradores.total"
     (page)="getAdministradores($event.pageIndex, $event.pageSize)"
+    [ngClass]="{ 'd-none': isLoading }"
   >
   </mat-paginator>
 </div>

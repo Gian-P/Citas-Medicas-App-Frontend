@@ -55,7 +55,7 @@ export class EspecialidadesListComponent implements OnInit {
       },
       (error) => {
         this.isLoading = false;
-        this.sweetAlertService.opensweetalerterror(error);
+        this.sweetAlertService.opensweetalerterror("Error al cargar los datos");
       }
     );
   }

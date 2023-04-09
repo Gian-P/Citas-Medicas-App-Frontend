@@ -2,9 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { BaseResponseCitas, Citas } from 'src/app/Core/Models/citas/citas.models';
+import {
+  BaseResponseCitas,
+  Citas,
+} from 'src/app/Core/Models/citas/citas.models';
 import { CitaService } from 'src/app/Core/Service/Citas/citas.service';
-import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.service';
 import { CitasFormComponent } from '../citas-form/citas-form.component';
 import { CitasStandbyListComponent } from '../citas-standby-list/citas-standby-list.component';
 
@@ -15,11 +17,9 @@ import { CitasStandbyListComponent } from '../citas-standby-list/citas-standby-l
 })
 export class CitasListComponent implements OnInit {
   public citas!: BaseResponseCitas;
-  public dataSource: any;
+  public dataSource = new MatTableDataSource<Citas>([]);
   public rol: string = '';
-  public existenCitas: boolean = true;
   public isLoading: boolean = true;
-  public show: string = "dontShow";
 
   displayedColumns: string[] = [
     'nombre',
@@ -31,33 +31,13 @@ export class CitasListComponent implements OnInit {
     'estado',
   ];
 
-  public myObserver = {
-    next: (data: any) => { 
-      this.citas = data;
-      this.isLoading = false;
-      this.show = "show";
-      this.dataSource = new MatTableDataSource<Citas>(
-        this.citas.citasPorMedicoProjections
-      );
-      this.paginator.length = this.citas.total;
-    },
-
-    error: (err: any) => {
-      this.existenCitas = false;
-      this.isLoading = false;
-      this.show = 'dontShow';
-      console.log(err);
-    },
-
-    complete: () => {},
-  };
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private dialog: MatDialog, private citasService: CitaService) {}
+  constructor(private dialog: MatDialog, private citasService: CitaService) {
+    this.rol = localStorage.getItem('rol') as string;
+  }
 
   ngOnInit(): void {
-    this.rol = localStorage.getItem('rol') as string;
     this.getCitas();
   }
 
@@ -78,15 +58,39 @@ export class CitasListComponent implements OnInit {
   }
 
   public getCitasByPacienteId(id: number, pageNo: number, pageSize: number) {
-    this.citasService
-      .getCitasByPaciente(id, pageNo, pageSize)
-      .subscribe(this.myObserver);
+    this.isLoading = true;
+    this.citasService.getCitasByPaciente(id, pageNo, pageSize).subscribe(
+      (data) => {
+        this.isLoading = false;
+        this.citas = data;
+        this.dataSource.data = this.citas.citasPorPacienteProjection;
+
+        if (this.paginator) {
+          this.paginator.length = this.citas.total;
+        }
+      },
+      (error) => {
+        this.isLoading = false;
+      }
+    );
   }
 
   public getCitasByMedicoId(id: number, pageNo: number, pageSize: number) {
-    this.citasService
-      .getCitasByDoctor(id, pageNo, pageSize)
-      .subscribe(this.myObserver);
+    this.isLoading = true;
+    this.citasService.getCitasByDoctor(id, pageNo, pageSize).subscribe(
+      (data) => {
+        this.isLoading = false;
+        this.citas = data;
+        this.dataSource.data = this.citas.citasPorMedicoProjections;
+
+        if (this.paginator) {
+          this.paginator.length = this.citas.total;
+        }
+      },
+      (error) => {
+        this.isLoading = false;
+      }
+    );
   }
 
   public addCreateDialog() {
@@ -99,7 +103,7 @@ export class CitasListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      this.getCitas(0, 10);
+      this.getCitas();
     });
   }
 }

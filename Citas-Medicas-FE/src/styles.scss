@@ -4,3 +4,23 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* app.component.scss */
+
+/* Estilo general para el scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Estilo para la barra */
+::-webkit-scrollbar-thumb {
+  background-color: #13B0F0;
+  border-radius: 5px;
+}
+
+/* Estilo para el fondo del scrollbar */
+::-webkit-scrollbar-track {
+  background-color: #F5F5F5;
+  border-radius: 5px;
+}
+

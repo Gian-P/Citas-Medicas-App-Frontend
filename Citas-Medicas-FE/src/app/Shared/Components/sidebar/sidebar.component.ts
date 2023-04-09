@@ -61,7 +61,7 @@ export class SidebarComponent implements OnInit {
     },
   ];
 
-  preferencias: modules[] = [{ name: 'Cuenta', route: '#', icon: 'person' }];
+  preferencias: modules[] = [{ name: 'Cuenta', route: 'dashboard/cuenta', icon: 'person' }];
 
   constructor(private router: Router) {}
 

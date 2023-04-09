@@ -1,79 +1,77 @@
 <app-page title="Citas">
-  <div class="button-container">
-    <button mat-raised-button class="button" (click)="addCreateDialog()" *ngIf="rol === 'Cliente' ">
-      CREAR NUEVA CITA
-    </button>
-    <button mat-raised-button class="button" (click)="openStandbyDialog()" *ngIf="rol === 'Medico' ">
-      CITAS EN ESPERA
-    </button>
-  </div>
-
-  <table mat-table [dataSource]="dataSource">
-
-    <!-- name Column -->
-    <ng-container matColumnDef="nombre">
-      <th mat-header-cell *matHeaderCellDef>Nombre médico</th>
-      <td class="tdnombre" mat-cell *matCellDef="let element">{{ element.nombre }}</td>
-    </ng-container>
-
-    <!-- apellido Column -->
-    <ng-container matColumnDef="apellido">
-      <th mat-header-cell *matHeaderCellDef>Apellido médico</th>
-      <td mat-cell *matCellDef="let element">{{ element.apellido }}</td>
-    </ng-container>
-
-    <!-- email Column -->
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef>EMAIL</th>
-      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
-    </ng-container>
-
-    <!-- fecha desde Column -->
-    <ng-container matColumnDef="fechaDesde">
-      <th mat-header-cell *matHeaderCellDef>Desde</th>
-      <td mat-cell *matCellDef="let element">{{ element.fechaDesde.toString().replace("T"," - ") }}</td>
-    </ng-container>
-
-    <!-- fecha desde Column -->
-    <ng-container matColumnDef="fechaHasta">
-      <th mat-header-cell *matHeaderCellDef>Hasta</th>
-      <td mat-cell *matCellDef="let element">{{ element.fechaHasta.toString().replace("T"," - ") }}</td>
-    </ng-container>
-
-    <!-- Google meet column -->
-    <ng-container matColumnDef="googleMeet">
-      <th mat-header-cell *matHeaderCellDef>Google meet</th>
-      <td mat-cell *matCellDef="let element"><a class="anchor text-info link-style" href="{{element.googleMeetLink}}" target="_blank">{{element.googleMeetLink ? 'Ir al meet' : ''}}</a></td>
-    </ng-container>
-
-    <!-- estatus Column -->
-    <ng-container matColumnDef="estado">
-      <th mat-header-cell *matHeaderCellDef>Estatus</th>
-      <td
-        class="tdestatus"
-        [ngClass]="{
-          'text-success': element.estatus === 'ACEPTADA',
-          'text-danger': element.estatus === 'ESPERA' || element.estatus === 'RECHAZADA' || element.estatus === 'CANCELADA' || element.estatus === 'Cancelada'
-        }"
-        mat-cell
-        *matCellDef="let element"
-      >
-        {{ element.estatus }}
-      </td>
-    </ng-container>
-
-    <!-- no hay contenido en la tablar -->
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
-
   <div *ngIf="isLoading" class="mx-auto d-flex justify-content-center mt-5">
     <mat-spinner color="accent"></mat-spinner>
   </div>
 
-  <div *ngIf="existenCitas === false">
-    <ng-container class="my-5">
+  <div *ngIf="!isLoading">
+    <div class="button-container">
+      <button mat-raised-button class="button" (click)="addCreateDialog()" *ngIf="rol === 'Cliente' ">
+        CREAR NUEVA CITA
+      </button>
+      <button mat-raised-button class="button" (click)="openStandbyDialog()" *ngIf="rol === 'Medico' ">
+        CITAS EN ESPERA
+      </button>
+    </div>
+
+    <table mat-table [dataSource]="dataSource">
+
+      <!-- name Column -->
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef>Nombre médico</th>
+        <td class="tdnombre" mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+      </ng-container>
+
+      <!-- apellido Column -->
+      <ng-container matColumnDef="apellido">
+        <th mat-header-cell *matHeaderCellDef>Apellido médico</th>
+        <td mat-cell *matCellDef="let element">{{ element.apellido }}</td>
+      </ng-container>
+
+      <!-- email Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>EMAIL</th>
+        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+      </ng-container>
+
+      <!-- fecha desde Column -->
+      <ng-container matColumnDef="fechaDesde">
+        <th mat-header-cell *matHeaderCellDef>Desde</th>
+        <td mat-cell *matCellDef="let element">{{ element.fechaDesde.toString().replace("T"," - ") }}</td>
+      </ng-container>
+
+      <!-- fecha desde Column -->
+      <ng-container matColumnDef="fechaHasta">
+        <th mat-header-cell *matHeaderCellDef>Hasta</th>
+        <td mat-cell *matCellDef="let element">{{ element.fechaHasta.toString().replace("T"," - ") }}</td>
+      </ng-container>
+
+      <!-- Google meet column -->
+      <ng-container matColumnDef="googleMeet">
+        <th mat-header-cell *matHeaderCellDef>Google meet</th>
+        <td mat-cell *matCellDef="let element"><a class="anchor text-info link-style" href="{{element.googleMeetLink}}" target="_blank">{{element.googleMeetLink ? 'Ir al meet' : ''}}</a></td>
+      </ng-container>
+
+      <!-- estatus Column -->
+      <ng-container matColumnDef="estado">
+        <th mat-header-cell *matHeaderCellDef>Estatus</th>
+        <td
+          class="tdestatus"
+          [ngClass]="{
+            'text-success': element.estatus === 'ACEPTADA',
+            'text-danger': element.estatus === 'ESPERA' || element.estatus === 'RECHAZADA' || element.estatus === 'CANCELADA' || element.estatus === 'Cancelada'
+          }"
+          mat-cell
+          *matCellDef="let element"
+        >
+          {{ element.estatus }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <ng-container *ngIf="dataSource.data.length === 0" class="my-5">
       <div class="text-center mt-3">
         <h2 class="text-muted">No hay contenido disponible</h2>
         <i class="far fa-sad-tear fa-3x text-muted"></i>
@@ -81,24 +79,14 @@
     </ng-container>
   </div>
 
-
-  <div [className]="show">
-    <mat-paginator
+  <mat-paginator
+    *ngIf="dataSource.data.length !== 0"
     [pageSizeOptions]="[5, 8, 25, 50]"
     [pageSize]="8"
-    [length]="paginator?.length"
+    [length]="citas.total"
+    showFirstLastButtons
     (page)="getCitas($event.pageIndex, $event.pageSize)"
+    [ngClass]="{ 'd-none': isLoading }"
   >
   </mat-paginator>
-  </div>
-  
-
-  
-
-
-   
-
-   
-
-
 </app-page>

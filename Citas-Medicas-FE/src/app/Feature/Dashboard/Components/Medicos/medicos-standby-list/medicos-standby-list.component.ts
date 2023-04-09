@@ -18,9 +18,9 @@ import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.ser
 })
 export class MedicosStandbyListComponent implements OnInit {
   public medicos!: BaseResponseMedico;
-  public dataSource: any;
+  public dataSource = new MatTableDataSource<Medico>([]);
   public rol: string = '';
-  public isLoading!: boolean;
+  public isLoading: boolean = true;
 
   displayedColumns: string[] = [
     'cedula',
@@ -30,31 +30,34 @@ export class MedicosStandbyListComponent implements OnInit {
     'acciones',
   ];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
   constructor(
     private medicoService: DoctorService,
     private statusService: EstatusService,
     private SweetAlertService: SweetAlertService
-  ) {}
-
-  ngOnInit(): void {
-    this.getMedicos();
+  ) {
     this.rol = localStorage.getItem('rol') as string;
   }
 
+  ngOnInit(): void {
+    this.getMedicos();
+  }
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   public getMedicos(pageNo: number = 0, pageSize: number = 5) {
-    this.isLoading = true;
     this.medicoService
       .getStandbyDoctorsPaged(pageNo, pageSize)
       .subscribe((data) => {
         this.isLoading = false;
         this.medicos = data;
-        this.dataSource = new MatTableDataSource<Medico>(
-          this.medicos.medicosEnEsperaProjections
-        );
-        this.paginator.length = this.medicos.total;
-    });
+        this.dataSource.data = this.medicos.medicosEnEsperaProjections;
+
+        if (this.paginator) {
+          this.paginator.length = this.medicos.total;
+        }
+      }, (error) => {
+        this.isLoading = false;
+      });
   }
 
   public updateStatus(email: string, estatus: string) {

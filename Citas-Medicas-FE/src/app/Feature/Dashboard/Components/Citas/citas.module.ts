@@ -18,6 +18,7 @@ import { CitasFormMeetComponent } from './citas-form-meet/citas-form-meet.compon
 import { TutorialCreateMeetComponent } from './tutorial-create-meet/tutorial-create-meet.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { AddPaymentMethodComponent } from './add-payment-method/add-payment-method.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { AddPaymentMethodComponent } from './add-payment-method/add-payment-meth
     ReactiveFormsModule,
     MatCardModule,
     MatPaginatorModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class CitasModule {}

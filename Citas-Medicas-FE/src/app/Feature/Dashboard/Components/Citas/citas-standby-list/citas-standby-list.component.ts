@@ -19,6 +19,26 @@ export class CitasStandbyListComponent implements OnInit {
   public dataSource: any;
   public rol: string = '';
 
+  public myObserver = {
+
+    next: (data:any) => {
+      this.citas = data;
+      this.dataSource = new MatTableDataSource<Citas>(
+        this.citas.citasPorMedicoProjections
+      );
+    },
+
+    error: (err: any) => {
+      this.sweetAlertService.opensweetalerterror(err.error.message);
+      this.close();
+    },
+
+    complete: () => {
+
+    },
+
+  };
+
   displayedColumns: string[] = [
     'nombre',
     'apellido',
@@ -37,8 +57,8 @@ export class CitasStandbyListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getCitas(0,10);
     this.rol = localStorage.getItem('rol') as string;
+    this.getCitas();
   }
 
   ngAfterViewInit() {
@@ -46,28 +66,14 @@ export class CitasStandbyListComponent implements OnInit {
   }
 
   public getCitas(pageNo: number = 0, pageSize: number = 10) {
-    let rol = localStorage.getItem('rol');
-
-    if (rol === 'Medico') {
+    if (this.rol === 'Medico') {
       let id = parseInt(localStorage.getItem('id') || '0');
       this.getCitasByMedicoId(id, pageNo, pageSize);
     }
   }
 
   public getCitasByMedicoId(id: number, pageNo: number, pageSize: number) {
-    this.citasService.getStandByCitasDoctor(id, pageNo, pageSize).subscribe(
-      (data) => {
-        this.citas = data;
-        this.dataSource = new MatTableDataSource<Citas>(
-          this.citas.citasPorMedicoProjections
-        );
-      },
-      (error) => {
-        this.sweetAlertService.opensweetalerterror(
-          'Error al obtener las citas'
-        );
-      }
-    );
+    this.citasService.getStandByCitasDoctor(id, pageNo, pageSize).subscribe(this.myObserver);
   }
 
   public cancelarCita(id: number) {
@@ -84,7 +90,7 @@ export class CitasStandbyListComponent implements OnInit {
               this.sweetAlertService.opensweetalertsuccess(
                 'Cita cancelada exitosamente'
               );
-              this.getCitas(0,10);
+              this.getCitas(0, 10);
             },
             (error) => {
               this.sweetAlertService.opensweetalerterror(

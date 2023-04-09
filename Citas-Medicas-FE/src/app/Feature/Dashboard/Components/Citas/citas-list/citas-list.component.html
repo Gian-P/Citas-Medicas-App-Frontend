@@ -1,6 +1,6 @@
 <app-page title="Citas">
   <div class="button-container">
-    <button mat-raised-button class="button" (click)="addCreateDialog()">
+    <button mat-raised-button class="button" (click)="addCreateDialog()" *ngIf="rol === 'Cliente' ">
       CREAR NUEVA CITA
     </button>
     <button mat-raised-button class="button" (click)="openStandbyDialog()" *ngIf="rol === 'Medico' ">
@@ -68,19 +68,37 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 
-  <ng-container *ngIf="dataSource.data.length === 0" class="my-5">
-    <div class="text-center mt-3">
-      <h2 class="text-muted">No hay contenido disponible</h2>
-      <i class="far fa-sad-tear fa-3x text-muted"></i>
-    </div>
-  </ng-container>
+  <div *ngIf="isLoading" class="mx-auto d-flex justify-content-center mt-5">
+    <mat-spinner color="accent"></mat-spinner>
+  </div>
 
-  <mat-paginator
-    *ngIf="dataSource.data.length !== 0"
+  <div *ngIf="existenCitas === false">
+    <ng-container class="my-5">
+      <div class="text-center mt-3">
+        <h2 class="text-muted">No hay contenido disponible</h2>
+        <i class="far fa-sad-tear fa-3x text-muted"></i>
+       </div>
+    </ng-container>
+  </div>
+
+
+  <div [className]="show">
+    <mat-paginator
     [pageSizeOptions]="[5, 8, 25, 50]"
     [pageSize]="8"
     [length]="paginator?.length"
     (page)="getCitas($event.pageIndex, $event.pageSize)"
   >
   </mat-paginator>
+  </div>
+  
+
+  
+
+
+   
+
+   
+
+
 </app-page>

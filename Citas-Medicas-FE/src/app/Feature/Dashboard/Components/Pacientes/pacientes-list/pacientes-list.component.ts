@@ -14,7 +14,7 @@ import { BaseResponsePaciente, Paciente } from '../../../../../Core/Models/users
 })
 export class PacientesListComponent implements OnInit {
   public pacientes!: BaseResponsePaciente;
-  public dataSource: any;
+  public dataSource = new MatTableDataSource<Paciente>([]);
   public isLoading = false;
 
   displayedColumns: string[] = [
@@ -32,9 +32,7 @@ export class PacientesListComponent implements OnInit {
     private pacienteService: PacienteService,
     private dialog: MatDialog,
     private sweeAlertService: SweetAlertService
-  ) {
-    this.getPacientes();
-  }
+  ) { }
 
   ngOnInit(): void {
     this.getPacientes();
@@ -44,17 +42,18 @@ export class PacientesListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  public getPacientes(pageNo: number = 0, pageSize: number = 8) {
+  public getPacientes(pageNo: number = 0, pageSize: number = 10) {
     this.isLoading = true;
     this.pacienteService
       .getPacientesPaged(pageNo, pageSize)
       .subscribe((res) => {
         this.isLoading = false;
         this.pacientes = res;
-        this.dataSource = new MatTableDataSource<Paciente>(
-          this.pacientes.pacientesProjection
-        );
-        this.paginator.length = this.pacientes.total;
+        this.dataSource.data = this.pacientes.pacientesProjection;
+
+        if(this.paginator){
+          this.paginator.length = this.pacientes.total;
+        }
       }, (err) => {
         this.isLoading = false;
         this.sweeAlertService.opensweetalerterror(err.message);
@@ -68,7 +67,7 @@ export class PacientesListComponent implements OnInit {
         if (result) {
           this.pacienteService.deletePaciente(id).subscribe((res) => {
             this.getPacientes();
-            this.sweeAlertService.opensweetalertsuccess(res);
+            this.sweeAlertService.opensweetalertsuccess("Paciente eliminado correctamente");
           });
         }
       });

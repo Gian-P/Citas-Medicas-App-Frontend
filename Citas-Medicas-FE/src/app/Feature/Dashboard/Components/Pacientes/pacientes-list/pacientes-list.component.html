@@ -52,14 +52,16 @@
         <i class="far fa-sad-tear fa-3x text-muted"></i>
       </div>
     </ng-container>
+  </div>
 
-    <mat-paginator
+  <mat-paginator
       *ngIf="dataSource.data.length !== 0"
-      [pageSizeOptions]="[5, 8, 25, 50]"
-      [pageSize]="8"
-      [length]="paginator?.length"
+      [pageSizeOptions]="[5, 10, 25, 50]"
+      [pageSize]="10"
+      [length]="pacientes.total"
       (page)="getPacientes($event.pageIndex, $event.pageSize)"
+      [ngClass]="{ 'd-none': isLoading }"
     >
     </mat-paginator>
-  </div>
+
 </app-page>

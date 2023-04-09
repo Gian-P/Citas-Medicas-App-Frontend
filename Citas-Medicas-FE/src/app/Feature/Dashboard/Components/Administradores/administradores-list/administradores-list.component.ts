@@ -19,7 +19,7 @@ import { AdministradoresUpdateFormComponent } from '../administradores-update-fo
 })
 export class AdministradoresListComponent implements OnInit {
   public administradores!: BaseResponseAdministrador;
-  public dataSource: any;
+  public dataSource = new MatTableDataSource<Administrador>([]);
   public isLoading = false;
   public rol: string = ''
 
@@ -38,10 +38,11 @@ export class AdministradoresListComponent implements OnInit {
     private adminService: AdminService,
     private dialog: MatDialog,
     private sweetAlert: SweetAlertService
-  ) {}
+  ) {
+    this.rol = localStorage.getItem('rol') as string;
+  }
 
   ngOnInit(): void {
-    this.rol = localStorage.getItem('rol') as string;
     this.getAdministradores();
   }
 
@@ -55,10 +56,11 @@ export class AdministradoresListComponent implements OnInit {
       (res) => {
         this.isLoading = false;
         this.administradores = res;
-        this.dataSource = new MatTableDataSource<Administrador>(
-          this.administradores.administradoresProjection
-        );
-        this.paginator.length = this.administradores.total;
+        this.dataSource.data = this.administradores.administradoresProjection;
+
+        if(this.paginator){
+          this.paginator.length = this.administradores.total;
+        }
       },
       (err) => {
         this.isLoading = false;

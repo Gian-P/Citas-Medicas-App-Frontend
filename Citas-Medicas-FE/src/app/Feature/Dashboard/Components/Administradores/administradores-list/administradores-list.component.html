@@ -75,14 +75,14 @@
         <i class="far fa-sad-tear fa-3x text-muted"></i>
       </div>
     </ng-container>
-
-    <mat-paginator
-      *ngIf="dataSource.data.length !== 0"
-      [pageSizeOptions]="[5, 10, 25, 50]"
-      [pageSize]="10"
-      [length]="paginator?.length"
-      (page)="getAdministradores($event.pageIndex, $event.pageSize)"
-    >
-    </mat-paginator>
   </div>
+  <mat-paginator
+    *ngIf="dataSource.data.length !== 0"
+    [pageSizeOptions]="[5, 10, 25, 50]"
+    [pageSize]="10"
+    [length]="administradores.total"
+    (page)="getAdministradores($event.pageIndex, $event.pageSize)"
+    [ngClass]="{ 'd-none': isLoading }"
+  >
+  </mat-paginator>
 </app-page>

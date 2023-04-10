@@ -1,15 +1,59 @@
+
 <app-page title="Descripción general">
-  <mat-grid-list cols="3" rowHeight="500px">
-    <mat-grid-tile *ngFor="let card of cards" [colspan]="1" [rowspan]="1">
+
+  <div *ngIf="isLoading" class="mx-auto d-flex justify-content-center mt-5">
+    <mat-spinner color="accent"></mat-spinner>
+  </div>
+
+  <div *ngIf="!isLoading">
+
+        <mat-grid-list cols="3" rowHeight="300px">
+
+    <div *ngFor="let card of cards, let i = index">
+      <a routerLink="{{card.ruta}}">
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="{{i <= 2 ? 'firstThree': ''}}">
+          <mat-card class="card text-center {{i > 2 ? 'lastThree': ''}}">
+            <mat-card-title>{{card.title}}</mat-card-title>
+            <img *ngIf="card.image" class="img" mat-card-image src="{{card.image}}" alt="{{card.title}}">
+            <mat-card-content>
+              <p>{{card.total}} registros</p>
+            </mat-card-content>
+          </mat-card>
+        </mat-grid-tile>
+      </a>
+
+    <mat-grid-tile [colspan]="1" [rowspan]="1" *ngIf="i === 4" >
+
       <mat-card class="card text-center">
-        <mat-card-title>{{card.title}}</mat-card-title>
-        <img class="img" mat-card-image src="{{card.image}}" alt="{{card.title}}">
+        <mat-card-title>Citas creadas</mat-card-title>
+         <img *ngIf="card.image" class="img" mat-card-image src="{{card.image}}" alt="{{card.title}}">
         <mat-card-content>
-          <p>{{card.records}} registros</p>
+          <p>{{totalVariables.totalCitas}} registros</p>
         </mat-card-content>
       </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
-</app-page>
 
-<div></div>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="1" [rowspan]="1" *ngIf="i === 4" >
+
+      <mat-card class="card text-center">
+        <mat-card-title>Citas en espera</mat-card-title>
+         <img *ngIf="card.image" class="img" mat-card-image src="{{card.image}}" alt="{{card.title}}">
+        <mat-card-content>
+          <p>{{totalVariables.totalCitasEnEspera}} registros</p>
+        </mat-card-content>
+      </mat-card>
+
+    </mat-grid-tile>
+
+    
+
+    </div>
+    
+  </mat-grid-list>
+
+  </div>
+
+
+
+</app-page>

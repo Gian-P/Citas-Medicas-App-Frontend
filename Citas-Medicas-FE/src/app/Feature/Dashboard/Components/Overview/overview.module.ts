@@ -7,17 +7,17 @@ import { OvierviewListComponent } from './ovierview-list/ovierview-list.componen
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { SharedModule } from 'src/app/Shared/shared.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
-  declarations: [
-    OvierviewListComponent
-  ],
+  declarations: [OvierviewListComponent],
   imports: [
     CommonModule,
     OverviewRoutingModule,
     MatGridListModule,
     MatCardModule,
-    SharedModule
-  ]
+    SharedModule,
+    MatProgressSpinnerModule,
+  ],
 })
-export class OverviewModule { }
+export class OverviewModule {}

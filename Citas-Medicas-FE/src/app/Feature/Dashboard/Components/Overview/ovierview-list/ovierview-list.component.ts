@@ -22,7 +22,6 @@ export class OvierviewListComponent implements OnInit {
     {
       title: 'Admins',
       image: '../../../../../../assets/img/admin-nc.svg',
-      records: 0,
       total: this.totalVariables.totalAdmins,
       ruta: '/dashboard/administradores/list',
     },
@@ -30,7 +29,6 @@ export class OvierviewListComponent implements OnInit {
     {
       title: 'Medicos',
       image: '../../../../../../assets/img/medicos-nc.svg',
-      records: 10,
       total: this.totalVariables.totalMedicos,
       ruta: '/dashboard/medicos/list',
     },
@@ -38,7 +36,6 @@ export class OvierviewListComponent implements OnInit {
     {
       title: 'Pacientes',
       image: '../../../../../../assets/img/pacientes-nc.svg',
-      records: 100,
       total: this.totalVariables.totalPacientes,
       ruta: '/dashboard/pacientes/list',
     },
@@ -46,7 +43,6 @@ export class OvierviewListComponent implements OnInit {
     {
       title: 'Admins en espera',
       image: '../../../../../../assets/img/admin-espera-nc.svg',
-      records: 100,
       total: this.totalVariables.totalAdminsEnEspera,
       ruta: '/dashboard/administradores/list',
     },
@@ -54,9 +50,22 @@ export class OvierviewListComponent implements OnInit {
     {
       title: 'Medicos en espera',
       image: '../../../../../../assets/img/medicos-espera-nc.svg',
-      records: 100,
       total: this.totalVariables.totalMedicosEnEspera,
       ruta: '/dashboard/medicos/list',
+    },
+
+    {
+      title: 'Citas',
+      image: '../../../../../../assets/img/citas-nc.svg',
+      total: this.totalVariables.totalCitas,
+      ruta: '',
+    },
+
+    {
+      title: 'Citas en espera',
+      image: '../../../../../../assets/img/citas-espera-nc.svg',
+      total: this.totalVariables.totalCitasEnEspera,
+      ruta: '',
     },
   ];
 
@@ -90,11 +99,11 @@ export class OvierviewListComponent implements OnInit {
     });
 
     this.AdminService.totalNotInStandByCitas().subscribe((data) => {
-      this.totalVariables.totalCitas = data;
+      this.cards[5].total = data;
     });
 
     this.AdminService.totalStandByCitas().subscribe((data) => {
-      this.totalVariables.totalCitasEnEspera = data;
+      this.cards[6].total = data;
     });
   }
 }
@@ -102,7 +111,6 @@ export class OvierviewListComponent implements OnInit {
 export interface Cards {
   title: string;
   image: string;
-  records: number;
   total: number
   ruta: string;
 }

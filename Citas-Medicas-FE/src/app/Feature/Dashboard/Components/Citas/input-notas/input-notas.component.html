@@ -1,0 +1,25 @@
+<div class="container">
+  <h2 mat-dialog-title class="text-center">Notas de la cita</h2>
+  <div mat-dialog-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="row">
+          <mat-form-field appearance="outline">
+            <mat-label>Nota de la cita</mat-label>
+            <textarea matInput formControlName="notas"></textarea>
+          </mat-form-field>
+      </div>
+      <div *ngIf="!isLoading" class="d-flex justify-content-end">
+        <button *ngIf="rol === 'Medico' " mat-button class="button" type="submit">
+          {{buttonText}}
+        </button>
+      </div>
+
+       <div *ngIf="isLoading" class="text-center mb-4">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>

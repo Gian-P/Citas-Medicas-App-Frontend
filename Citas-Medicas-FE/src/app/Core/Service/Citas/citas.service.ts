@@ -4,6 +4,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { Citas } from 'src/app/Core/Models/citas/citas.models';
 import { CitaModificada } from '../../Models/calendario/citaModificada.models';
+import { notas } from "src/app/Feature/Dashboard/Components/Citas/input-notas/input-notas.component";
 
 @Injectable({
   providedIn: 'root',
@@ -27,19 +28,21 @@ export class CitaService {
     pageNo: number,
     pageSize: number
   ): Observable<any> {
-    return this.http.get(
-      environment.baseUrl +
-        'citas-medicos-en-espera/' +
-        id +
-        '/' +
-        pageNo +
-        '/' +
-        pageSize
-    ).pipe(
-      catchError((err: HttpErrorResponse) => {
-        return throwError("Error al obtener las citas");
-      })
-    );
+    return this.http
+      .get(
+        environment.baseUrl +
+          'citas-medicos-en-espera/' +
+          id +
+          '/' +
+          pageNo +
+          '/' +
+          pageSize
+      )
+      .pipe(
+        catchError((err: HttpErrorResponse) => {
+          return throwError('Error al obtener las citas');
+        })
+      );
   }
 
   public getStandByCitasPaciente(
@@ -47,19 +50,21 @@ export class CitaService {
     pageNo: number,
     pageSize: number
   ): Observable<any> {
-    return this.http.get(
-      environment.baseUrl +
-        'citas-pacientes-en-espera/' +
-        id +
-        '/' +
-        pageNo +
-        '/' +
-        pageSize
-    ).pipe(
-      catchError((err: HttpErrorResponse) => {
-        return throwError("Error al obtener las citas");
-      })
-    );
+    return this.http
+      .get(
+        environment.baseUrl +
+          'citas-pacientes-en-espera/' +
+          id +
+          '/' +
+          pageNo +
+          '/' +
+          pageSize
+      )
+      .pipe(
+        catchError((err: HttpErrorResponse) => {
+          return throwError('Error al obtener las citas');
+        })
+      );
   }
 
   public getCitasByDoctor(
@@ -67,19 +72,21 @@ export class CitaService {
     pageNo: number,
     pageSize: number
   ): Observable<any> {
-    return this.http.get(
-      environment.baseUrl +
-        'citas-por-medico/' +
-        id +
-        '/' +
-        pageNo +
-        '/' +
-        pageSize
-    ).pipe(
-      catchError((err: HttpErrorResponse) => {
-        return throwError("Error al obtener las citas");
-      })
-    );
+    return this.http
+      .get(
+        environment.baseUrl +
+          'citas-por-medico/' +
+          id +
+          '/' +
+          pageNo +
+          '/' +
+          pageSize
+      )
+      .pipe(
+        catchError((err: HttpErrorResponse) => {
+          return throwError('Error al obtener las citas');
+        })
+      );
   }
 
   public getCitasByPaciente(
@@ -87,19 +94,21 @@ export class CitaService {
     pageNo: number,
     pageSize: number
   ): Observable<any> {
-    return this.http.get(
-      environment.baseUrl +
-        'citas-por-paciente/' +
-        id +
-        '/' +
-        pageNo +
-        '/' +
-        pageSize
-    ).pipe(
-      catchError((err: HttpErrorResponse) => {
-        return throwError("Error al obtener las citas");
-      })
-    );
+    return this.http
+      .get(
+        environment.baseUrl +
+          'citas-por-paciente/' +
+          id +
+          '/' +
+          pageNo +
+          '/' +
+          pageSize
+      )
+      .pipe(
+        catchError((err: HttpErrorResponse) => {
+          return throwError('Error al obtener las citas');
+        })
+      );
   }
 
   public deleteCitas(id: number | string): Observable<any> {
@@ -107,7 +116,6 @@ export class CitaService {
   }
 
   public updateCita(cita: CitaModificada): Observable<any> {
-
     let idCita = parseInt(localStorage.getItem('idCita') || '0');
 
     return this.http.put(
@@ -121,5 +129,14 @@ export class CitaService {
       environment.baseUrl + 'agregar-google-meet/' + idCita,
       meet
     );
+  }
+
+  public createNote(nota: notas): Observable<any> {
+    return this.http.put(environment.baseUrl + 'agregar-nota-cita/'+ nota.idCita, nota);
+  }
+
+  public editNote(nota: notas): Observable<any> {
+    return this.http.put(
+      environment.baseUrl + 'modificar-nota-cita/' + nota.idCita, nota);
   }
 }

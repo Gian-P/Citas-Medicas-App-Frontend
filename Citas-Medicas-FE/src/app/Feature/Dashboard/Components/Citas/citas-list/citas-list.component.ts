@@ -9,6 +9,7 @@ import {
 import { CitaService } from 'src/app/Core/Service/Citas/citas.service';
 import { CitasFormComponent } from '../citas-form/citas-form.component';
 import { CitasStandbyListComponent } from '../citas-standby-list/citas-standby-list.component';
+import { InputNotasComponent, notas } from "../input-notas/input-notas.component";
 
 @Component({
   selector: 'app-citas-list',
@@ -28,6 +29,7 @@ export class CitasListComponent implements OnInit {
     'fechaDesde',
     'fechaHasta',
     'googleMeet',
+    'notas',
     'estado',
   ];
 
@@ -96,6 +98,18 @@ export class CitasListComponent implements OnInit {
   public addCreateDialog() {
     this.dialog.open(CitasFormComponent);
   }
+
+  public openNotasDialog(citas: Citas){
+    const notas: notas = {
+      notas: citas.notas,
+      idCita: citas.idCita
+    };
+
+    this.dialog.open(InputNotasComponent, {data:notas}).afterClosed().subscribe(() => {
+      this.getCitas();
+    });
+  }
+
 
   public openStandbyDialog() {
     const dialogRef = this.dialog.open(CitasStandbyListComponent, {

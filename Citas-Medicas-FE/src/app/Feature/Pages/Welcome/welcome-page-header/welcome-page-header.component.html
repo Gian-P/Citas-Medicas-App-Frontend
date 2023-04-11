@@ -112,10 +112,12 @@
               autocomplete="new-password"
             />
           </div>
-
-          <button
-            type="submit"
+        
+          
+          <button 
+            type="button"
             class="btn btn-secondary welcome-page-form-submit-btn"
+            (click)="goto()"
           >
             Agendar una cita
           </button>
@@ -129,16 +131,7 @@
       <div class="gap-utility">
         <span class="common-title-styles">Sobre nosotros</span>
         <span class="common-paragraph-styles"
-          >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-          tristique maximus turpis, a lobortis ligula tempor nec. Vestibulum
-          vulputate tempus eros eget ornare. Integer risus nunc, molestie ac
-          suscipit eu, ullamcorper eu lectus. Aenean pellentesque est ac
-          sagittis accumsan. Etiam rutrum dictum nibh, sit amet pharetra odio.
-          Quisque porttitor accumsan arcu eget pulvinar. Suspendisse commodo
-          nunc quis velit placerat, eget mattis nunc rutrum. Praesent ipsum
-          felis, consequat at mollis ac, malesuada imperdiet dui.Donec et
-          malesuada ante, ac dictum urna. In elementum ut ligula ac lobortis.
-          Cras sem sapien, posuere sit amet faucibus eu, porttitor et massa.
+          >El equipo está compuesto por seis personas: Giancarlo, Bryan, Davide, Rosanna, Esleiker y Rossian. Cada uno de ellos aporta habilidades y conocimientos únicos al equipo. Bryan es un líder natural que siempre busca soluciones creativas a los problemas. Giancarlo es un programador talentoso que siempre encuentra maneras de optimizar el código. Davide es un desarrollador especializado en el backend y siempre está dispuesto a ayudar a los demás. Rossian es una persona muy organizada y se asegura de que el equipo esté en línea con los plazos y objetivos. Esleiker es un desarrollador de software hábil y siempre está dispuesto a ayudar a sus compañeros de equipo. Finalmente, Rosanna es un comunicador nato y tiene habilidades interpersonales excepcionales. Juntos, el equipo tiene una gran variedad de habilidades que les permiten trabajar de manera efectiva y lograr los objetivos en conjunto.
         </span>
         <button type="button" class="btn btn-primary start-button">
           Empezar
@@ -160,10 +153,7 @@
       <div class="why-us-container">
         <span class="common-title-styles why-pick-us">¿Por qué escogernos?</span>
         <span class="common-paragraph-styles why-us-paragraph"
-          >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
-          ornare tincidunt libero quis varius. Etiam ac sem nibh. Etiam in
-          dictum neque. Cras sem sapien, posuere sit amet faucibus eu, porttitor
-          et massa.
+          >En primer lugar, nuestra plataforma es fácil de usar y está diseñada pensando en la comodidad y la accesibilidad de los pacientes. Puedes programar tus citas médicas en línea en cuestión de minutos, sin tener que hacer largas filas o llamar por teléfono.
         </span>
 
         <div class="commom-checkbox-styles checkbox-container">
@@ -176,10 +166,6 @@
           />
           <div class="title-and-message-container">
             <span class="why-us-common-title-styles">Personal capacitado</span>
-            <span class="why-us-common-paragraph-styles"
-              >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
-              ornare tincidunt libero quis varius.</span
-            >
           </div>
         </div>
 
@@ -195,10 +181,7 @@
             <span class="why-us-common-title-styles"
               >Sistema especializado</span
             >
-            <span class="why-us-common-paragraph-styles"
-              >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
-              ornare tincidunt libero quis varius.
-            </span>
+
           </div>
         </div>
 
@@ -212,10 +195,6 @@
           />
           <div class="title-and-message-container">
             <span class="why-us-common-title-styles">Precio absequible</span>
-            <span class="why-us-common-paragraph-styles"
-              >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
-              ornare tincidunt libero quis varius.
-            </span>
           </div>
         </div>
       </div>
@@ -238,8 +217,7 @@
     </div>
     <div class="col services-msg">
       <span>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ornare
-        tincidunt libero quis varius. Etiam ac sem nibh. Etiam in dictum neque.
+        Los servicios de citas médicas en línea han ganado popularidad en los últimos años debido a la conveniencia y accesibilidad que ofrecen. 
       </span>
     </div>
   </div>
@@ -251,11 +229,7 @@
     <div class="col services-text-container">
       <div class="services-text">
         <span class="services-msg"
-          >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
-          ornare tincidunt libero quis varius. Etiam ac sem nibh. Etiam in
-          dictum neque.Praesent ornare tincidunt libero quis varius. Praesent
-          ornare tincidunt libero quis varius. Praesent ornare tincidunt libero
-          quis varius.
+          > Estos servicios permiten a los pacientes programar citas con médicos y especialistas a través de plataformas digitales, eliminando la necesidad de visitar una clínica o hospital en persona. 
         </span>
         <button class="btn btn-secondary services-btn">Leer más...</button>
       </div>
@@ -294,8 +268,8 @@
       </div>
 
       <div class="img3-identity">
-        <span class="name">Juan Perez</span>
-        <span class="profession">Dentista</span>
+        <span class="name">Carlos Santana</span>
+        <span class="profession">Ginecólogo</span>
       </div>
     </div>
 
@@ -314,6 +288,7 @@
       </div>
     </div>
 
+
     <div class="col">
       <div class="third-img-container">
         <img
@@ -324,11 +299,12 @@
       </div>
 
       <div class="img3-identity">
-        <span class="name">Juan Perez</span>
-        <span class="profession">Dentista</span>
+        <span class="name">Carlos Perez</span>
+        <span class="profession">Pediatra</span>
       </div>
     </div>
   </div>
+
 
   <div class="row row10">
     <div class="col circle-container">
@@ -349,10 +325,10 @@
         />
       </div>
       <div class="information-container">
-        <span>1288 Kings Way</span>
-        <span>King Street 5ta avenida, Nueva York</span>
-        <span>teléfono:+00-2345-3455-5544</span>
-        <span>contacto:contact@gmail.com</span>
+        <span>Santo Domingo</span>
+        <span>Piantini, Distrito Nacional</span>
+        <span>Teléfono: +1 809-893-1020</span>
+        <span>Contacto: citasmedicas@gmail.com</span>
       </div>
     </div>
 

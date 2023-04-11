@@ -19,6 +19,8 @@ import { TutorialCreateMeetComponent } from './tutorial-create-meet/tutorial-cre
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { AddPaymentMethodComponent } from './add-payment-method/add-payment-method.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { InputNotasComponent } from './input-notas/input-notas.component';
+import { TextFieldModule } from "@angular/cdk/text-field";
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     CitasFormMeetComponent,
     TutorialCreateMeetComponent,
     AddPaymentMethodComponent,
+    InputNotasComponent,
   ],
   imports: [
     CommonModule,
@@ -43,6 +46,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatCardModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    TextFieldModule,
   ],
 })
 export class CitasModule {}

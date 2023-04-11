@@ -51,6 +51,18 @@
         <td mat-cell *matCellDef="let element"><a class="anchor text-info link-style" href="{{element.googleMeetLink}}" target="_blank">{{element.googleMeetLink ? 'Ir al meet' : ''}}</a></td>
       </ng-container>
 
+      <!--Notas column-->
+      <ng-container matColumnDef="notas">
+        <th mat-header-cell *matHeaderCellDef>Notas</th>
+        <td mat-cell *matCellDef="let element">
+          <button (click)="openNotasDialog(element)" *ngIf="element.estatus === 'ACEPTADA' && rol === 'Medico' " class="button_notas text-info">{{element.notas ? 'Ver nota' : 'Agregar nota'}}
+          </button>
+          <button (click)="openNotasDialog(element)" *ngIf="rol === 'Cliente' " class="button_notas text-info">{{element.notas ? 'Ver nota' : ''}}
+          </button>
+
+        </td>
+      </ng-container>
+
       <!-- estatus Column -->
       <ng-container matColumnDef="estado">
         <th mat-header-cell *matHeaderCellDef>Estatus</th>

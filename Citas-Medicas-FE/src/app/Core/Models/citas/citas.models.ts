@@ -15,6 +15,7 @@ export interface Citas extends Base {
   idCita: number;
   googleMeetLink: string;
   nombre: string;
+  notas: string;
 }
 
 export interface BaseResponseCitas {

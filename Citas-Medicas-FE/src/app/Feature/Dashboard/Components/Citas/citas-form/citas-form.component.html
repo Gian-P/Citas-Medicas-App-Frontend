@@ -44,8 +44,14 @@
       </div>
     </div>
 
-    <div class="d-grid">
+    <div *ngIf="!isLoading" class="d-grid">
       <button class="button" mat-raised-button>Guardar</button>
+    </div>
+
+    <div *ngIf="isLoading" class="text-center mb-4">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
     </div>
   </form>
 </div>

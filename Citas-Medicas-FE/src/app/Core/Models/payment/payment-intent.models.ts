@@ -8,11 +8,7 @@ export interface PaymentIntentRequest {
 
 export interface PaymentIntentResponse {
   idPago: number;
-  paymentIntent: PaymentIntent;
-}
-
-export interface PaymentIntent{
-  id: string;
+  paymentId: string;
 }
 
 export interface PaymentSendData {

@@ -1,8 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import {
-  PaymentIntent,
   PaymentIntentRequest,
   PaymentIntentResponse,
   PaymentSendData,
@@ -17,6 +16,7 @@ import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.ser
 })
 export class AddPaymentMethodComponent implements OnInit {
   private payment!: PaymentIntentResponse;
+  public isLoading: boolean = false;
 
   paymentForm = this.fb.group({
     name: ['', Validators.required],
@@ -30,6 +30,7 @@ export class AddPaymentMethodComponent implements OnInit {
     private dialogRef: MatDialogRef<AddPaymentMethodComponent>,
     private paymentService: PagosService,
     private sweetAlert: SweetAlertService,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: PaymentSendData
   ) {}
 
@@ -43,34 +44,47 @@ export class AddPaymentMethodComponent implements OnInit {
     } as PaymentIntentRequest;
 
     if (this.paymentForm.valid) {
+      this.isLoading = true;
       this.paymentService
         .paymentIntent(paymentIntentRequest)
         .subscribe((pago: any) => {
-          this.payment = pago.paymentIntent;
-          console.log(this.payment);
+          var paymentIntedId = JSON.parse(pago.paymentIntent);
+          this.payment = pago;
+          this.payment.paymentId = paymentIntedId.id;
+
           this.sweetAlert
             .opensweetalertdelete('¿Está seguro de realizar el pago?')
             .subscribe((res: any) => {
               if (res) {
-                this.paymentService
-                  .confirmPayment(
-                    "pi_1J9Z2pJ",
-                    5
-                  )
-                  .subscribe((res: any) => {
+                this.paymentService.confirmPayment(this.payment.paymentId, this.payment.idPago).subscribe(
+                  (res: any) => {
+                    this.isLoading = false;
                     this.sweetAlert.opensweetalertsuccess(
                       'Pago realizado con éxito'
                     );
-                  });
+                    this.dialog.closeAll();
+                  },
+                  (err: any) => {
+                    this.isLoading = false;
+                    this.sweetAlert.opensweetalerterror(
+                      'Error al confirmar pago'
+                    );
+                  }
+                );
               } else {
-                this.paymentService
-                  .cancelPayment(
-                    "pi_1J9Z2pJ",
-                    5
-                  )
-                  .subscribe((res: any) => {
-                    this.sweetAlert.opensweetalerterror('Pago cancelado');
-                  });
+                this.paymentService.cancelPayment(this.payment.paymentId, this.payment.idPago).subscribe(
+                  (res: any) => {
+                    this.isLoading = false;
+                    this.sweetAlert.opensweetalerterror('Pago cancelado exitosamente');
+                    this.dialog.closeAll();
+                  },
+                  (err: any) => {
+                    this.isLoading = false;
+                    this.sweetAlert.opensweetalerterror(
+                      'Error al cancelar pago'
+                    );
+                  }
+                );
               }
             });
         });

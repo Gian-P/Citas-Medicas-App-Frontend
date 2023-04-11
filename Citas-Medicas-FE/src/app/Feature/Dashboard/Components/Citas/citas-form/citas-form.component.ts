@@ -18,6 +18,7 @@ export class CitasFormComponent implements OnInit {
   public doctors!: BaseResponseMedico;
   public citas!: Citas;
   public form: FormGroup = new FormGroup({});
+  public isLoading: boolean = false;
   public Fecha1!: any;
   public Fecha2!: any;
 
@@ -46,7 +47,7 @@ export class CitasFormComponent implements OnInit {
   }
 
   public getDoctors() {
-    this.doctorService.getDoctorsPaged(0, 10).subscribe((res: any) => {
+    this.doctorService.getDoctorsPaged(0, 100).subscribe((res: any) => {
       this.doctors = res;
     });
   }
@@ -61,6 +62,7 @@ export class CitasFormComponent implements OnInit {
   }
 
   public onSubmit() {
+    this.isLoading = true;
     this.citas = {
       ...this.form.value,
     } as Citas;
@@ -68,18 +70,22 @@ export class CitasFormComponent implements OnInit {
     if (this.validateDate()) {
       this.citas.idPaciente = localStorage.getItem('id') as unknown as number;
       this.citaService.createCita(this.citas).subscribe((res: any) => {
-        console.log(res);
+        this.isLoading = false;
+
         const paymentSend = {
-          idCita: 40,
-          idPaciente: 5,
+          idCita: res.idCita,
+          idPaciente: res.idPaciente,
         } as PaymentSendData;
 
         this.paymentDialog.open(AddPaymentMethodComponent, {
           data: paymentSend,
         });
       }, (err: any) => {
+        this.isLoading = false;
         this.sweetAlert.opensweetalerterror(err.error.message);
       });
+    }else{
+      this.isLoading = false;
     }
   }
 

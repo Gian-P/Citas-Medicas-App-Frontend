@@ -36,7 +36,7 @@ export class AddPaymentMethodComponent implements OnInit {
 
   submit() {
     const paymentIntentRequest = {
-      amount: 50,
+      amount: 5000,
       currency: 'USD',
       description: 'Cita médica',
       idCita: this.data.idCita,
@@ -66,7 +66,7 @@ export class AddPaymentMethodComponent implements OnInit {
                   },
                   (err: any) => {
                     this.isLoading = false;
-                    this.sweetAlert.opensweetalerterror(
+                    this.sweetAlert.opensweetalertsuccess(
                       'Error al confirmar pago'
                     );
                   }

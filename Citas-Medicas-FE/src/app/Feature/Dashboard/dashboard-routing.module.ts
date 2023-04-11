@@ -61,8 +61,7 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('./Components/Cuenta/cuenta.module').then((m) => m.CuentaModule),
-      canActivate: [AdminGuard],
+      import('./Components/Cuenta/cuenta.module').then((m) => m.CuentaModule)
   }
 ];
 

@@ -16,6 +16,7 @@ import { TutorialCreateMeetComponent } from '../tutorial-create-meet/tutorial-cr
 export class CitasFormMeetComponent implements OnInit {
   public meet!: Meet;
   public form: FormGroup = new FormGroup({});
+  public isLoading: boolean = false;
 
   constructor(
     private dialogRef: MatDialogRef<MedicosFormComponent>,
@@ -42,19 +43,28 @@ export class CitasFormMeetComponent implements OnInit {
       .opensweetalertwarning('¿Estás seguro?')
       .subscribe((res) => {
         if (res) {
+          this.isLoading = true;
           this.citaService.cambiarEstatusCita(this.idCita, estatus).subscribe(
             (res: any) => {
               this.citaService.addGoogleMeetLink(this.idCita, meet).subscribe(
                 (res: any) => {
+                  this.isLoading = false;
                   this.sweetAlertService.opensweetalertsuccess(
                     'La cita se ha confirmado con éxito'
                   );
                   this.dialogRef.close();
+                }, (err: any) => {
+                  this.isLoading = false;
+                  this.sweetAlertService.opensweetalerterror('Hubo un error al confirmar la cita. Por favor contacta al administrador del sistema');
                 }
-              );
+              ), (err: any) => {
+                this.isLoading = false;
+                this.sweetAlertService.opensweetalerterror('Hubo un error al confirmar la cita. Por favor contacta al administrador del sistema');
+              };
             },
             (err: any) => {
-              this.sweetAlertService.opensweetalerterror('Hubo un error al confirmar la cita');
+              this.isLoading = false;
+              this.sweetAlertService.opensweetalerterror('Hubo un error al confirmar la cita. Por favor contacta al administrador del sistema');
             }
           );
         }

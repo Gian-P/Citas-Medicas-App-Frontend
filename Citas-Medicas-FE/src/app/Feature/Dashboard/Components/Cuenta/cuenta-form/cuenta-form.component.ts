@@ -192,7 +192,7 @@ export class CuentaFormComponent implements OnInit {
   private getData() {
     const id = parseInt(this.id);
 
-    if (this.rol == 'Paciente') {
+    if (this.rol == 'Cliente') {
       this.getPaciente(id);
     } else if (this.rol == 'Medico') {
       this.getMedico(id);

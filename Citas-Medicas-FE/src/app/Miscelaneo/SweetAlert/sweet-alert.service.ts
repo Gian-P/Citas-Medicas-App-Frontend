@@ -36,7 +36,7 @@ export class SweetAlertService {
       swal.fire({
         title: '¿Está seguro?',
         text: `${value}`,
-        titleText: '¡Estás apunto de realizar una acción importante!',
+        titleText: '¡Estás a punto de realizar una acción importante!',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',

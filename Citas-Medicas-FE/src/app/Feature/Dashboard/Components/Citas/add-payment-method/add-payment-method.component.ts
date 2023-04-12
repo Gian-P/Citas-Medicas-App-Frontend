@@ -53,7 +53,7 @@ export class AddPaymentMethodComponent implements OnInit {
           this.payment.paymentId = paymentIntedId.id;
 
           this.sweetAlert
-            .opensweetalertdelete('¿Está seguro de realizar el pago?')
+            .opensweetalertwarning('¿Está seguro de realizar el pago?')
             .subscribe((res: any) => {
               if (res) {
                 this.paymentService.confirmPayment(this.payment.paymentId, this.payment.idPago).subscribe(
@@ -72,10 +72,10 @@ export class AddPaymentMethodComponent implements OnInit {
                   }
                 );
               } else {
-                this.paymentService.cancelPayment(this.payment.paymentId, this.payment.idPago).subscribe(
+                this.paymentService.cancelPayment(this.payment.paymentId, this.payment.idPago, this.data.idCita).subscribe(
                   (res: any) => {
                     this.isLoading = false;
-                    this.sweetAlert.opensweetalerterror('Pago cancelado exitosamente');
+                    this.sweetAlert.opensweetalerterror('Pago cancelado exitosamente, su cita ha sido eliminada.');
                     this.dialog.closeAll();
                   },
                   (err: any) => {

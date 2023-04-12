@@ -101,18 +101,6 @@
         <mat-form-field class="mat-form" appearance="outline">
           <mat-label>Número tel. casa</mat-label>
           <input formControlName="numeroTelefonoCasa" matInput type="text" />
-          <mat-error
-            *ngIf="form.get('numeroTelefonoCasa')?.hasError('required')"
-          >
-            El número es requerido
-          </mat-error>
-          <mat-error
-            *ngIf="
-              form.get('numeroTelefonoCasa')?.hasError('numeroTelefonoCasa')
-            "
-          >
-            El número no es valido
-          </mat-error>
         </mat-form-field>
       </div>
     </div>

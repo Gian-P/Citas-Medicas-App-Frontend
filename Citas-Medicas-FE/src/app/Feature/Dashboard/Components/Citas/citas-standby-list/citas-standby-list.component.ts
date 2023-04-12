@@ -26,6 +26,7 @@ export class CitasStandbyListComponent implements OnInit {
     'email',
     'fechaDesde',
     'fechaHasta',
+    'modalidad',
     'acciones',
   ];
 
@@ -96,10 +97,12 @@ export class CitasStandbyListComponent implements OnInit {
       });
   }
 
-  public aceptarCita(id: number) {
+  public aceptarCita(cita: Citas) {
     this.dialog.open(CitasFormMeetComponent, {
       width: 'auto',
-      data: id,
+      data: cita,
+    }).afterClosed().subscribe(() => {
+      this.getCitas();
     });
   }
 

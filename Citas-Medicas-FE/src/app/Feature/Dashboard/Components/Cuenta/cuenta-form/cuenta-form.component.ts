@@ -56,16 +56,18 @@ export class CuentaFormComponent implements OnInit {
   }
 
   public getEspecialidades() {
-    this.especialidadService.getListEspecialidades().subscribe(
-      (res) => {
-        this.especialidades = res;
-      },
-      (err) => {
-        this.sweetAlertService.opensweetalerterror(
-          'Error al obtener las especialidades'
-        );
-      }
-    );
+    if(this.rol !== 'Cliente'){
+      this.especialidadService.getListEspecialidades().subscribe(
+        (res) => {
+          this.especialidades = res;
+        },
+        (err) => {
+          this.sweetAlertService.opensweetalerterror(
+            'Error al obtener las especialidades'
+          );
+        }
+      );
+    }
   }
 
   public getPaciente(id: number) {

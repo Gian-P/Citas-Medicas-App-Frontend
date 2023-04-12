@@ -71,7 +71,6 @@ export class SignUpComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    console.log("1");
     this.isLoading = true;
     const user: Register = {
       ...this.form.value,
@@ -118,7 +117,7 @@ export class SignUpComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       rol: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
-      numeroTelefonoCasa: new FormControl('', [Validators.required]),
+      numeroTelefonoCasa: new FormControl(''),
       numeroTelefonoCelular: new FormControl('', [Validators.required]),
     });
 

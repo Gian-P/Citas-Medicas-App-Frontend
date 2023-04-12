@@ -30,6 +30,7 @@ export class CitasListComponent implements OnInit {
     'fechaHasta',
     'googleMeet',
     'notas',
+    'modalidad',
     'estado',
   ];
 

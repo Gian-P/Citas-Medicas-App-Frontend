@@ -68,6 +68,10 @@ export class EspecialidadesListComponent implements OnInit {
           this.especialidadService.deleteEspecialidad(id).subscribe((res) => {
             this.getEspecialidades();
             this.sweetAlertService.opensweetalertsuccess(res);
+          }, (err) => {
+            this.sweetAlertService.opensweetalerterror(
+              'No se puede eliminar la especialidad porque está siendo utilizada.'
+            );
           });
         }
       });

@@ -35,11 +35,16 @@ export class PagosService {
     );
   }
 
-  public cancelPayment(id: string, idPago: number): Observable<any> {
-    return this.http.post(this.myAppUrl + 'cancel/' + id + '/' + idPago, undefined).pipe(
-      catchError((err: HttpErrorResponse) => {
-        return throwError("Error al cancelar el pago");
-      })
-    );
+  public cancelPayment(id: string, idPago: number, idCita: number): Observable<any> {
+    return this.http
+      .post(
+        this.myAppUrl + 'cancel/' + id + '/' + idPago + '/' + idCita,
+        undefined
+      )
+      .pipe(
+        catchError((err: HttpErrorResponse) => {
+          return throwError('Error al cancelar el pago');
+        })
+      );
   }
 }

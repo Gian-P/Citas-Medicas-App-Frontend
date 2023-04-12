@@ -7,6 +7,7 @@ import { CitaService } from 'src/app/Core/Service/Citas/citas.service';
 import { SweetAlertService } from 'src/app/Miscelaneo/SweetAlert/sweet-alert.service';
 import { MedicosFormComponent } from '../../Medicos/medicos-form/medicos-form.component';
 import { TutorialCreateMeetComponent } from '../tutorial-create-meet/tutorial-create-meet.component';
+import { Citas } from "src/app/Core/Models/citas/citas.models";
 
 @Component({
   selector: 'app-citas-form-meet',
@@ -17,14 +18,17 @@ export class CitasFormMeetComponent implements OnInit {
   public meet!: Meet;
   public form: FormGroup = new FormGroup({});
   public isLoading: boolean = false;
+  public tipoCita: string = '';
 
   constructor(
     private dialogRef: MatDialogRef<MedicosFormComponent>,
     private dialog: MatDialog,
     private sweetAlertService: SweetAlertService,
     private citaService: CitaService,
-    @Inject(MAT_DIALOG_DATA) public idCita: number
-  ) {}
+    @Inject(MAT_DIALOG_DATA) public cita: Citas
+  ) {
+    this.tipoCita = this.cita.tipoCita;
+  }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -44,23 +48,40 @@ export class CitasFormMeetComponent implements OnInit {
       .subscribe((res) => {
         if (res) {
           this.isLoading = true;
-          this.citaService.cambiarEstatusCita(this.idCita, estatus).subscribe(
+          this.citaService.cambiarEstatusCita(this.cita.idCita, estatus).subscribe(
             (res: any) => {
-              this.citaService.addGoogleMeetLink(this.idCita, meet).subscribe(
-                (res: any) => {
-                  this.isLoading = false;
-                  this.sweetAlertService.opensweetalertsuccess(
-                    'La cita se ha confirmado con éxito'
-                  );
-                  this.dialogRef.close();
-                }, (err: any) => {
-                  this.isLoading = false;
-                  this.sweetAlertService.opensweetalerterror('Hubo un error al confirmar la cita. Por favor contacta al administrador del sistema');
-                }
-              ), (err: any) => {
+              this.isLoading =  true;
+              if(this.tipoCita === 'Virtual'){
+                 this.citaService
+                   .addGoogleMeetLink(this.cita.idCita, meet)
+                   .subscribe(
+                     (res: any) => {
+                       this.isLoading = false;
+                       this.sweetAlertService.opensweetalertsuccess(
+                         'La cita se ha confirmado con éxito'
+                       );
+                       this.dialogRef.close();
+                     },
+                     (err: any) => {
+                       this.isLoading = false;
+                       this.sweetAlertService.opensweetalerterror(
+                         'Hubo un error al confirmar la cita. Por favor contacta al administrador del sistema'
+                       );
+                     }
+                   ),
+                   (err: any) => {
+                     this.isLoading = false;
+                     this.sweetAlertService.opensweetalerterror(
+                       'Hubo un error al confirmar la cita. Por favor contacta al administrador del sistema'
+                     );
+                   };
+              } else{
+                this.sweetAlertService.opensweetalertsuccess(
+                  'La cita se ha confirmado con éxito'
+                );
                 this.isLoading = false;
-                this.sweetAlertService.opensweetalerterror('Hubo un error al confirmar la cita. Por favor contacta al administrador del sistema');
-              };
+                this.dialogRef.close();
+              }
             },
             (err: any) => {
               this.isLoading = false;

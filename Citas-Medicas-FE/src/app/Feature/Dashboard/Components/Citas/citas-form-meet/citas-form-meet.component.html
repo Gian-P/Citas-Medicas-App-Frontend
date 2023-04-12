@@ -17,6 +17,7 @@
   <div class="mb-3">
     <div class="text-center">
       <button
+        *ngIf="cita.tipoCita === 'Virtual' "
         class="button"
         mat-raised-button
         color="primary"
@@ -27,7 +28,7 @@
   </div>
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="row mb-4">
+    <div class="row mb-4" *ngIf="cita.tipoCita === 'Virtual' ">
       <div class="col">
         <mat-form-field appearance="outline">
           <mat-label>Introduce enlace</mat-label>

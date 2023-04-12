@@ -61,7 +61,7 @@ export class AdministradoresFormComponent implements OnInit {
       direccion: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required]),
       nombre: new FormControl('', [Validators.required]),
-      numeroTelefonoCasa: new FormControl('', [Validators.required]),
+      numeroTelefonoCasa: new FormControl(''),
       password: new FormControl('', [Validators.required]),
       numeroTelefonoCelular: new FormControl('', [Validators.required]),
     });

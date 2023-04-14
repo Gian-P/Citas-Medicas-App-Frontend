@@ -75,7 +75,7 @@
           class="tdestatus"
           [ngClass]="{
             'text-success': element.estatus === 'ACEPTADA',
-            'text-danger': element.estatus === 'ESPERA' || element.estatus === 'RECHAZADA' || element.estatus === 'CANCELADA' || element.estatus === 'Cancelada'
+            'text-danger': element.estatus === 'ESPERA' || element.estatus == 'ELIMINADA' || element.estatus === 'RECHAZADA' || element.estatus === 'CANCELADA' || element.estatus === 'Cancelada'
           }"
           mat-cell
           *matCellDef="let element"

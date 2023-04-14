@@ -33,4 +33,8 @@ export class NavbarComponent implements OnInit {
   getUserName(): any{
     this.userName = localStorage.getItem('email') || '';
   }
+
+  public goto(route: string): void {
+    this.router.navigate([route]);
+  }
 }

@@ -67,7 +67,6 @@ export class CitasStandbyListComponent implements OnInit {
       }
     }, (error) => {
       this.isLoading = false;
-      this.sweetAlertService.opensweetalerterror('Error al obtener las citas');
     });
   }
 

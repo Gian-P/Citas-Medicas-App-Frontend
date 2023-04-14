@@ -97,7 +97,9 @@ export class CitasListComponent implements OnInit {
   }
 
   public addCreateDialog() {
-    this.dialog.open(CitasFormComponent);
+    this.dialog.open(CitasFormComponent).afterClosed().subscribe(() => {
+      this.getCitas();
+    });
   }
 
   public openNotasDialog(citas: Citas){

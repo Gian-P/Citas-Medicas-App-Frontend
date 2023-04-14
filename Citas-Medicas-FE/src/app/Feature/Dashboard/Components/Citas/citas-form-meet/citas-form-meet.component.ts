@@ -39,6 +39,8 @@ export class CitasFormMeetComponent implements OnInit {
       ...this.form.value,
     } as Meet;
 
+    meet.googleMeetLink = meet.googleMeetLink != null ? meet.googleMeetLink : null as any;
+
     const estatus: Estatus = {
       estatus: 'ACEPTADA',
     } as Estatus;
@@ -51,8 +53,7 @@ export class CitasFormMeetComponent implements OnInit {
           this.citaService.cambiarEstatusCita(this.cita.idCita, estatus).subscribe(
             (res: any) => {
               this.isLoading =  true;
-              if(this.tipoCita === 'Virtual'){
-                 this.citaService
+              this.citaService
                    .addGoogleMeetLink(this.cita.idCita, meet)
                    .subscribe(
                      (res: any) => {
@@ -75,13 +76,6 @@ export class CitasFormMeetComponent implements OnInit {
                        'Hubo un error al confirmar la cita. Por favor contacta al administrador del sistema'
                      );
                    };
-              } else{
-                this.sweetAlertService.opensweetalertsuccess(
-                  'La cita se ha confirmado con éxito'
-                );
-                this.isLoading = false;
-                this.dialogRef.close();
-              }
             },
             (err: any) => {
               this.isLoading = false;

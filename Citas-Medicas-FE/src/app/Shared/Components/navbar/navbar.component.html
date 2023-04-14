@@ -19,7 +19,7 @@
             <mat-icon>keyboard_arrow_down</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item>Cuenta</button>
+            <button (click)="goto('/dashboard/cuenta')" mat-menu-item>Cuenta</button>
             <button (click)="logOut()" mat-menu-item>Cerrar sesión</button>
           </mat-menu>
         </li>

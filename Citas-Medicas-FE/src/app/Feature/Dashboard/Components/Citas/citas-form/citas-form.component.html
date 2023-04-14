@@ -28,7 +28,7 @@
             <mat-option
               *ngFor="let doctor of doctors?.medicosEnEsperaProjections"
               value="{{ doctor.idMedico }}"
-              >{{ doctor.nombre }}</mat-option
+              >{{ doctor.nombre }} - {{ doctor.nombreEspecialidad }}</mat-option
             >
           </mat-select>
         </mat-form-field>
